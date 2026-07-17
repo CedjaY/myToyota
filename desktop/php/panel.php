@@ -6,7 +6,7 @@ if (!isConnect()) {
 
 $pluginName = init('m');
 
-$eqLogics = eqLogic::byType($pluginName);
+$eqLogics = eqLogic::byType($pluginName, true);
 if (!$eqLogics) {
 	throw new Exception('{{Aucun équipement trouvé. Pour en créer un, allez dans Plugins -> Objets connectés -> My Toyota.<br/> Puis cliquz sur Ajouter et paramétrez le !}}');
 }
@@ -23,6 +23,7 @@ if (!$eqLogics) {
 				<?php
 				$first = true;
 				foreach ($eqLogics as $myToyota) {
+					if (!$myToyota->getIsEnable()) continue;
 					if (init('eqLogic_id') == '' && $first == true) {
 						echo '<li class="cursor li_object active" ><a data-eqLogic_id="' .$myToyota->getId(). '" href="index.php?v=d&p=panel&m=' .$pluginName. '&eqLogic_id=' . $myToyota->getId() . '" style="padding: 5px 0px; background-color: rgb(var(--bg-color))"><span>' . $myToyota->getName(). '</span></a></li>';
 						$first = false;
@@ -43,6 +44,7 @@ if (!$eqLogics) {
 		<?php
 		echo '<div style="width: 100%;">';
 		foreach ($eqLogics as $myToyota) {
+			if (!$myToyota->getIsEnable()) continue;
 			if (init('eqLogic_id') == '') {
 				echo $myToyota->toHtml('panel');
 				break;

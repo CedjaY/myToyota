@@ -663,13 +663,14 @@ class myToyota_API
 		return $return;
     }
 
-    public function remoteRefreshStatus($fichierLog='myToyota') // A tester sur véhicule capable
+    public function remoteRefreshStatus($fichierLog='myToyota')
     {
         $this->_checkAuth($fichierLog);
 		$url = $this::API_BASE_URL . $this::VEHICLE_REMOTE_REFRESH_STATUS;
         $headers = $this->_setHeadersUpdate();
-        log::add($fichierLog, 'debug', '| Url : '. $url);      
-		$return = $this->_request($url, 'GET', null, $headers);
+        $data = json_encode(['guid' => $this->uuid, 'vin' => $this->vin, 'deviceType' => 'Android']);
+        log::add($fichierLog, 'debug', '| Url : '. $url);
+		$return = $this->_request($url, 'POST', $data, $headers);
 		return $return;
     }
 

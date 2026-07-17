@@ -259,9 +259,12 @@ class myToyota extends eqLogic {
     $charging = [
         ['chargingStatus', 'Etat de la charge', 29, SUBTYPE_STRING],
         ['connectorStatus', 'Etat de la prise', 30, SUBTYPE_BINARY],
-        ['beRemainingRangeElectric', 'Km restant (électrique)', 31, SUBTYPE_NUMERIC],
-        ['chargingLevelHv', 'Charge restante', 32, SUBTYPE_NUMERIC],
+        ['beRemainingRangeElectric', 'Km restant EV (avec clim)', 31, SUBTYPE_NUMERIC],
+        ['beRemainingRangeElectricNoAc', 'Km restant EV (sans clim)', 31, SUBTYPE_NUMERIC],
+        ['chargingLevelHv', 'Charge batterie (%)', 32, SUBTYPE_NUMERIC],
         ['chargingEndTime', 'Heure de fin de charge', 33, SUBTYPE_STRING],
+        ['climateActive', 'Climatisation active', 33, SUBTYPE_BINARY],
+        ['climateType', 'Type climatisation', 33, SUBTYPE_STRING],
     ];
     foreach ($charging as $cmd) {
         $this->createCmd($cmd[0], $cmd[1], $cmd[2], TYPE_INFO, $cmd[3]);
@@ -275,6 +278,7 @@ class myToyota extends eqLogic {
     $this->createCmd('vehicleMessages', 'Messages', 36, TYPE_INFO, SUBTYPE_STRING);
     $this->createCmd(CMD_GPS_COORDINATES, 'Coordonnées GPS', 37, TYPE_INFO, SUBTYPE_STRING);
     $this->createCmd(CMD_LAST_UPDATE, 'Dernière mise à jour', 38, TYPE_INFO, SUBTYPE_STRING);
+    $this->createCmd('lastCommunication', 'Dernière communication serveur', 39, TYPE_INFO, SUBTYPE_STRING);
 
     // Actions disponibles pour interagir avec le véhicule (comme climatiser, charger, etc.)
     $actions = [
@@ -311,6 +315,15 @@ class myToyota extends eqLogic {
     $this->createCmd('beRemainingRangeTotal', 'Km restant (global)', 67, TYPE_INFO, SUBTYPE_NUMERIC);
     $this->createCmd('moy_sem', 'Moyenne semaine', 68, TYPE_INFO, SUBTYPE_STRING);
     $this->createCmd('trajets', 'trajet 7 derniers jours', 69, TYPE_INFO, SUBTYPE_STRING);
+
+    // Force l'historisation des commandes utilisées dans les graphiques
+    foreach (['mileage', 'remaining_fuel', 'chargingLevelHv'] as $cmdName) {
+        $cmd = $this->getCmd(null, $cmdName);
+        if (is_object($cmd) && $cmd->getIsHistorized() == 0) {
+            $cmd->setIsHistorized(1);
+            $cmd->save();
+        }
+    }
 }
 
   // Fonction exécutée automatiquement avant la suppression de l'équipement
@@ -370,6 +383,11 @@ class myToyota extends eqLogic {
 		$replace['#panel_doors_windows_display'.$this->getId().'#'] = $this->getConfiguration('panel_doors_windows_display');
 		$replace['#panel_color_icon_closed'.$this->getId().'#'] = $this->getConfiguration('panel_color_icon_closed');
 		$replace['#fuel_value_unit'.$this->getId().'#'] = $this->getConfiguration('fuel_value_unit');
+		// EVLink (ou autre borne) : IDs des commandes externes
+		$replace['#evlink_etat_id#'] = $this->getConfiguration('evlink_etat_id', '');
+		$replace['#evlink_puissance_id#'] = $this->getConfiguration('evlink_puissance_id', '');
+		$replace['#evlink_conso_id#'] = $this->getConfiguration('evlink_conso_id', '');
+		$replace['#evlink_courant_id#'] = $this->getConfiguration('evlink_courant_id', '');
 							
 		// Traitement des commandes infos
 		foreach ($this->getCmd('info') as $cmd) {
@@ -716,10 +734,25 @@ class myToyota extends eqLogic {
                                             date("d-m-Y à G:i:s", strtotime($location->payload->vehicleLocation->locationAcquisitionDatetime)));
         }
 
+        // Réveil du modem véhicule avant lecture état portes/fenêtres (cache Toyota)
+        $refreshResult = $myConnection->remoteRefreshStatus();
+        log::add('myToyota', 'info', '| POST refresh-status : ' . $refreshResult->body);
+        sleep(5);
+
         // état des fenetres, portes, ...
         $result = $myConnection->getRemoteStatusEndPoint(); //status des équipements
         $remoteStatus = json_decode($result->body);
         log::add('myToyota', 'debug', '| Retour remote status : ' . $result->body);
+
+        // Retry si le cache n'est pas encore prêt (403)
+        if (isset($remoteStatus->status->messages[0]->responseCode) &&
+            strpos($remoteStatus->status->messages[0]->responseCode, '403') !== false) {
+            log::add('myToyota', 'info', '| Remote status 403, retry dans 5s...');
+            sleep(5);
+            $result = $myConnection->getRemoteStatusEndPoint();
+            $remoteStatus = json_decode($result->body);
+            log::add('myToyota', 'debug', '| Retour remote status (retry) : ' . $result->body);
+        }
         $eqLogic->checkAndUpdateCmd('doorLockState', 'UNKNOWN');
         $eqLogic->checkAndUpdateCmd('allDoorsState', 'UNKNOWN');
         $eqLogic->checkAndUpdateCmd('allWindowsState', 'UNKNOWN');
@@ -887,14 +920,18 @@ class myToyota extends eqLogic {
             log::add('myToyota', 'info', __('| Retour élement: distance possible essence inconnue', __FILE__));
           }
  
-          // paramètres électriques et PEHV
+          // paramètres électriques et PHEV
           if ($vehicle_type == 'Hybride Rechargeable' || $vehicle_type == 'Electrique'){
             $result_elec = $myConnection->remoteElectric();
             $body_elec = json_decode($result_elec->body);
             log::add('myToyota', 'debug', '| Retour télémétrie électrique : ' . $result_elec->body);
-    
-            if ($body_elec->status->detailedDescription == 'Request Completed Successfully'){
-              $telemetrie_elec = $body->payload;
+
+            // BUG CORRIGÉ #1 : $body_elec->payload (et non $body->payload)
+            // BUG CORRIGÉ #2 : accès à messages[0]->detailedDescription (structure réelle de l'API)
+            if (isset($body_elec->status->messages[0]) &&
+                $body_elec->status->messages[0]->detailedDescription == 'Request Completed Successfully'){
+              $telemetrie_elec = $body_elec->payload;
+
               if ( isset($telemetrie_elec->fuelLevel) ){
                 $eqLogic->checkAndUpdateCmd('remaining_fuel', $telemetrie_elec->fuelLevel);
                 log::add('myToyota', 'info', __('| Retour élement: niveau réservoir :', __FILE__) . ' ' . $telemetrie_elec->fuelLevel . '%');
@@ -919,42 +956,73 @@ class myToyota extends eqLogic {
                 log::add('myToyota', 'info', __('| Retour élement: niveau batterie inconnu', __FILE__));
               }
 
+              // evRangeWithAc = autonomie EV avec climatisation active
               if ( isset($telemetrie_elec->evRangeWithAc) ){
                 $eqLogic->checkAndUpdateCmd('beRemainingRangeElectric', $telemetrie_elec->evRangeWithAc->value);
-                log::add('myToyota', 'info', __('| Retour élement: distance avant batterie vide :', __FILE__) . ' ' . $telemetrie_elec->evRangeWithAc->value . ' km');
+                log::add('myToyota', 'info', __('| Retour élement: autonomie EV (avec clim) :', __FILE__) . ' ' . $telemetrie_elec->evRangeWithAc->value . ' km');
               } else {
                 $eqLogic->checkAndUpdateCmd('beRemainingRangeElectric', '---');
-                log::add('myToyota', 'info', __('| Retour élement: distance avant batterie vide inconnu', __FILE__));
+                log::add('myToyota', 'info', __('| Retour élement: autonomie EV (avec clim) inconnue', __FILE__));
+              }
+
+              // evRange = autonomie EV sans climatisation (nouvelle donnée C-HR PHEV)
+              if ( isset($telemetrie_elec->evRange) ){
+                $eqLogic->checkAndUpdateCmd('beRemainingRangeElectricNoAc', $telemetrie_elec->evRange->value);
+                log::add('myToyota', 'info', __('| Retour élement: autonomie EV (sans clim) :', __FILE__) . ' ' . $telemetrie_elec->evRange->value . ' km');
+              } else {
+                $eqLogic->checkAndUpdateCmd('beRemainingRangeElectricNoAc', '---');
+                log::add('myToyota', 'info', __('| Retour élement: autonomie EV (sans clim) inconnue', __FILE__));
               }
 
               if ( isset($telemetrie_elec->chargingStatus)){
                 $eqLogic->checkAndUpdateCmd('chargingStatus', $telemetrie_elec->chargingStatus);
-                log::add('myToyota', 'info', __('| Retour élement: status de la charge', __FILE__) . $telemetrie_elec->chargingStatus);
+                log::add('myToyota', 'info', __('| Retour élement: status de la charge :', __FILE__) . ' ' . $telemetrie_elec->chargingStatus);
               } else {
                 $eqLogic->checkAndUpdateCmd('chargingStatus', 'UNKNOWN');
                 log::add('myToyota', 'info', __('| Retour élement: status de la charge inconnue', __FILE__));
               }
 
+              // chargingEndTime : si charge terminée, on utilise lastUpdateTimestamp comme horodatage de fin
+              if (isset($telemetrie_elec->chargingStatus) && $telemetrie_elec->chargingStatus == 'chargeComplete' && isset($telemetrie_elec->lastUpdateTimestamp)) {
+                $endTime = date('d-m-Y H:i:s', strtotime($telemetrie_elec->lastUpdateTimestamp));
+                $eqLogic->checkAndUpdateCmd('chargingEndTime', $endTime);
+                log::add('myToyota', 'info', __('| Retour élement: fin de charge :', __FILE__) . ' ' . $endTime);
+              } else {
+                $eqLogic->checkAndUpdateCmd('chargingEndTime', 'not available');
+              }
+
+            } else {
+              // Fallback : batteryLevel et chargingStatus depuis la télémétrie standard
+              log::add('myToyota', 'info', __('| Télémétrie électrique indisponible, utilisation du fallback télémétrie standard', __FILE__));
+              if ( isset($telemetrie->batteryLevel) ){
+                $eqLogic->checkAndUpdateCmd('chargingLevelHv', $telemetrie->batteryLevel);
+                log::add('myToyota', 'info', __('| Retour élement (fallback): niveau batterie :', __FILE__) . ' ' . $telemetrie->batteryLevel . '%');
+              }
+              if ( isset($telemetrie->chargingStatus) ){
+                $eqLogic->checkAndUpdateCmd('chargingStatus', $telemetrie->chargingStatus);
+                log::add('myToyota', 'info', __('| Retour élement (fallback): status de la charge :', __FILE__) . ' ' . $telemetrie->chargingStatus);
+              }
             }
           }
 
 
-          // Climatisation ???
-          $result = $myConnection->getRemoteClimateStatus(); //dernière localisation
-          $climateStatus = json_decode($result->body);
-    
+          // Climatisation : {"type": "full", "status": 0}  — status 0=inactive, 1=active
+          $result = $myConnection->getRemoteClimateStatus();
+          $climateBody = json_decode($result->body);
           log::add('myToyota', 'debug', __('| Retour climatisation :', __FILE__) . ' ' . $result->body);
+          if (isset($climateBody->payload)) {
+            $climatePayload = $climateBody->payload;
+            $eqLogic->checkAndUpdateCmd('climateActive', isset($climatePayload->status) ? intval($climatePayload->status) : 0);
+            $eqLogic->checkAndUpdateCmd('climateType', isset($climatePayload->type) ? $climatePayload->type : 'unknown');
+            log::add('myToyota', 'info', '| Retour élement: climatisation active : ' . intval($climatePayload->status) . ' / type : ' . ($climatePayload->type ?? 'unknown'));
+          }
 
           // trips
           $to = date('Y-m-d');
           $from = date('Y-m-d', strtotime('-7 days', strtotime($to)));
-          $route = false;
+          $route = true;
           $summary = true;
-          if ($route){
-            $limit = 50; // 1000 max si $route = false et 50 max si $rpute = true
-          } else {
-            $limit = 1000;
-          }
+          $limit = 50; // max 50 avec route=true
           $offset = 0;
     
           $result = $myConnection->getTripsEndpoint($from, $to, $route, $summary, $limit, $offset); //pour récupérer les 7 derniers jours
@@ -963,11 +1031,8 @@ class myToyota extends eqLogic {
           log::add('myToyota', 'debug', __('| retour circuits', __FILE__) . $result->body);
           
           // moyennes sur 7 jours
-          $fuelConsumption = 0;
-          $length = 0;
-          $evDistance = 0;
-          $evTime = 0;
-          $duration = 0;
+          $fuelConsumption = 0; $length = 0; $evDistance = 0; $evTime = 0; $duration = 0;
+          $chargeTime = 0; $chargeDist = 0; $ecoTime = 0; $ecoDist = 0; $powerTime = 0; $powerDist = 0;
           $summarys = $tripsEndpoint->payload->summary;
           $metatData = $tripsEndpoint->payload->_metadata;
           foreach ($summarys as $summary){
@@ -976,32 +1041,109 @@ class myToyota extends eqLogic {
             $evDistance += $summary->hdc->evDistance;
             $evTime += $summary->hdc->evTime;
             $duration += $summary->summary->duration;
+            if (isset($summary->hdc->chargeTime)) { $chargeTime += $summary->hdc->chargeTime; }
+            if (isset($summary->hdc->chargeDist)) { $chargeDist += $summary->hdc->chargeDist; }
+            if (isset($summary->hdc->ecoTime))    { $ecoTime    += $summary->hdc->ecoTime; }
+            if (isset($summary->hdc->ecoDist))    { $ecoDist    += $summary->hdc->ecoDist; }
+            if (isset($summary->hdc->powerTime))  { $powerTime  += $summary->hdc->powerTime; }
+            if (isset($summary->hdc->powerDist))  { $powerDist  += $summary->hdc->powerDist; }
           }
-          $dureeTot = myToyota::convertSecondes($duration);
-          $dureeEv = myToyota::convertSecondes($evTime);
-          $consoMoy = myToyota::consoMoyenne($fuelConsumption, $length);
+          $dureeTot   = myToyota::convertSecondes($duration);
+          $dureeEv    = myToyota::convertSecondes($evTime);
+          $dureeCharge= myToyota::convertSecondes($chargeTime);
+          $dureeEco   = myToyota::convertSecondes($ecoTime);
+          $dureePower = myToyota::convertSecondes($powerTime);
+          $consoMoy   = myToyota::consoMoyenne($fuelConsumption, $length);
           $averageSpeed = myToyota::averageSpeed($length, $duration);
 
-          $summarySem = '{"conso_moy":' . $consoMoy . ', "vit_moy":' . $averageSpeed . 
-            ', "distance_tot":' . strval($length / 1000) . ',"duree_tot": "' . $dureeTot . 
-            '", "distance_ev":' . strval($evDistance / 1000) . ',"duree_ev":"' . $dureeEv . 
-            '","conso_essence":' . strval($fuelConsumption / 1000) . ',"nb_trajets":' . $metatData->pagination->totalCount . '}';
-            log::add('myToyota', 'info', __('| retour trips moyenne sur 7 jours:', __FILE__) . ' ' . $summarySem);          
-            $eqLogic->checkAndUpdateCmd('moy_sem', $summarySem);
+          $summarySem = json_encode([
+            'conso_moy'    => $consoMoy,       'vit_moy'      => $averageSpeed,
+            'distance_tot' => round($length / 1000, 3),        'duree_tot'    => $dureeTot,
+            'distance_ev'  => round($evDistance / 1000, 3),    'duree_ev'     => $dureeEv,
+            'conso_essence'=> round($fuelConsumption / 1000, 3),'nb_trajets'  => $metatData->pagination->totalCount,
+            'charge_dist'  => round($chargeDist / 1000, 3),    'charge_time'  => $dureeCharge,
+            'eco_dist'     => round($ecoDist / 1000, 3),        'eco_time'     => $dureeEco,
+            'power_dist'   => round($powerDist / 1000, 3),     'power_time'   => $dureePower,
+          ]);
+          log::add('myToyota', 'info', __('| retour trips moyenne sur 7 jours:', __FILE__) . ' ' . $summarySem);
+          $eqLogic->checkAndUpdateCmd('moy_sem', $summarySem);
 
           // les trajets des 7 derniers jours
           $trips = $tripsEndpoint->payload->trips;
           $i = 1;
+          $trajet = [];
           foreach ($trips as $trip){
-            $trajet['trajet' . strval($i)] = array('debut_trajet' => date("d-m-Y G:i:s", strtotime($trip->summary->startTs)) ,
-              'conso_moy' => myToyota::consoMoyenne($trip->summary->fuelConsumption, $trip->summary->length) , 'vit_moy' => $trip->summary->averageSpeed , 
-              'distance_tot' => strval($trip->summary->length / 1000) , 'duree_tot' => myToyota::convertSecondes($trip->summary->duration) ,
-              'distance_ev' => strval($trip->hdc->evDistance / 1000) , 'duree_ev' => myToyota::convertSecondes($trip->hdc->evTime) ,
-              'conso_essence' => strval($trip->summary->fuelConsumption / 1000));
-              log::add('myToyota', 'info', __('| retour résumé trajet n°', __FILE__) . ' ' . strval($i) . ' : ' . json_encode($trajet['trajet' . strval($i++)]));
+            // Géolocalisation départ / arrivée depuis les waypoints GPS
+            $ville_depart  = '';
+            $ville_arrivee = '';
+            $routePoints = null;
+            if (isset($trip->route) && is_array($trip->route) && count($trip->route) > 0) {
+                $routePoints = $trip->route;
+            } elseif (isset($trip->sections) && is_array($trip->sections) && count($trip->sections) > 0) {
+                $routePoints = $trip->sections;
+            }
+            if ($routePoints !== null) {
+                $first = $routePoints[0];
+                $last  = $routePoints[count($routePoints) - 1];
+                $latF = $first->lat ?? ($first->latitude ?? null);
+                $lonF = $first->lon ?? ($first->longitude ?? null);
+                $latL = $last->lat  ?? ($last->latitude  ?? null);
+                $lonL = $last->lon  ?? ($last->longitude ?? null);
+                if ($latF !== null && $lonF !== null) {
+                    $ville_depart  = myToyota::reverseGeocode($latF, $lonF);
+                }
+                if ($latL !== null && $lonL !== null) {
+                    $ville_arrivee = myToyota::reverseGeocode($latL, $lonL);
+                }
+            }
+
+            $trajet['trajet' . strval($i)] = [
+              'debut_trajet'  => date("d-m-Y G:i:s", strtotime($trip->summary->startTs)),
+              'ville_depart'  => $ville_depart,
+              'ville_arrivee' => $ville_arrivee,
+              'conso_moy'     => myToyota::consoMoyenne($trip->summary->fuelConsumption, $trip->summary->length),
+              'vit_moy'       => $trip->summary->averageSpeed,
+              'distance_tot'  => strval($trip->summary->length / 1000),
+              'duree_tot'     => myToyota::convertSecondes($trip->summary->duration),
+              'distance_ev'   => isset($trip->hdc->evDistance) ? strval(round($trip->hdc->evDistance / 1000, 3)) : '0',
+              'duree_ev'      => isset($trip->hdc->evTime)     ? myToyota::convertSecondes($trip->hdc->evTime) : '0:0:0',
+              'conso_essence' => strval($trip->summary->fuelConsumption / 1000),
+              // Champs HDC spécifiques PHEV
+              'charge_dist'   => isset($trip->hdc->chargeDist) ? strval(round($trip->hdc->chargeDist / 1000, 3)) : '0',
+              'charge_time'   => isset($trip->hdc->chargeTime) ? myToyota::convertSecondes($trip->hdc->chargeTime) : '0:0:0',
+              'eco_dist'      => isset($trip->hdc->ecoDist)    ? strval(round($trip->hdc->ecoDist / 1000, 3)) : '0',
+              'eco_time'      => isset($trip->hdc->ecoTime)    ? myToyota::convertSecondes($trip->hdc->ecoTime) : '0:0:0',
+              'power_dist'    => isset($trip->hdc->powerDist)  ? strval(round($trip->hdc->powerDist / 1000, 3)) : '0',
+              'power_time'    => isset($trip->hdc->powerTime)  ? myToyota::convertSecondes($trip->hdc->powerTime) : '0:0:0',
+            ];
+            log::add('myToyota', 'info', __('| retour résumé trajet n°', __FILE__) . ' ' . strval($i) . ' : ' . json_encode($trajet['trajet' . strval($i++)]));
           }
           $tripsJson = json_encode($trajet);
           $eqLogic->checkAndUpdateCmd('trajets', $tripsJson);
+
+          // Fusion dans l'historique persistant
+          $historyFile = dirname(__FILE__) . '/../../data/myToyota_' . $vin . '_trips.json';
+          $history = [];
+          if (file_exists($historyFile)) {
+              $existing = json_decode(file_get_contents($historyFile), true);
+              if (is_array($existing)) { $history = $existing; }
+          }
+          // Index existant par debut_trajet pour dédup
+          $existingKeys = [];
+          foreach ($history as $h) {
+              if (isset($h['debut_trajet'])) { $existingKeys[$h['debut_trajet']] = true; }
+          }
+          foreach ($trajet as $t) {
+              if (!isset($existingKeys[$t['debut_trajet']])) {
+                  $history[] = $t;
+              }
+          }
+          // Tri par date décroissante
+          usort($history, function($a, $b) {
+              return strtotime(str_replace('-', '/', $b['debut_trajet'])) - strtotime(str_replace('-', '/', $a['debut_trajet']));
+          });
+          file_put_contents($historyFile, json_encode($history));
+          log::add('myToyota', 'info', '| Historique trajets sauvegardé : ' . count($history) . ' trajets');
 
         }
 
@@ -1020,10 +1162,11 @@ class myToyota extends eqLogic {
         }
 
         // services et entretien
+        // BUG CORRIGÉ #3 : la réponse n'a pas de champ "status", on vérifie directement payload
         $result = $myConnection->historiqueService();
         $body = json_decode($result->body);
         log::add('myToyota', 'debug', __('| Retour services et entretien :', __FILE__) . ' ' . $result->body);
-        if ($body->status->messages[0]->description == 'Request Processed successfully'){
+        if (isset($body->payload->serviceHistories) && is_array($body->payload->serviceHistories)){
           $histoservice = $body->payload->serviceHistories;
           $i=1;
           foreach ($histoservice as $service){
@@ -1031,7 +1174,7 @@ class myToyota extends eqLogic {
               'compteur' => $service->mileage . ' ' . $service->unit, 'notes' => $service->notes,
               'operations'=> $service->operationsPerformed, 'ro_number' => $service->roNumber,
               'categorie' => $service->serviceCategory, 'garage' => $service->serviceProvider,
-              'concessionaire' => $service->servicingDealer);
+              'concessionaire' => isset($service->servicingDealer) ? $service->servicingDealer : $service->serviceProvider);
               log::add('myToyota', 'info', __('| retour résumé services n°', __FILE__) . ' ' . strval($i) . ' : ' . json_encode($services['service' . strval($i++)]));
           }
           $servicesJson = json_encode($services);
@@ -1039,6 +1182,9 @@ class myToyota extends eqLogic {
         }
 
         
+
+        // Horodatage de la dernière communication réussie avec le serveur Toyota
+        $eqLogic->checkAndUpdateCmd('lastCommunication', date('Y-m-d H:i:s'));
 
         //fin du traitement
         log::add('myToyota', 'info', __('| fin du traitement pour le véhicule', __FILE__) . ' ' . strval($nomvehicule) . ' avec ID ' . $idvehicule);
@@ -1068,6 +1214,46 @@ class myToyota extends eqLogic {
             vehicule['trajets'] = json.dumps(mestrajets)
 
     */
+    public static function reverseGeocode($lat, $lon)
+    {
+        $cacheFile = dirname(__FILE__) . '/../../data/geocode_cache.json';
+        $cacheKey  = round($lat, 3) . ',' . round($lon, 3);
+
+        $cache = [];
+        if (file_exists($cacheFile)) {
+            $cache = json_decode(file_get_contents($cacheFile), true) ?: [];
+        }
+        if (isset($cache[$cacheKey])) {
+            return $cache[$cacheKey];
+        }
+
+        $url = 'https://nominatim.openstreetmap.org/reverse?format=json&lat=' . $lat . '&lon=' . $lon . '&zoom=10&accept-language=fr';
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_USERAGENT, 'JeedomMyToyotaPlugin/1.0 (https://github.com/sav/mytoyota)');
+        curl_setopt($ch, CURLOPT_TIMEOUT, 6);
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        $city = '';
+        if ($response) {
+            $data = json_decode($response, true);
+            $city = $data['address']['city']
+                 ?? $data['address']['town']
+                 ?? $data['address']['village']
+                 ?? $data['address']['municipality']
+                 ?? $data['address']['county']
+                 ?? '';
+        }
+
+        $cache[$cacheKey] = $city;
+        if (!is_dir(dirname($cacheFile))) { mkdir(dirname($cacheFile), 0755, true); }
+        file_put_contents($cacheFile, json_encode($cache, JSON_PRETTY_PRINT));
+
+        usleep(1100000); // respecter le rate limit Nominatim (1 req/s)
+        return $city;
+    }
+
     public static function convertSecondes($secondes)
     {
       $result = strval(intval($secondes / 3600)). ':' . strval(intval(($secondes % 3600) / 60)) . ':' . strval(intval((($secondes % 3600) % 60)));

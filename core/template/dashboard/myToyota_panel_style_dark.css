@@ -1,11 +1,18 @@
+.myToyota_panel_flat {
+	box-shadow: none !important;
+	height: unset !important;
+	min-height: unset !important;
+	max-height: none !important;
+}
+
 .myToyota_panel_flat .container-fluid {
 	margin : 5px 5px 5px 20px !important;
 	padding : 0px 0px 0px 0px !important;
 }
 
 .myToyota_panel_flat #column {
-	margin : 0px 0px 0px 0px !important;
-	padding : 0px 0px 0px 0px !important;
+	margin: 34px 0 !important;
+	padding: 0 !important;
 }
 
 .myToyota_panel_flat #titre {
@@ -22,21 +29,24 @@
 	height: 1.5em;
 }
 
-.myToyota_panel_flat #tile {
-    margin : 5px 5px 5px 5px !important;
-	padding : 0px 0px 0px 0px !important;
-	background-color : rgb(var(--bg-color)) !important;
-	filter : contrast(105%);
+.myToyota_panel_flat .tile {
+	margin: 0 8px 8px !important;
+	padding: 8px !important;
+	background: rgba(255,255,255,0.05) !important;
+	border: 1px solid rgba(255,255,255,0.09) !important;
+	border-radius: 10px !important;
+	filter: none;
 }
 
 .myToyota_panel_flat #picture {
 	display: table-cell;
-	vertical-align : middle;
-	color : #FFFFFF !important;
+	vertical-align: middle;
+	color: #FFFFFF !important;
+	margin: 50px 0 !important;
 }
 
 .myToyota_panel_flat #location {
-	padding: 20px 0px 0px 0px !important;
+	padding: 0 !important;
 }
 
 .myToyota_panel_flat #distance {
@@ -46,17 +56,18 @@
 }
 
 .myToyota_panel_flat .myMap {
-	width: 400px;
+	width: 100%;
 	height: 240px;
-	border: 0px;
-	filter: grayscale(100%) invert(90%);
+	border: 0;
+	filter: none;
 }
 
-.myToyota_panel_flat #titre_tile {
+.myToyota_panel_flat #titre_tile,
+.myToyota_panel_flat .myToyota_panel_flat_titre_tile {
 	font-size : 14px;
 	color : var(--txt-color) !important;
 	margin : 0px 0px 0px 0px !important;
-	padding : 15px 0px 0px 0px !important;
+	padding : 15px 0px 8px 0px !important;
 }
 
 .myToyota_panel_flat #icon_tile {
@@ -65,7 +76,8 @@
 	color: rgb(80,120,170) !important;
 }
 
-.myToyota_panel_flat #value_tile {
+.myToyota_panel_flat #value_tile,
+.myToyota_panel_flat .value_tile {
 	font-size : 22px;
 	color : #FFFFFF !important;
 	text-align: center;
@@ -108,19 +120,26 @@
 }
 
 .myToyota_panel_flat #text_doors {
-	font-size : 14px;
-	color : var(--txt-color) !important;
-	margin : 0px 0px 0px 0px !important;
-	padding : 0px 5px 0px 0px !important;
-	text-align : right; 
+	font-size: 14px;
+	color: var(--txt-color) !important;
+	margin: 0 !important;
+	padding: 0 5px 0 0 !important;
+	text-align: right;
+	width: 40% !important;
 }
 
 .myToyota_panel_flat #value_doors {
-	font-size : 14px;
-	color : #FFFFFF !important;
-	margin : 0px 0px 0px 0px !important;
-	padding : 0px 0px 0px 10px !important;
-	text-align : left; 
+	font-size: 14px;
+	color: #FFFFFF !important;
+	margin: 0 !important;
+	padding: 0 0 0 6px !important;
+	text-align: left;
+	width: 60% !important;
+}
+
+.myToyota_panel_flat #value_doors > span,
+.myToyota_panel_flat #value_doors > span > span {
+	display: inline !important;
 }
 
 .myToyota_panel_flat .btn {
@@ -133,9 +152,42 @@
 }
 
 .myToyota_panel_flat #liste_msg {
-	width: 440px;
-	height: 340px;
-	overflow: hidden;
+	width: 100%;
+	max-height: 320px;
+	overflow-y: auto;
+	padding: 0 8px 6px;
+	box-sizing: border-box;
+}
+
+.myToyota_panel_flat #liste_msg table {
+	width: 100%;
+	border-collapse: collapse;
+	font-size: 12px;
+}
+
+.myToyota_panel_flat #liste_msg td {
+	padding: 5px 8px;
+	vertical-align: middle;
+	border-bottom: 1px solid rgba(255,255,255,0.06);
+	text-align: left;
+}
+
+.myToyota_panel_flat #liste_msg tr:last-child td {
+	border-bottom: none;
+}
+
+.myToyota_panel_flat .mypanel-msg-item {
+	padding: 6px 0;
+	border-bottom: 1px solid rgba(255,255,255,0.06);
+	list-style: none;
+}
+.myToyota_panel_flat .mypanel-msg-item:last-child { border-bottom: none; }
+.myToyota_panel_flat .mypanel-msg-line { font-size: 12px; color: rgba(255,255,255,0.85); }
+.myToyota_panel_flat .mypanel-msg-garage { font-size: 11px; color: rgba(255,255,255,0.45); padding-left: 12px; margin-top: 2px; }
+
+.myToyota_panel_flat #footer_row {
+	margin: 0 !important;
+	padding: 0 !important;
 }
 
 .myToyota_panel_flat #last_update {
@@ -168,9 +220,316 @@
 	overflow: auto;
 }
 
-.myToyota_panel_flat th.myToyota_stat_th,  td.myToyota_stat_td {
-	border: 1px solid black;
-	padding:4px 6px;
+/* ---- Tiles panel ---- */
+.mypanel-photo {
+	text-align: center;
+	padding: 10px 0 6px;
+}
+
+.mypanel-info-row {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 4px 12px 8px;
+}
+
+.mypanel-presence {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 3px;
+	color: #ffffff;
+	min-width: 52px;
+}
+
+.mypanel-maintenance {
+	display: flex;
+	gap: 10px;
+	align-items: center;
+}
+
+.mypanel-section-title {
+	font-size: 9px;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	color: rgba(255,255,255,0.35);
+	padding: 8px 12px 3px;
+	text-align: left;
+	background: transparent !important;
+	border: none !important;
+	box-shadow: none !important;
+	border-radius: 0 !important;
+}
+
+.mypanel-tiles-row {
+	display: flex;
+	gap: 6px;
+	padding: 0 8px 6px;
+}
+
+.mypanel-card {
+	flex: 1;
+	background: rgba(255,255,255,0.05);
+	border: 1px solid rgba(255,255,255,0.09);
+	border-radius: 10px;
+	padding: 10px 6px 8px;
+	text-align: center;
+	min-width: 0;
+}
+
+.mypanel-card-icon {
+	font-size: 18px;
+	margin-bottom: 6px;
+	color: rgb(80,120,170);
+}
+
+.mypanel-card-label {
+	font-size: 9px;
+	text-transform: uppercase;
+	letter-spacing: 0.3px;
+	color: rgba(255,255,255,0.4);
+	margin-bottom: 4px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.mypanel-card-value {
+	font-size: 16px;
+	font-weight: 500;
+	color: #ffffff;
+	white-space: normal;
+	word-break: break-word;
+	line-height: 1.2;
+}
+
+.mypanel-unit {
+	font-size: 11px;
+	color: rgba(255,255,255,0.45);
+	margin-left: 3px;
+}
+
+.mypanel-section-card {
+	margin: 0 8px 8px;
+	width: 440px;
+	background: rgba(255,255,255,0.05);
+	border: 1px solid rgba(255,255,255,0.09);
+	border-radius: 10px;
+	padding: 0 0 4px;
+}
+
+.mypanel-section-card .mypanel-section-title {
+	padding: 8px 12px 4px;
+}
+
+.mypanel-section-card .mypanel-tiles-row {
+	padding: 0 6px 2px;
+}
+
+
+.mypanel-charge-inner {
+	padding: 6px 14px 8px;
+	border-top: 1px solid rgba(255,255,255,0.07);
+	margin-top: 2px;
+}
+
+.mypanel-charge {
+	margin: 0 8px 8px;
+	background: rgba(255,255,255,0.05);
+	border: 1px solid rgba(255,255,255,0.09);
+	border-radius: 10px;
+	padding: 10px 14px;
+}
+
+.mypanel-charge-row {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	font-size: 14px;
+	color: #ffffff;
+	flex-wrap: wrap;
+}
+
+.mypanel-charge-icon {
+	color: rgb(80,120,170);
+}
+
+.mypanel-charge-sep {
+	width: 1px;
+	height: 18px;
+	background: rgba(255,255,255,0.15);
+}
+
+.mypanel-charge-end {
+	font-size: 11px;
+	color: rgba(255,255,255,0.5);
+}
+
+.mypanel-actions {
+	display: flex;
+	align-items: center;
+	flex-wrap: nowrap;
+	gap: 4px;
+	padding: 10px 12px;
+}
+
+.mytw-btn {
+	flex: 1 1 0 !important;
+	height: 30px !important;
+	min-width: 0 !important;
+	border-radius: 7px !important;
+	border: 1px solid rgba(255,255,255,0.15) !important;
+	background: rgba(255,255,255,0.07) !important;
+	color: rgba(255,255,255,0.8) !important;
+	font-size: 13px;
+	cursor: pointer;
+	display: inline-flex !important;
+	align-items: center;
+	justify-content: center;
+	padding: 0 !important;
+	margin: 0 !important;
+	transition: background 0.15s, color 0.15s;
+}
+
+.mytw-btn:hover {
+	background: rgba(80,120,170,0.4) !important;
+	color: #ffffff !important;
+	border-color: rgba(80,120,170,0.6) !important;
+}
+
+.mytw-btn-sep {
+	width: 1px;
+	height: 22px;
+	background: rgba(255,255,255,0.12);
+	margin: 0 2px;
+}
+
+/* ---- Onglet Charges : suppression padding Bootstrap col ---- */
+#eqlogictabcharge .tile {
+	margin-left: 0 !important;
+	margin-right: 0 !important;
+}
+
+#eqlogictabcharge .mypanel-section-title {
+	padding-left: 4px !important;
+	padding-right: 4px !important;
+}
+
+/* ---- Onglets ---- */
+#div_pageContainer .myToyota_panel_flat .tab-content,
+.myToyota_panel_flat .tab-content {
+	height: unset !important;
+	max-height: none !important;
+}
+
+.myToyota_panel_flat .tab-pane {
+	padding: 12px 4px 4px 4px;
+}
+
+/* ---- Stat cards (EVLink / HDC) ---- */
+.myToyota_stat_card {
+	border: 1px solid rgba(255,255,255,0.1);
+	border-radius: 10px;
+	overflow: hidden;
+	background: rgba(255,255,255,0.03);
+}
+
+.myToyota_stat_card_header {
+	background: #1a3a5c;
+	color: #FFFFFF;
+	font-size: 13px;
+	font-weight: 600;
+	padding: 8px 14px;
+	letter-spacing: 0.3px;
+}
+
+.myToyota_stat_card_body {
+	display: flex;
+	flex-wrap: wrap;
+	padding: 4px 0;
+}
+
+.myToyota_stat_item {
+	flex: 1 1 140px;
+	padding: 10px 16px;
+	border-right: 1px solid rgba(255,255,255,0.07);
+	text-align: center;
+}
+
+.myToyota_stat_item:last-child {
+	border-right: none;
+}
+
+.myToyota_stat_label {
+	font-size: 10px;
+	color: rgba(255,255,255,0.5);
+	text-transform: uppercase;
+	letter-spacing: 0.4px;
+	margin-bottom: 4px;
+}
+
+.myToyota_stat_value {
+	font-size: 20px;
+	color: #FFFFFF;
+	font-weight: 500;
+	line-height: 1.2;
+}
+
+.myToyota_stat_unit {
+	font-size: 12px;
+	color: rgba(255,255,255,0.6);
+	font-weight: 400;
+}
+
+/* ---- Tables trajets / charges ---- */
+.myToyota_panel_flat .tablePhev,
+.myToyota_panel_flat .tableCharge {
+	width: 100%;
+	overflow-x: auto;
+	border-radius: 8px;
+	box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+}
+
+.myToyota_panel_flat table.tableCmdPhev,
+.myToyota_panel_flat table.tableCmdHyd,
+.myToyota_panel_flat table.fixed_header,
+.myToyota_panel_flat table.fixed_headerCharge,
+.myToyota_panel_flat table.tableCmdCharge {
+	width: 100%;
+	border-collapse: collapse;
+	font-size: 12px;
+	color: #E0E0E0;
+}
+
+.myToyota_panel_flat th.myToyota_stat_th {
+	background-color: #1a3a5c;
+	color: #FFFFFF;
+	padding: 8px 10px;
+	text-align: center;
+	font-weight: 600;
+	font-size: 11px;
+	text-transform: uppercase;
+	letter-spacing: 0.4px;
+	border: none;
+	white-space: nowrap;
+}
+
+.myToyota_panel_flat th.myToyota_stat_th:first-child { border-radius: 8px 0 0 0; }
+.myToyota_panel_flat th.myToyota_stat_th:last-child  { border-radius: 0 8px 0 0; }
+
+.myToyota_panel_flat td.myToyota_stat_td {
+	padding: 6px 10px;
 	text-align: center;
 	vertical-align: middle;
+	border: none;
+	border-bottom: 1px solid rgba(255,255,255,0.07);
+	white-space: nowrap;
+}
+
+.myToyota_panel_flat tr.myToyota_stat_tr_body:nth-child(even) td.myToyota_stat_td {
+	background-color: rgba(255,255,255,0.04);
+}
+
+.myToyota_panel_flat tr.myToyota_stat_tr_body:hover td.myToyota_stat_td {
+	background-color: rgba(80,120,200,0.18);
 }

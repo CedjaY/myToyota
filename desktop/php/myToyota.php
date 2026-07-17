@@ -252,6 +252,34 @@ $eqLogics = eqLogic::byType($plugin->getId());
 							
 							</br>
 							
+							<legend><i class="fas fa-charging-station"></i> {{Borne de recharge (optionnel — EVLink ou autre)}}</legend>
+							<div class="form-group">
+								<label class="col-sm-4 control-label help" data-help="{{ID Jeedom de la commande info binaire indiquant si la borne est en charge (1) ou non (0)}}">{{Commande État borne (0/1)}}</label>
+								<div class="col-sm-4">
+									<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="evlink_etat_id" placeholder="{{ex: 6672}}">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-4 control-label help" data-help="{{ID Jeedom de la commande info numérique donnant la puissance en Watts}}">{{Commande Puissance (W)}}</label>
+								<div class="col-sm-4">
+									<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="evlink_puissance_id" placeholder="{{ex: 6681}}">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-4 control-label help" data-help="{{ID Jeedom de la commande info numérique donnant la consommation totale en kWh}}">{{Commande Consommation (kWh)}}</label>
+								<div class="col-sm-4">
+									<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="evlink_conso_id" placeholder="{{ex: 6684}}">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-4 control-label help" data-help="{{ID Jeedom de la commande info numérique donnant le courant en Ampères (optionnel)}}">{{Commande Courant (A) — optionnel}}</label>
+								<div class="col-sm-4">
+									<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="evlink_courant_id" placeholder="{{ex: 6683}}">
+								</div>
+							</div>
+
+							</br>
+
 							<legend><i class="fas fa-location-arrow"></i> {{Paramètres de localisation}}</legend>
 							<div class="form-group">
 								<label class="col-sm-4 control-label">{{Domicile (présence)}}</label>

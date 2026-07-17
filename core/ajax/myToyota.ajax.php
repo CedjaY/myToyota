@@ -46,8 +46,14 @@ try {
       $result = myToyota::getGPSCoordinates(init('vin'));
       ajax::success($result);
     }
-      
-    
+
+    if (init('action') == 'getTripsHistory') {
+      $vin = init('vin');
+      $historyFile = dirname(__FILE__) . '/../../data/myToyota_' . $vin . '_trips.json';
+      if (!file_exists($historyFile)) { ajax::success([]); }
+      $history = json_decode(file_get_contents($historyFile), true);
+      ajax::success(is_array($history) ? $history : []);
+    }
 
     throw new Exception(__('Aucune méthode correspondante à', __FILE__) . ' : ' . init('action'));
     /*     * *********Catch exeption*************** */

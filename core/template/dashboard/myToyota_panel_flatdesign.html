@@ -1,136 +1,137 @@
-<div id="myToyota_panel_flat_ID" class="eqLogic-widget eqLogic noResize myToyota_panel_flat myToyota_panel_flat_#id# myToyota" style="min-width:1392px !important; max-width:1392px !important; min-height:650px; max-height:4650px; text-align:center; border:#border#; border-radius:#border-radius#; background-color:#background-color#; color:#color#; #style#;" data-eqType="#eqType#" data-translate-category="#translate_category#" data-category="#category#" data-tags="#tags#" data-eqLogic_id="#id#" data-eqLogic_uid="#uid#" data-version="panel">
+<div id="myToyota_panel_flat_ID" class="eqLogic-widget eqLogic noResize myToyota_panel_flat myToyota_panel_flat_#id# myToyota" style="min-width:1392px !important; max-width:1392px !important; text-align:center; border:#border#; border-radius:#border-radius#; background-color:#background-color#; color:#color#; #style#;" data-eqType="#eqType#" data-translate-category="#translate_category#" data-category="#category#" data-tags="#tags#" data-eqLogic_id="#id#" data-eqLogic_uid="#uid#" data-version="panel">
 
 	<a href="#eqLink#" id="titre" style="#hideEqLogicName#"><img class="logo_car#id#" id="logo" style="vertical-align: bottom !important" src=""><span style="padding-left:10px;"> #name_display#</span></a>
 	<!-- <span class="cmd refresh pull-right cursor" data-cmd_id="#refresh_id#" title="Rafraichir" style="margin-right:10px;" onclick="jeedom.cmd.execute({id: #refresh_id#});"><i id="refresh" class="fas fa-sync"></i></span> -->
 	
 	<div class="container-fluid">
-		
+
 		<div>
-			
-			<!-- Column N°1 -->
+
+			<!-- Column N°1 — Photo + Énergie -->
 			<div class="col-xs-4" id="column" style="width:450px;">
-		
-				<div class="col-xs-12" id="tile" style="height:250px; width:440px;">
-					<div id="picture" style="height: 250px; width:440px;">
-						<img id="img_car#id#" src="plugins/myToyota/data/#vehicle_vin#id##.png" style="width:300px; margin-bottom: -40px" />
+
+				<!-- Photo véhicule -->
+				<div class="mypanel-photo">
+					<img id="img_car#id#" src="plugins/myToyota/data/#vehicle_vin#id##.png" style="width:280px;" />
+				</div>
+
+				<!-- Présence + Maintenance -->
+				<div class="mypanel-info-row">
+					<div class="mypanel-presence">
+						<i class="Cmd#presence_id#" style="font-size:1.6em;"></i>
+						<span class="Cmd#distance_id#" style="font-size:10px; font-weight:bold;"></span>
+					</div>
+					<div class="mypanel-maintenance">
+						<span class="icon_oil#id#"><img src="plugins/myToyota/core/img/oil_grey.png" height="40" title="{{Huile moteur OK}}"/></span>
+						<span class="icon_brake#id#"><img src="plugins/myToyota/core/img/brake_grey.png" height="40" title="{{Freins OK}}"/></span>
+						<span class="icon_tire#id#"><img src="plugins/myToyota/core/img/tire_grey.png" height="40" title="{{Pression des pneus OK}}"/></span>
+						<span class="icon_washingfluid#id#"><img src="plugins/myToyota/core/img/washingfluid_grey.png" height="40" title="{{Lave-glace OK}}"/></span>
+						<span class="icon_vehicle#id#"><img src="plugins/myToyota/core/img/vehicle_grey.png" height="40" title="{{Véhicule OK}}"/></span>
 					</div>
 				</div>
-				
-				<div class="col-xs-2" id="tile" style="height:50px; width:75px;">
-					<div id="picture" style="height:35px; width:75px; padding-top: 5px;"><i class="Cmd#presence_id#"></i></div>
-					<div id="distance" style="height:15px; width:75px;"><span class="Cmd#distance_id#"></span></div>
-				</div>
-				
-				<div class="col-xs-10" id="tile" style="height:50px; width:355px;">
-					<div class="col-xs-1"></div>
-					<div class="col-xs-2" style="padding:0px !important;"><span class="icon_oil#id#"><img src="plugins/myToyota/core/img/oil_grey.png" height="50" title="{{Huile moteur OK (à confirmer)}}"/></span></div>
-					<div class="col-xs-2" style="padding:0px !important;"><span class="icon_brake#id#"><img src="plugins/myToyota/core/img/brake_grey.png" height="50" title="{{Freins OK}}"/></span></div>
-					<div class="col-xs-2" style="padding:0px !important;"><span class="icon_tire#id#"><img src="plugins/myToyota/core/img/tire_grey.png" height="50" title="{{Pression des pneus OK}}"/></span></div>
-					<div class="col-xs-2" style="padding:0px !important;"><span class="icon_washingfluid#id#"><img src="plugins/myToyota/core/img/washingfluid_grey.png" height="50" title="Liquide de lave-glace OK}}"/></span></div>
-					<div class="col-xs-2" style="padding:0px !important;"><span class="icon_vehicle#id#"><img src="plugins/myToyota/core/img/vehicle_grey.png" height="50" title="{{Statut Véhicule OK}}"/></span></div>
-					<div class="col-xs-1"></div>
-				</div>
-				
-				<div class="col-xs-4" id="tile" style="height:140px; width:140px;">
-					<div class="col-xs-8" id="titre_tile" style="height:70px;">{{Kilométrage}}</div>
-					<div class="col-xs-4" id="icon_tile" style="height:70px;"><i class="fas fa-lg fa-map-signs"></i></div>
-					<div class="col-xs-12" id="value_tile" style="height:70px;"><span class="Cmd#mileage_id#"></span><span id="titre_tile"> km</span></div>
-				</div>
-				
-				<!-- affichage si véhicule thermique ou PHEV -->
-				<div class="col-xs-4 combustion_engine#id#" id="tile" style="height:140px; width:140px;">
-					<div class="col-xs-8 combustion_engine_txt#id#" id="titre_tile" style="height:70px;">{{Niveau carburant}}</div>
-					<div class="col-xs-4 combustion_engine_txt#id#" id="icon_tile" style="height:70px;"><i class="fas fa-lg fa-gas-pump"></i></div>
-					<div class="col-xs-12 combustion_engine_txt#id#" id="value_tile" style="height:70px;"><span class="Cmd#remaining_fuel_id#"></span><span id="titre_tile"> %</span></div>
-				</div>
-				
-				<div class="col-xs-4 combustion_engine#id#" id="tile" style="height:140px; width:140px;">
-					<div class="col-xs-8 combustion_engine_autonom_txt#id#" id="titre_tile" style="height:70px;">{{Autonomie thermique}}</div>
-					<div class="col-xs-4 combustion_engine_autonom_txt#id#" id="icon_tile" style="height:70px;"><i class="fas fa-lg fa-map-pin"></i></div>
-					<div class="col-xs-12 combustion_engine_autonom_txt#id#" id="value_tile" style="height:70px;"><span class="Cmd#beRemainingRangeFuelKm_id#"></span><span id="titre_tile"> km</span></div>
-				</div>
-				
-				<!-- fin affichage si véhicule thermique ou PHEV -->
 
-				<!-- affichage si véhicule électrique ou PHEV -->
-				<div class="col-xs-4 electric_engine#id#" id="tile" style="height:140px; width:140px;">
-					<div class="col-xs-8 electric_engine_txt#id#" id="titre_tile" style="height:70px;">{{Batterie}}</div>
-					<div class="col-xs-4 electric_engine_txt#id#" id="icon_tile" style="height:70px;"><i class="fas fa-lg fa-car-battery"></i></div>
-					<div class="col-xs-12 electric_engine_txt#id#" id="value_tile" style="height:70px;"><span class="Cmd#chargingLevelHv_id#"></span><span id="titre_tile"> %</span></div>				
+				<!-- Kilométrage + autonomie totale -->
+				<div class="mypanel-section-title">{{Général}}</div>
+				<div class="mypanel-tiles-row">
+					<div class="mypanel-card">
+						<div class="mypanel-card-icon"><i class="fas fa-map-signs"></i></div>
+						<div class="mypanel-card-label">{{Kilométrage}}</div>
+						<div class="mypanel-card-value"><span class="Cmd#mileage_id#">---</span><span class="mypanel-unit">km</span></div>
+					</div>
+					<div class="mypanel-card commun_engine_txt#id#">
+						<div class="mypanel-card-icon commun_engine_txt#id#"><i class="fas fa-road"></i></div>
+						<div class="mypanel-card-label commun_engine_txt#id#">{{Autonomie totale}}</div>
+						<div class="mypanel-card-value commun_engine_txt#id#"><span class="Cmd#beRemainingRangeTotal_id#">---</span><span class="mypanel-unit">km</span></div>
+					</div>
 				</div>
-								
-				<div class="col-xs-4 electric_engine#id#" id="tile" style="height:140px; width:140px;">
-					<div class="col-xs-8 electric_engine_txt#id#" id="titre_tile" style="height:70px;">{{Autonomie électrique}}</div>
-					<div class="col-xs-4 electric_engine_txt#id#" id="icon_tile" style="height:70px;"><i class="fas fa-lg fa-map-pin"></i></div>
-					<div class="col-xs-12 electric_engine_txt#id#" id="value_tile" style="height:70px;"><span class="Cmd#beRemainingRangeElectric_id#"></span><span id="titre_tile"> km</span></div>				
-				</div>
-				
-				<div class="col-xs-4 electric_engine#id#" id="tile" style="height:140px; width:140px;">
-					<div class="col-xs-8 electric_engine_txt#id#" id="titre_tile" style="height:70px;">{{Prise}}</div>
-					<div class="col-xs-4 electric_engine_txt#id#" id="icon_tile" style="height:70px;"><i class="fas fa-lg fa-plug"></i></div>
-					<div class="col-xs-12 electric_engine_txt#id#" id="value_tile" style="height:70px;"><span class="Cmd#connectorStatus_id#"></span></div>				
-				</div>
-				
-				<div class="col-xs-4 electric_engine#id#" id="tile" style="height:140px; width:140px;">
-					<div class="col-xs-8 electric_engine_txt#id#" id="titre_tile" style="height:70px;">{{Recharge}}</div>
-					<div class="col-xs-4 electric_engine_txt#id#" id="icon_tile" style="height:70px;"><i class="fas fa-lg fa-charging-station"></i></div>
-					<div class="col-xs-12 electric_engine_txt#id#" id="value_tile" style="height:40px;"><span class="Cmd#chargingStatus_id#"></span></div>
-					<div class="col-xs-12 electric_engine_txt#id#" id="value_tile_2" style="height:30px;"><span class="Cmd#chargingEndTime_id#"></span></div>					
-				</div>
-				<!-- fin affichage si véhicule électrique ou PHEV-->
 
-				<div class="col-xs-4 commun_engine#id#" id="tile" style="height:140px; width:140px;">
-					<div class="col-xs-8 commun_engine_txt#id#" id="titre_tile" style="height:70px;">{{Autonomie totale}}</div>
-					<div class="col-xs-4 commun_engine_txt#id#" id="icon_tile" style="height:70px;"><i class="fas fa-lg fa-map-pin"></i></div>
-					<div class="col-xs-12 commun_engine_txt#id#" id="value_tile" style="height:70px;"><span class="Cmd#beRemainingRangeTotal_id#"></span><span id="titre_tile"> km</span></div>				
+				<!-- Thermique -->
+				<div class="mypanel-section-title combustion_engine_txt#id#">{{Thermique}}</div>
+				<div class="mypanel-tiles-row">
+					<div class="mypanel-card combustion_engine_txt#id#">
+						<div class="mypanel-card-icon combustion_engine_txt#id#"><i class="fas fa-gas-pump"></i></div>
+						<div class="mypanel-card-label combustion_engine_txt#id#">{{Carburant}}</div>
+						<div class="mypanel-card-value combustion_engine_txt#id#"><span class="Cmd#remaining_fuel_id#">---</span><span class="mypanel-unit">%</span></div>
+					</div>
+					<div class="mypanel-card combustion_engine_txt#id#">
+						<div class="mypanel-card-icon combustion_engine_autonom_txt#id#"><i class="fas fa-road"></i></div>
+						<div class="mypanel-card-label combustion_engine_autonom_txt#id#">{{Autonomie}}</div>
+						<div class="mypanel-card-value combustion_engine_autonom_txt#id#"><span class="Cmd#beRemainingRangeFuelKm_id#">---</span><span class="mypanel-unit">km</span></div>
+					</div>
 				</div>
-				
 
-			</div>			
-			
-			<!-- Column N°2 -->
+				<!-- Électrique + Recharge -->
+				<div class="mypanel-section-title electric_engine_txt#id#">{{Électrique}}</div>
+				<div class="mypanel-tiles-row">
+					<div class="mypanel-card electric_engine_txt#id#">
+						<div class="mypanel-card-icon electric_engine_txt#id#"><i class="fas fa-car-battery"></i></div>
+						<div class="mypanel-card-label electric_engine_txt#id#">{{Batterie}}</div>
+						<div class="mypanel-card-value electric_engine_txt#id#"><span class="Cmd#chargingLevelHv_id#">---</span><span class="mypanel-unit">%</span></div>
+					</div>
+					<div class="mypanel-card electric_engine_txt#id#">
+						<div class="mypanel-card-icon electric_engine_txt#id#"><i class="fas fa-road"></i></div>
+						<div class="mypanel-card-label electric_engine_txt#id#">{{Autonomie EV}}</div>
+						<div class="mypanel-card-value electric_engine_txt#id#"><span class="Cmd#beRemainingRangeElectric_id#">---</span><span class="mypanel-unit">km</span></div>
+					</div>
+					<div class="mypanel-card electric_engine_txt#id#">
+						<div class="mypanel-card-icon electric_engine_txt#id#"><i class="fas fa-plug"></i></div>
+						<div class="mypanel-card-label electric_engine_txt#id#">{{Prise}}</div>
+						<div class="mypanel-card-value electric_engine_txt#id#"><span class="Cmd#connectorStatus_id#">---</span></div>
+					</div>
+				</div>
+				<div class="mypanel-charge electric_engine_txt#id#">
+					<div class="mypanel-charge-row">
+						<i class="fas fa-charging-station mypanel-charge-icon electric_engine_txt#id#"></i>
+						<span class="electric_engine_txt#id#"><span class="Cmd#chargingStatus_id#">---</span></span>
+						<div class="mypanel-charge-sep electric_engine_txt#id#"></div>
+						<span class="mypanel-charge-end electric_engine_txt#id#"><span class="Cmd#chargingEndTime_id#"></span></span>
+					</div>
+				</div>
+
+			</div>
+
+			<!-- Column N°2 — Sécurité + Portes + Actions -->
 			<div class="col-xs-4" id="column" style="width:450px;">
-				
-				<div class="col-xs-6" id="tile" style="height:100px; width: 215px;">
-					<div class="col-xs-8" id="titre_tile" style="height:50px;">{{Verrouillage}}</div>
-					<div class="col-xs-4" id="icon_tile" style="height:50px;"><i class="fas fa-lg fa-unlock-alt"></i></div>
-					<div class="col-xs-12" id="value_tile" style="height:50px;"><span class="Cmd#doorLockState_id#"></span></div>
+
+				<!-- Sécurité -->
+				<div class="mypanel-section-title">{{Sécurité}}</div>
+				<div class="mypanel-tiles-row">
+					<div class="mypanel-card">
+						<div class="mypanel-card-icon"><i class="fas fa-lock"></i></div>
+						<div class="mypanel-card-label">{{Verrouillage}}</div>
+						<div class="mypanel-card-value"><span class="Cmd#doorLockState_id#">---</span></div>
+					</div>
+					<div class="mypanel-card">
+						<div class="mypanel-card-icon"><i class="fas fa-shield-alt"></i></div>
+						<div class="mypanel-card-label">{{Alarme}}</div>
+						<div class="mypanel-card-value"><span class="securisedMode#id#">---</span></div>
+					</div>
+					<div class="mypanel-card all_info_display#id#">
+						<div class="mypanel-card-icon"><img src="plugins/myToyota/core/img/doors_blue.png" style="height:20px"></div>
+						<div class="mypanel-card-label">{{Portes}}</div>
+						<div class="mypanel-card-value"><span class="Cmd#allDoorsState_id#">---</span></div>
+					</div>
+					<div class="mypanel-card all_info_display#id#">
+						<div class="mypanel-card-icon"><img src="plugins/myToyota/core/img/windows_blue.png" style="height:20px"></div>
+						<div class="mypanel-card-label">{{Fenêtres}}</div>
+						<div class="mypanel-card-value"><span class="Cmd#allWindowsState_id#">---</span></div>
+					</div>
 				</div>
-				
-				<div class="col-xs-6" id="tile" style="height:100px; width:215px;">
-					<div class="col-xs-8" id="titre_tile" style="height:50px;">{{Sécurité (+alarme)}}</div>
-					<div class="col-xs-4" id="icon_tile" style="height:50px;"><i class="fas fa-lg fa-shield-alt"></i></div>
-					<div class="col-xs-12" id="value_tile" style="height:50px;"><span class="securisedMode#id#"></span></div>
-				</div>
-				
-				<div class="col-xs-6 all_info_display#id#" id="tile" style="height:100px; width:215px;">
-					<div class="col-xs-8" id="titre_tile" style="height:50px;">{{Toutes les portes}}</div>
-					<div class="col-xs-4" id="icon_tile" style="height:50px;"><img src="plugins/myToyota/core/img/doors_blue.png" style="height:24px"></div>
-					<div class="col-xs-12" id="value_tile" style="height:50px;"><span class="Cmd#allDoorsState_id#"></span></div>
-				</div>
-				
-				<div class="col-xs-6 all_info_display#id#" id="tile" style="height:100px; width:215px;">
-					<div class="col-xs-8" id="titre_tile" style="height:50px;">{{Toutes les fenêtres}}</div>
-					<div class="col-xs-4" id="icon_tile" style="height:50px;"><img src="plugins/myToyota/core/img/windows_blue.png" style="height:24px"></div>
-					<div class="col-xs-12" id="value_tile" style="height:50px;"><span class="Cmd#allWindowsState_id#"></span></div>
-				</div>
-				
-				<div class="col-xs-12" id="tile" style="height:420px; width:440px;">
-					<div class="col-xs-2" id="icon_tile" style="height:70px;"><i class="fas fa-lg fa-info"></i></div>
-					<div class="col-xs-10" id="titre_tile_2" style="height:70px;">{{Informations}}</div>
-					
+
+				<!-- Informations portes/pneus -->
+				<div class="mypanel-section-title">{{Informations}}</div>
+				<div class="col-xs-12 tile" style="width:435px;height:400px;overflow-y:auto;">
 					<div class="col-xs-12" id="row_doors">
-						<div class="col-xs-6" id="text_doors">{{Capot}} </div>
+						<div class="col-xs-6" id="text_doors">{{Capot}}</div>
 						<div class="col-xs-6" id="value_doors" style="text-align:left"><span class="Cmd#hood_state_id#"></span></div>
 					</div>
-					
 					<div class="col-xs-4" id="column">
-						<div class="col-xs-12" id="row_doors" style="height: 20px;"></div>
-						<div class="col-xs-12" id="row_doors" style="height: 20px;">
+						<div class="col-xs-12" id="row_doors" style="height:20px;"></div>
+						<div class="col-xs-12" id="row_doors" style="height:20px;">
 							<div class="col-xs-6 pressure_info#id#" id="text_doors">{{Pression}}</div>
 							<div class="col-xs-6 pressure_info#id#" id="value_doors"><span class="Cmd#tireFrontLeft_target_id#"><span class="Cmd#tireFrontLeft_pressure_id#"></span></span></div>
 						</div>
-						<div class="col-xs-12" id="row_doors" style="height: 25px;"></div>
+						<div class="col-xs-12" id="row_doors" style="height:25px;"></div>
 						<div class="col-xs-12" id="row_doors">
 							<div class="col-xs-6" id="text_doors">{{Porte}}</div>
 							<div class="col-xs-6" id="value_doors"><span class="Cmd#doorDriverFront_id#"></span></div>
@@ -139,7 +140,7 @@
 							<div class="col-xs-6" id="text_doors">{{Fenêtre}}</div>
 							<div class="col-xs-6" id="value_doors"><span class="Cmd#windowDriverFront_id#"></span></div>
 						</div>
-						<div class="col-xs-12" id="row_doors" style="height: 25px;"></div>
+						<div class="col-xs-12" id="row_doors" style="height:25px;"></div>
 						<div class="col-xs-12" id="row_doors">
 							<div class="col-xs-6" id="text_doors">{{Porte}}</div>
 							<div class="col-xs-6" id="value_doors"><span class="Cmd#doorDriverRear_id#"></span></div>
@@ -148,24 +149,22 @@
 							<div class="col-xs-6" id="text_doors">{{Fenêtre}}</div>
 							<div class="col-xs-6" id="value_doors"><span class="Cmd#windowDriverRear_id#"></span></div>
 						</div>
-						<div class="col-xs-12" id="row_doors" style="height: 25px;"></div>
-						<div class="col-xs-12" id="row_doors" style="height: 20px;">
+						<div class="col-xs-12" id="row_doors" style="height:25px;"></div>
+						<div class="col-xs-12" id="row_doors" style="height:20px;">
 							<div class="col-xs-6 pressure_info#id#" id="text_doors">{{Pression}}</div>
 							<div class="col-xs-6 pressure_info#id#" id="value_doors"><span class="Cmd#tireRearLeft_target_id#"><span class="Cmd#tireRearLeft_pressure_id#"></span></span></div>
 						</div>
 					</div>
-					
-					<div class="col-xs-4" id="picture" style="margin:20px 0px 20px 0px">
+					<div class="col-xs-4" id="picture" style="margin:20px 0;">
 						<img src="plugins/myToyota/core/img/widget_car.png" style="height:200px; filter:opacity(50%)"/>
 					</div>
-					
 					<div class="col-xs-4" id="column">
-						<div class="col-xs-12" id="row_doors" style="height: 20px;"></div>
-						<div class="col-xs-12" id="row_doors" style="height: 20px;">
+						<div class="col-xs-12" id="row_doors" style="height:20px;"></div>
+						<div class="col-xs-12" id="row_doors" style="height:20px;">
 							<div class="col-xs-6 pressure_info#id#" id="text_doors">{{Pression}}</div>
 							<div class="col-xs-6 pressure_info#id#" id="value_doors"><span class="Cmd#tireFrontRight_target_id#"><span class="Cmd#tireFrontRight_pressure_id#"></span></span></div>
 						</div>
-						<div class="col-xs-12" id="row_doors" style="height: 25px;"></div>
+						<div class="col-xs-12" id="row_doors" style="height:25px;"></div>
 						<div class="col-xs-12" id="row_doors">
 							<div class="col-xs-6" id="text_doors">{{Porte}}</div>
 							<div class="col-xs-6" id="value_doors"><span class="Cmd#doorPassengerFront_id#"></span></div>
@@ -174,7 +173,7 @@
 							<div class="col-xs-6" id="text_doors">{{Fenêtre}}</div>
 							<div class="col-xs-6" id="value_doors"><span class="Cmd#windowPassengerFront_id#"></span></div>
 						</div>
-						<div class="col-xs-12" id="row_doors" style="height: 25px;"></div>
+						<div class="col-xs-12" id="row_doors" style="height:25px;"></div>
 						<div class="col-xs-12" id="row_doors">
 							<div class="col-xs-6" id="text_doors">{{Porte}}</div>
 							<div class="col-xs-6" id="value_doors"><span class="Cmd#doorPassengerRear_id#"></span></div>
@@ -183,134 +182,112 @@
 							<div class="col-xs-6" id="text_doors">{{Fenêtre}}</div>
 							<div class="col-xs-6" id="value_doors"><span class="Cmd#windowPassengerRear_id#"></span></div>
 						</div>
-						<div class="col-xs-12" id="row_doors" style="height: 25px;"></div>
-						<div class="col-xs-12" id="row_doors" style="height: 20px;">
+						<div class="col-xs-12" id="row_doors" style="height:25px;"></div>
+						<div class="col-xs-12" id="row_doors" style="height:20px;">
 							<div class="col-xs-6 pressure_info#id#" id="text_doors">{{Pression}}</div>
 							<div class="col-xs-6 pressure_info#id#" id="value_doors"><span class="Cmd#tireRearRight_target_id#"><span class="Cmd#tireRearRight_pressure_id#"></span></span></div>
 						</div>
 					</div>
-					
 					<div class="col-xs-12" id="row_doors">
 						<div class="col-xs-6" id="text_doors">{{Toit ouv.}}</div>
 						<div class="col-xs-6" id="value_doors" style="text-align:left"><span class="Cmd#moonroof_state_id#"></span></div>
 					</div>
-					
 					<div class="col-xs-12" id="row_doors">
 						<div class="col-xs-6" id="text_doors">{{Coffre}}</div>
 						<div class="col-xs-6" id="value_doors" style="text-align:left"><span class="Cmd#trunk_state_id#"></span></div>
 					</div>
-								
 				</div>
-				
-				<div class="col-xs-12" id="tile" style="height:110px; width:440px;">
-					
-					<div class="col-xs-2" id="icon_tile" style="height:50px;"><i class="fas fa-lg fa-cogs"></i></div>
-					<div class="col-xs-10" id="titre_tile_2" style="height:50px;">{{Actions}}</div>
 
-					<button class="btn cmd action" data-cmd_id="#refresh_id#" title="{{Rafraichir}}" onclick="jeedom.cmd.execute({id: #refresh_id#});"><i class="fa-lg icon fas fa-sync-alt"></i></button>
-					<button class="btn cmd action" data-cmd_id="#doorLock_id#" title="{{Verrouiller}}" onclick="jeedom.cmd.execute({id: #doorLock_id#});"><i class="fa-lg icon fas fa-lock"></i></button>
-					<button class="btn cmd action" data-cmd_id="#doorUnlock_id#" title="{{Déverrouiller}}" onclick="jeedom.cmd.execute({id: #doorUnlock_id#});"><i class="fa-lg icon fas fa-lock-open"></i></button>
-					<button class="btn cmd action" data-cmd_id="#climateNow_id#" title="{{Start Clim}}" onclick="jeedom.cmd.execute({id: #climateNow_id#});"><i class="fa-lg icon fas fa-fan"></i></button>
-					<button class="btn cmd action" data-cmd_id="#stopClimateNow_id#" title="{{Stop Clim}}" onclick="jeedom.cmd.execute({id: #stopClimateNow_id#});"><i class="fa-lg icon fas fa-ban"></i></button>
-					<!--
-					<button id="charge_btn#id#" class="btn cmd action" data-cmd_id="#chargeNow_id#" title="Charger (non fonctionnel)" onclick="jeedom.cmd.execute({id: #chargeNow_id#});"><i class="fa-lg icon fas fa-charging-station"></i></button>
-					<button id="stopcharge_btn#id#" class="btn cmd action" data-cmd_id="#stopChargeNow_id#" title="Stop Charger (non fonctionnel)" onclick="jeedom.cmd.execute({id: #stopChargeNow_id#});"><i class="fa-lg icon fas fa-power-off"></i></button>
-					-->
-					<button class="btn cmd action" data-cmd_id="#hazardOn_id#" title="{{Feux de détresse}}" onclick="jeedom.cmd.execute({id: #hazardOn_id#});"><i class="fa-lg icon fas fa-exclamation-triangle"></i></button>
-					<button class="btn cmd action" data-cmd_id="#hazardOff_id#" title="{{Stop feux de détresse}}" onclick="jeedom.cmd.execute({id: #hazardOff_id#});"><i class="fa-lg icon fas fa-exclamation-circle"></i></button>
-					<button class="btn cmd action" data-cmd_id="#hornBlow_id#" title="{{Klaxonner}}" onclick="jeedom.cmd.execute({id: #hornBlow_id#});"><i class="fa-lg icon fas fa-volume-up"></i></button>
-					<!--
-					<button class="btn cmd action" data-cmd_id="#stopHornBlow_id#" title="Stop klaxonner" onclick="jeedom.cmd.execute({id: #hornBlow_id#});"><i class="fa-lg icon fas fa-volume-mute"></i></button>
-					-->
-					<button class="btn cmd action" data-cmd_id="#vehicleFinder_id#" title="{{Recherche véhicule}}"><i class="fa-lg icon fas fa-map-marked"></i></button>
+				<!-- Actions -->
+				<div class="mypanel-section-title">{{Actions}}</div>
+				<div class="mypanel-section-card" style="width:435px;">
+				<div class="mypanel-actions">
+					<button class="mytw-btn cmd action" id="btn_refresh#id#" data-cmd_id="#refresh_id#" title="{{Rafraichir}}"><i class="fas fa-sync-alt"></i></button>
+					<div class="mytw-btn-sep"></div>
+					<button class="mytw-btn cmd action" data-cmd_id="#doorLock_id#" title="{{Verrouiller}}" onclick="jeedom.cmd.execute({id: #doorLock_id#});"><i class="fas fa-lock"></i></button>
+					<button class="mytw-btn cmd action" data-cmd_id="#doorUnlock_id#" title="{{Déverrouiller}}" onclick="jeedom.cmd.execute({id: #doorUnlock_id#});"><i class="fas fa-lock-open"></i></button>
+					<div class="mytw-btn-sep"></div>
+					<button class="mytw-btn cmd action" data-cmd_id="#climateNow_id#" title="{{Start Clim}}" onclick="jeedom.cmd.execute({id: #climateNow_id#});"><i class="fas fa-fan"></i></button>
+					<button class="mytw-btn cmd action" data-cmd_id="#stopClimateNow_id#" title="{{Stop Clim}}" onclick="jeedom.cmd.execute({id: #stopClimateNow_id#});"><i class="fas fa-ban"></i></button>
+					<div class="mytw-btn-sep"></div>
+					<button class="mytw-btn cmd action" data-cmd_id="#hazardOn_id#" title="{{Feux de détresse}}" onclick="jeedom.cmd.execute({id: #hazardOn_id#});"><i class="fas fa-exclamation-triangle"></i></button>
+					<button class="mytw-btn cmd action" data-cmd_id="#hazardOff_id#" title="{{Stop feux de détresse}}" onclick="jeedom.cmd.execute({id: #hazardOff_id#});"><i class="fas fa-exclamation-circle"></i></button>
+					<button class="mytw-btn cmd action" data-cmd_id="#hornBlow_id#" title="{{Klaxonner}}" onclick="jeedom.cmd.execute({id: #hornBlow_id#});"><i class="fas fa-volume-up"></i></button>
+					<div class="mytw-btn-sep"></div>
+					<button class="mytw-btn cmd action" data-cmd_id="#vehicleFinder_id#" title="{{Recherche véhicule}}"><i class="fas fa-map-marked"></i></button>
 					<script>
 						$('.cmd[data-cmd_id=#vehicleFinder_id#]').on('click', function () {
 							$('#md_modal').dialog({title: "{{Recherche Véhicule}}"});
 							$('#md_modal').load('index.php?v=d&plugin=myToyota&modal=VehicleFinder.myToyota&eqLogic_id='+'#id#').dialog('open');
 						});
 					</script>
-					<button class="btn cmd action" data-cmd_id="#sendPOI_id#" title="{{Envoi POI (non fonctionnel)}}"><i class="fa-lg icon fas fa-map-marker-alt"></i></button>
-					<script>
-						/*
-						$('.cmd[data-cmd_id=#sendPOI_id#]').on('click', function () {
-							$('body').append('<div id="mod_sendPOI" style="overflow-x: hidden; overflow-y: hidden;"/>');
-							$("#mod_sendPOI").dialog({
-									title: "Envoi POI",
-									closeText: '',
-									autoOpen: false,
-									modal: true,
-									height: 240,
-									width: 447
-							});
-							jQuery.ajaxSetup({async: false});
-							$('#mod_sendPOI').load('index.php?v=d&plugin=myToyota&modal=SendPOI.myToyota&eqLogic_id='+'#id#');
-							jQuery.ajaxSetup({async: true});
-															
-							$('#mod_sendPOI').dialog('open');
-						});
-						*/
-					</script>
+					<button class="mytw-btn cmd action" data-cmd_id="#sendPOI_id#" title="{{Envoi POI}}"><i class="fas fa-map-marker-alt"></i></button>
 				</div>
-				
-			</div>	
-			
-			<!-- Column N°3 -->
+				</div><!-- /mypanel-section-card Actions -->
+
+			</div>
+
+			<!-- Column N°3 — Services + Localisation -->
 			<div class="col-xs-4" id="column" style="width:450px;">
-				
-				<div class="col-xs-12" id="tile" style="height:420px; width:440px;">
-					<div class="col-xs-2" id="icon_tile" style="height:50px;"><i class="fas fa-lg fa-wrench"></i></div>
-					<div class="col-xs-10" id="titre_tile_2" style="height:50px;">{{Services - Entretiens}}</div>
+
+				<div class="mypanel-section-title">{{Services - Entretiens}}</div>
+				<div class="col-xs-12 tile" style="width:440px;">
 					<div id="liste_msg" class="label Cmd#vehicleMessages_id# table_message#id#"></div>
 				</div>
-				
-				<div class="col-xs-12" id="tile" style="height:330px; width:440px;">
-					<div class="col-xs-2" id="icon_tile" style="height:50px;"><i class="fas fa-lg fa-location-arrow"></i></div>
-					<div class="col-xs-10" id="titre_tile_2" style="height:50px;">{{Localisation}}</div>
+
+				<div class="mypanel-section-title">{{Localisation}}</div>
+				<div class="col-xs-12 tile" style="width:440px;">
 					<div id="location">
-						<iframe class="myMap" id="myFrame#id#" style="height:255px;" src="https://maps.google.com/maps?hl=fr&ie=utf8&output=embed&q=#gps_coordinates#"></iframe>
+						<iframe class="myMap" id="myFrame#id#" style="height:486px;" src="https://maps.google.com/maps?hl=fr&ie=utf8&output=embed&q=#gps_coordinates#"></iframe>
 					</div>
 				</div>
-			
+
 			</div>
 
 			<!-- Charts -->
-			<div class="col-xs-6" id="column" style="width:675px;">
-				<div class="col-xs-12" id="tile" style="width:665px;">
-					<div class="col-xs-12" id="km_chart#id#"></div>
-				</div>
-			</div>
-			
 			<div class="col-xs-6 fuel_chart#id#" id="column" style="width:675px;">
-				<div class="col-xs-12" id="tile" style="width:665px;">
+				<div class="mypanel-section-title fuel_chart#id#">{{Niveau carburant}}</div>
+				<div class="col-xs-12 tile fuel_chart#id#" style="width:665px;">
+					<div style="display:flex;align-items:center;gap:6px;padding:4px 4px 6px;">
+						<button class="mytw-btn" id="fuel_prev#id#" style="width:28px;height:24px;flex:none;">&#8592;</button>
+						<span id="fuel_period#id#" style="flex:1;text-align:center;font-size:11px;opacity:0.55;"></span>
+						<button class="mytw-btn" id="fuel_next#id#" style="width:28px;height:24px;flex:none;">&#8594;</button>
+					</div>
 					<div class="col-xs-12" id="fuel_chart#id#"></div>
 				</div>
 			</div>
-			
+
 			<div class="col-xs-6 charge_chart#id#" id="column" style="width:675px;">
-				<div class="col-xs-12" id="tile" style="width:665px;">
+				<div class="mypanel-section-title charge_chart#id#">{{Charge restante}}</div>
+				<div class="col-xs-12 tile charge_chart#id#" style="width:665px;">
+					<div style="display:flex;align-items:center;gap:6px;padding:4px 4px 6px;">
+						<button class="mytw-btn" id="charge_prev#id#" style="width:28px;height:24px;flex:none;">&#8592;</button>
+						<span id="charge_period#id#" style="flex:1;text-align:center;font-size:11px;opacity:0.55;"></span>
+						<button class="mytw-btn" id="charge_next#id#" style="width:28px;height:24px;flex:none;">&#8594;</button>
+					</div>
 					<div class="col-xs-12" id="charge_chart#id#"></div>
 				</div>
 			</div>
-			
+
 			<div class="col-xs-6 charge_sessions#id#" id="column" style="width:675px;">
-				<div class="col-xs-12" id="tile" style="height:400px; width:665px;">
-					<div class="col-xs-12" id="titre_graph" style="height:35px;">{{Statistiques de charge - Mois en cours}}</div>
-					<div class="col-xs-12" id="soustitre_graph" style="height:20px;"><span class="Cmd#totalEnergyCharged_id#"></span></div>
+				<div class="mypanel-section-title">{{Statistiques de charge - Mois en cours}}</div>
+				<div class="col-xs-12" class="tile" style="width:665px;">
+					<div class="col-xs-12" id="soustitre_graph" style="padding:6px 8px;"><span class="Cmd#totalEnergyCharged_id#"></span></div>
 					<div id="table_sessions" class="label Cmd#chargingSessions_id# table_sessions#id#"></div>
 				</div>
 			</div>
 
 			<!-- Tableaux -->
-            <div class="col-xs-12 tab_stat" id="column" style="width: 1350px;">
-                <div class="col-xs-12 FONC_trajet" id="titre_tile_2">{{Statistiques et Trajets}}
-                </div>
+			<div class="col-xs-12 tab_stat" id="column" style="width: 1350px;">
+				<div class="col-xs-12 FONC_trajet mypanel-section-title" style="font-size:13px; font-weight:600; letter-spacing:0.5px; padding:14px 8px 6px;">{{Statistiques et Trajets}}
+				</div>
                 <!-- Onglets -->
                 <ul class="nav nav-tabs" role="tablist">
-                    <li role="presentation" class="TAB_hyd" id="TAB_hyd"><a href="#eqlogictabhyd" aria-controls="home" role="tab" data-toggle="tab"><i class="fas fa-tachometer-alt"></i> {{Trajets Hybride}} </a></li>
-                    <li role="presentation" class="TAB_ess" id="TAB_ess"><a href="#eqlogictabess" aria-controls="home" role="tab" data-toggle="tab"><i class="fas fa-tachometer-alt"></i> {{Trajets}}</a></li>
-                    <li role="presentation" class="TAB_elec" id="TAB_elec"><a href="#eqlogictabelec" aria-controls="home" role="tab" data-toggle="tab"><i class="fas fa-tachometer-alt"></i> {{Trajets Electrique}}</a></li>
-                    <li role="presentation" class="TAB_phev" id="TAB_phev"><a href="#eqlogictabphev" aria-controls="home" role="tab" data-toggle="tab"><i class="fas fa-tachometer-alt"></i> {{Trajets PHEV}}</a></li>
-                    <li role="presentation" class="TAB_charge" id="TAB_charge"><a href="#eqlogictabcharge" aria-controls="home" role="tab" data-toggle="tab"><i class="fas jeedom-prise"></i> {{Charges}} </a></li>
+                    <li role="presentation" class="TAB_hyd#id#" id="TAB_hyd#id#"><a href="#eqlogictabhyd" aria-controls="home" role="tab" data-toggle="tab"><i class="fas fa-tachometer-alt"></i> {{Trajets Hybride}} </a></li>
+                    <li role="presentation" class="TAB_ess#id#" id="TAB_ess#id#"><a href="#eqlogictabess" aria-controls="home" role="tab" data-toggle="tab"><i class="fas fa-tachometer-alt"></i> {{Trajets}}</a></li>
+                    <li role="presentation" class="TAB_elec#id#" id="TAB_elec#id#"><a href="#eqlogictabelec" aria-controls="home" role="tab" data-toggle="tab"><i class="fas fa-tachometer-alt"></i> {{Trajets Electrique}}</a></li>
+                    <li role="presentation" class="TAB_phev#id#" id="TAB_phev#id#"><a data-pane="eqlogictabphev" aria-controls="home" role="tab"><i class="fas fa-tachometer-alt"></i> {{Trajets PHEV}}</a></li>
+                    <li role="presentation" class="TAB_charge#id#" id="TAB_charge#id#"><a data-pane="eqlogictabcharge" aria-controls="home" role="tab"><i class="fas jeedom-prise"></i> {{Charges}} </a></li>
                 </ul>
                 <div class="tab-content">
                     <!-- Onglet des trajets HYD -->
@@ -395,57 +372,136 @@
 					</div>
                     <!-- Onglet des trajets phev-->
 			        <div role="tabpanel" class="tab-pane tab-pane-phev" id="eqlogictabphev">
-                            
-						<div class="col-xs-12 myToyota_panel_flat_tile FONC_trajet_phev">
-							<div class="myToyota_panel_flat_titre_tile " id="titre_tile">{{Trajets PHEV}}
-							</div>
-							<div >
-								<table class="fixed_header tableCmdPhev" id="table_cmd_phev">
-								</table>
+
+						<div class="col-xs-12 FONC_trajet_phev" style="margin-bottom:10px;">
+							<div class="myToyota_stat_card">
+								<div class="myToyota_stat_card_header"><i class="fas fa-chart-bar"></i> {{Statistiques PHEV — 7 jours glissants}}</div>
+								<div class="myToyota_stat_card_body">
+									<div class="myToyota_stat_item">
+										<div class="myToyota_stat_label">{{Nombre trajets}}</div>
+										<div class="myToyota_stat_value"><span class="FONC_phev_trajets">---</span></div>
+									</div>
+									<div class="myToyota_stat_item">
+										<div class="myToyota_stat_label">{{Durée totale}}</div>
+										<div class="myToyota_stat_value"><span class="FONC_phev_duree_totale">---</span></div>
+									</div>
+									<div class="myToyota_stat_item">
+										<div class="myToyota_stat_label">{{Distance totale}}</div>
+										<div class="myToyota_stat_value"><span class="FONC_phev_distance_totale">---</span> <span class="myToyota_stat_unit">km</span></div>
+									</div>
+									<div class="myToyota_stat_item">
+										<div class="myToyota_stat_label">{{Vitesse moyenne}}</div>
+										<div class="myToyota_stat_value"><span class="FONC_phev_vitesse_moyenne">---</span> <span class="myToyota_stat_unit">km/h</span></div>
+									</div>
+									<div class="myToyota_stat_item">
+										<div class="myToyota_stat_label">{{Dist. EV}}</div>
+										<div class="myToyota_stat_value"><span class="FONC_phev_distance_ev">---</span> <span class="myToyota_stat_unit">km</span></div>
+									</div>
+									<div class="myToyota_stat_item">
+										<div class="myToyota_stat_label">{{Dist. en charge}}</div>
+										<div class="myToyota_stat_value"><span class="FONC_phev_charge_dist">---</span> <span class="myToyota_stat_unit">km</span></div>
+									</div>
+									<div class="myToyota_stat_item">
+										<div class="myToyota_stat_label">{{Dist. Eco}}</div>
+										<div class="myToyota_stat_value"><span class="FONC_phev_eco_dist">---</span> <span class="myToyota_stat_unit">km</span></div>
+									</div>
+									<div class="myToyota_stat_item">
+										<div class="myToyota_stat_label">{{Dist. Power}}</div>
+										<div class="myToyota_stat_value"><span class="FONC_phev_power_dist">---</span> <span class="myToyota_stat_unit">km</span></div>
+									</div>
+								</div>
 							</div>
 						</div>
-						
+
+						<div class="col-xs-12 myToyota_panel_flat_tile FONC_trajet_phev">
+							<div class="myToyota_panel_flat_titre_tile" id="titre_tile2">{{Historique des trajets PHEV}}</div>
+							<br>
+							<div class="tablePhev" style="overflow-x:auto;">
+								<table class="fixed_header tableCmdPhev" id="table_cmd_phev" style="width:100%;"></table>
+							</div>
+							<div id="phev_pagination#id#" style="display:none;align-items:center;gap:8px;padding:8px 4px 2px;">
+								<button class="mytw-btn" id="phev_prev#id#" style="width:70px;">&#8592; {{Préc.}}</button>
+								<span id="phev_page_info#id#" style="flex:1;text-align:center;font-size:11px;opacity:0.6;"></span>
+								<button class="mytw-btn" id="phev_next#id#" style="width:70px;">{{Suiv.}} &#8594;</button>
+							</div>
+						</div>
+
 					</div>
 						<!-- Onglet des commandes de l'équipement -->
                     <div role="tabpanel" class="tab-pane tab-pane-charge" id="eqlogictabcharge">
-                        <div class="col-xs-12 myToyota_panel_flat_tile FONC_charge">
-                            <div class="myToyota_panel_flat_titre_tile " id="titre_tile">{{Charges}}</div>
-                            <div class="col-xs-12">
-                                <div class="col-xs-4 myToyota_panel_flat_tile " style="width:140px;">
-                                    <div class="myToyota_panel_flat_titre_tile " id="titre_tile">{{Nombre charge}}</div>
-                                    <center><span class="FONC_charging_count" id="FONC_charging_count">---</span></center>
+
+                        <!-- Bloc EVLink (masqué si non configuré) -->
+                        <div class="col-xs-12 FONC_charge evlink_bloc#id#" style="display:none; margin-bottom:10px;">
+                            <div class="myToyota_stat_card">
+                                <div class="myToyota_stat_card_header"><i class="fas fa-charging-station"></i> {{Borne de recharge — temps réel}}</div>
+                                <div class="myToyota_stat_card_body">
+                                    <div class="myToyota_stat_item">
+                                        <div class="myToyota_stat_label">{{État}}</div>
+                                        <div class="myToyota_stat_value"><span class="evlink_etat#id#">---</span></div>
+                                    </div>
+                                    <div class="myToyota_stat_item">
+                                        <div class="myToyota_stat_label">{{Puissance}}</div>
+                                        <div class="myToyota_stat_value"><span class="evlink_puissance#id#">---</span> <span class="myToyota_stat_unit">W</span></div>
+                                    </div>
+                                    <div class="myToyota_stat_item">
+                                        <div class="myToyota_stat_label">{{Conso. totale}}</div>
+                                        <div class="myToyota_stat_value"><span class="evlink_conso#id#">---</span> <span class="myToyota_stat_unit">kWh</span></div>
+                                    </div>
+                                    <div class="myToyota_stat_item evlink_courant_bloc#id#" style="display:none;">
+                                        <div class="myToyota_stat_label">{{Courant}}</div>
+                                        <div class="myToyota_stat_value"><span class="evlink_courant#id#">---</span> <span class="myToyota_stat_unit">A</span></div>
+                                    </div>
                                 </div>
-                                <div class="col-xs-4 myToyota_panel_flat_tile " style="width:140px;">
-                                    <div class="myToyota_panel_flat_titre_tile " id="titre_tile">{{Energie totale}}</div>
-                                    <center><span class="FONC_charging_total_energy" id="FONC_charging_total_energy">---</span> kw</center>
-                                </div>
-                                <div class="col-xs-4 myToyota_panel_flat_tile " style="width:140px;">
-                                    <div class="myToyota_panel_flat_titre_tile " id="titre_tile">{{Durée totale}}</div>
-                                    <center><span class="FONC_charging_total_duration" id="FONC_charging_total_duration">---</span></center>
-                                </div>
-                                <div class="col-xs-4 myToyota_panel_flat_tile " style="width:140px;">
-                                    <div class="myToyota_panel_flat_titre_tile " id="titre_tile">{{Puissance moyenne de charge}}</div>
-                                    <center><span class="FONC_charging_avg_power" id="FONC_charging_avg_power">---</span> W/h</center>
+                            </div>
+                        </div>
+
+                        <!-- Graphique EVlink historique + sessions -->
+                        <div class="col-xs-12 evlink_bloc#id#" style="display:none; margin-bottom:6px;">
+                            <div class="mypanel-section-title">{{Historique de charge (borne) — 7 derniers jours}}</div>
+                            <div class="tile" style="width:100%; padding:10px 8px 6px;">
+                                <div id="evlink_chart#id#" style="height:220px; width:100%;"></div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 evlink_bloc#id#" style="display:none; margin-bottom:10px;">
+                            <div class="myToyota_stat_card">
+                                <div id="evlink_sessions#id#" style="overflow-x:auto;"></div>
+                            </div>
+                        </div>
+
+                        <!-- Bloc HDC (récupération d'énergie des trajets) -->
+                        <div class="col-xs-12 FONC_charge" style="margin-bottom:10px;">
+                            <div class="myToyota_stat_card">
+                                <div class="myToyota_stat_card_header"><i class="fas fa-bolt"></i> {{Récupération d'énergie (HDC) — 7 derniers jours}}</div>
+                                <div class="myToyota_stat_card_body">
+                                    <div class="myToyota_stat_item">
+                                        <div class="myToyota_stat_label">{{Trajets avec récup.}}</div>
+                                        <div class="myToyota_stat_value"><span class="FONC_charging_count">---</span></div>
+                                    </div>
+                                    <div class="myToyota_stat_item">
+                                        <div class="myToyota_stat_label">{{Dist. en charge totale}}</div>
+                                        <div class="myToyota_stat_value"><span class="FONC_charging_total_energy">---</span> <span class="myToyota_stat_unit">km</span></div>
+                                    </div>
+                                    <div class="myToyota_stat_item">
+                                        <div class="myToyota_stat_label">{{Temps en charge total}}</div>
+                                        <div class="myToyota_stat_value"><span class="FONC_charging_total_duration">---</span></div>
+                                    </div>
+                                    <div class="myToyota_stat_item">
+                                        <div class="myToyota_stat_label">{{Dist. moy./trajet}}</div>
+                                        <div class="myToyota_stat_value"><span class="FONC_charging_avg_power">---</span> <span class="myToyota_stat_unit">km</span></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-xs-12 myToyota_panel_flat_tile FONC_charge">
-                                <div class="myToyota_panel_flat_titre_tile " id="titre_tile">{{Charges}}
+                                <div class="myToyota_panel_flat_titre_tile" id="titre_tile">{{Détail par trajet — Historique}}</div>
+                                <br>
+                                <div class="tableCharge" style="overflow-x:auto;">
+                                    <table class="fixed_headerCharge tableCmdCharge" id="table_cmdCharge" style="width:100%;"></table>
                                 </div>
-                                <div >
-                                    <table class="fixed_headerCharge tableCmdCharge" id="table_cmdCharge">
-                                        <thead>
-                                            <tr>
-                                                <th>{{Date}}</th>
-                                                <th>{{Durée}}</th>
-                                                <th>{{Energie injectée kw}}</th>
-                                                <th>{{Puissance moyenne de charge}}</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            
-                                        </tbody>
-                                    </table>
+                                <div id="hdc_pagination#id#" style="display:none;align-items:center;gap:8px;padding:8px 4px 2px;">
+                                    <button class="mytw-btn" id="hdc_prev#id#" style="width:70px;">&#8592; {{Préc.}}</button>
+                                    <span id="hdc_page_info#id#" style="flex:1;text-align:center;font-size:11px;opacity:0.6;"></span>
+                                    <button class="mytw-btn" id="hdc_next#id#" style="width:70px;">{{Suiv.}} &#8594;</button>
                                 </div>
                         </div>
                     </div>
@@ -458,11 +514,11 @@
 
 
 			<!-- Last row -->
-			<div class="col-xs-12" id="column">
+			<div class="col-xs-12" id="footer_row">
 				<div id="last_update">{{Dernière connexion avec le véhicule :}} <span class="Cmd#lastUpdate_id# state"></span></div>
 			</div>
-			<div class="col-xs-12" id="column">
-				<div id="last_update">{{Dernière interrogation du serveur myToyota (max 30 minutes) :}} <span class="Cmd#lastCommunication_id# state"></span></div>
+			<div class="col-xs-12" id="footer_row">
+				<div id="last_update">{{Dernière interrogation du serveur myToyota (max 30 minutes) :}} <span class="Cmd#lastCommunication_id# state">{{En attente du prochain rafraîchissement...}}</span></div>
 			</div>
 
 		</div>
@@ -472,11 +528,12 @@
 	#divGraphInfo#
 	
 	<script>
-    
+
+
     //----- Theme colors & optional parameters
 	var theme_jeedom;
-	var color_icon_closed;
-	var color_icon_closed_rgb;
+	var color_icon_closed = 'black';     // default thème clair (Jeedom défaut)
+	var color_icon_closed_rgb = 'black'; // default thème clair (Jeedom défaut)
 	
 	function setTheme#id#() {
 		var theme = "";
@@ -519,6 +576,14 @@
 		document.head.appendChild(link);
 		logo.src = source;
 		if ( theme != 'legacy' ) { $('.myToyota_panel_flat_#id#')[0].style.setProperty('background-color', theme, 'important'); }
+		// Forcer la couleur du texte sur les value_tile (le color:#color# du conteneur peut hériter une valeur incorrecte)
+		var txtColor = (theme == 'black' || theme == 'legacy') ? '#FFFFFF' : '#333333';
+		$('.myToyota_panel_flat_#id# .value_tile').each(function() {
+			this.style.setProperty('color', txtColor, 'important');
+		});
+		$('.myToyota_panel_flat_#id# #value_tile').each(function() {
+			this.style.setProperty('color', txtColor, 'important');
+		});
 		return theme;
 	}
 
@@ -535,13 +600,30 @@
 			return;
 		}
 		theme_jeedom = setTheme#id#();
-		color_icon_closed = setColorIconClosed#id#(theme_jeedom); 
+		color_icon_closed = setColorIconClosed#id#(theme_jeedom);
 		if (color_icon_closed == 'green') {
 			color_icon_closed_rgb = 'rgb(150,201,39)';
 		}
 		else  {
 			color_icon_closed_rgb = color_icon_closed;
 		}
+		// Re-déclencher les portes/fenêtres avec la bonne couleur
+		jeedom.cmd.update['#doorDriverFront_id#']({display_value:'#doorDriverFront#'});
+		jeedom.cmd.update['#doorDriverRear_id#']({display_value:'#doorDriverRear#'});
+		jeedom.cmd.update['#doorPassengerFront_id#']({display_value:'#doorPassengerFront#'});
+		jeedom.cmd.update['#doorPassengerRear_id#']({display_value:'#doorPassengerRear#'});
+		jeedom.cmd.update['#trunk_state_id#']({display_value:'#trunk_state#'});
+		jeedom.cmd.update['#hood_state_id#']({display_value:'#hood_state#'});
+		jeedom.cmd.update['#windowDriverFront_id#']({display_value:'#windowDriverFront#'});
+		jeedom.cmd.update['#windowDriverRear_id#']({display_value:'#windowDriverRear#'});
+		jeedom.cmd.update['#windowPassengerFront_id#']({display_value:'#windowPassengerFront#'});
+		jeedom.cmd.update['#windowPassengerRear_id#']({display_value:'#windowPassengerRear#'});
+		jeedom.cmd.update['#moonroof_state_id#']({display_value:'#moonroof_state#'});
+		// Mettre à jour le titre des graphiques Highcharts
+		var hcTitleColor = (theme_jeedom == 'black' || theme_jeedom == 'legacy') ? '#FFFFFF' : '#333333';
+		if (typeof km_chart#id# !== 'undefined')     { km_chart#id#.update({ title: { style: { color: hcTitleColor } } }); }
+		if (typeof fuel_chart#id# !== 'undefined')   { fuel_chart#id#.update({ title: { style: { color: hcTitleColor } } }); }
+		if (typeof charge_chart#id# !== 'undefined') { charge_chart#id#.update({ title: { style: { color: hcTitleColor } } }); }
 	}
 	
 	function setColorIconClosed#id#(theme)  {
@@ -602,50 +684,51 @@
 	
 		//----- Electric / Combustion / Hybrid
 		if ( '#vehicle_type#id##' == 'Electrique' )  {
-			$('.combustion_engine_txt#id#').hide(); 
+			$('.combustion_engine_txt#id#').hide();
 			$('.combustion_engine_autonom_txt#id#').hide();
-			$('.TAB_hyd').hide();
-			$('.TAB_ess').hide();
-			$('.TAB_phev').hide();
-			$('.TAB_elec').show();
-			$('.TAB_charge').show();
+			$('.TAB_hyd#id#').hide();
+			$('.TAB_ess#id#').hide();
+			$('.TAB_phev#id#').hide();
+			$('.TAB_elec#id#').show();
+			$('.TAB_charge#id#').show();
 			document.getElementById("eqlogictabelec").className += " active";
-			document.getElementById("TAB_elec").className += " active";
+			document.getElementById("TAB_elec#id#").className += " active";
 		}
 		if ( '#vehicle_type#id##' == 'Hybride')  {
 			$('.electric_engine_txt#id#').hide();
 			$('.commun_engine_txt#id#').hide();
 			$('.charge_sessions#id#').hide();
 			$('.charge_chart#id#').hide();
-			$('.TAB_hyd').show();
-			$('.TAB_ess').hide();
-			$('.TAB_phev').hide();
-			$('.TAB_elec').hide();
-			$('.TAB_charge').hide();
+			$('.TAB_hyd#id#').show();
+			$('.TAB_ess#id#').hide();
+			$('.TAB_phev#id#').hide();
+			$('.TAB_elec#id#').hide();
+			$('.TAB_charge#id#').hide();
 			document.getElementById("eqlogictabhyd").className += " active";
-			document.getElementById("TAB_hyd").className += " active";
+			document.getElementById("TAB_hyd#id#").className += " active";
 		}
 		if ( '#vehicle_type#id##' == 'Thermique')  {
 			$('.electric_engine_txt#id#').hide();
 			$('.commun_engine_txt#id#').hide();
 			$('.charge_sessions#id#').hide();
 			$('.charge_chart#id#').hide();
-			$('.TAB_hyd').hide();
-			$('.TAB_elec').hide();
-			$('.TAB_ess').show();
-			$('.TAB_phev').hide();
-			$('.TAB_charge').hide();
+			$('.TAB_hyd#id#').hide();
+			$('.TAB_elec#id#').hide();
+			$('.TAB_ess#id#').show();
+			$('.TAB_phev#id#').hide();
+			$('.TAB_charge#id#').hide();
 			document.getElementById("eqlogictabess").className += " active";
-			document.getElementById("TAB_ess").className += " active";
+			document.getElementById("TAB_ess#id#").className += " active";
 		}
 		if ( '#vehicle_type#id##' == 'Hybride Rechargeable')  {
-			$('.TAB_hyd').hide();
-			$('.TAB_elec').hide();
-			$('.TAB_ess').hide();
-			$('.TAB_phev').show();
-			$('.TAB_charge').show();
+			$('.TAB_hyd#id#').hide();
+			$('.TAB_elec#id#').hide();
+			$('.TAB_ess#id#').hide();
+			$('.TAB_phev#id#').show();
+			$('.TAB_charge#id#').show();
+			$('.charge_sessions#id#').hide();
 			document.getElementById("eqlogictabphev").className += " active";
-			document.getElementById("TAB_phev").className += " active";
+			document.getElementById("TAB_phev#id#").className += " active";
 		}
 		if ( '#vehicle_type#id##' != 'Electrique' && '#vehicle_type#id##' != 'Hybride Rechargeable' )  {
 			//$('#charge_btn#id#').hide();
@@ -709,7 +792,12 @@
 		
 	//----- Milage
 	jeedom.cmd.update['#mileage_id#'] = function(_options) {
-       $('.Cmd#mileage_id#').empty().append('<span>'+_options.display_value+'</span>');
+		var val = parseFloat(_options.display_value);
+		if (!isNaN(val) && val > 0) {
+			$('.Cmd#mileage_id#').empty().append('<span>'+_options.display_value+'</span>');
+		} else {
+			$('.Cmd#mileage_id#').empty().append('<span>---</span>');
+		}
     }
 	jeedom.cmd.update['#mileage_id#']({display_value:'#mileage#'});
 
@@ -802,10 +890,16 @@
 	
 	jeedom.cmd.update['#chargingEndTime_id#'] = function(_options) {
 		if ( _options.display_value != "not available" )  {
-           	$('.Cmd#chargingEndTime_id#').empty().append('<span>{{Recharge terminée}}</br>(100%) à '+_options.display_value+'</span>');
+			var raw = _options.display_value;
+			var dateMatch = raw.match(/(\d{2}-\d{2}-\d{4})/);
+			var timeMatch = raw.match(/(\d{2}:\d{2})/);
+			var datePart = dateMatch ? dateMatch[1] : raw;
+			var timePart = timeMatch ? timeMatch[1] : '';
+			var txt = timePart ? '{{Terminée}} le ' + datePart + ' &#224; ' + timePart : '{{Terminée}} le ' + datePart;
+			$('.Cmd#chargingEndTime_id#').empty().append('<span style="font-size:10px; line-height:1.5;">' + txt + '</span>');
         }
 		else  {
-			$('.Cmd#chargingEndTime_id#').empty().append('<span></span>');		
+			$('.Cmd#chargingEndTime_id#').empty().append('<span></span>');
 		}
 	}
 	jeedom.cmd.update['#chargingEndTime_id#']({display_value:'#chargingEndTime#'});
@@ -1062,13 +1156,14 @@
 				cat = messages[message].categorie;
 			}
 			if (messages[message].compteur != ''){
-				km = messages[message].compteur
+				km = String(messages[message].compteur).replace(/\s*km$/i, '');
 			}else{
 				km = 0;
 			}
-			table_html += '<li class="list-group-item" style="margin-bottom: 10px; padding: 0px 0px 5px 0px"><span class="label cmdName">';
-			table_html += 'Le ' + messages[message].date+' à ' + km+' km : ' + cat + '</span><br/>';
-			table_html += '<span class="label cmdName" style="padding-left: 100px;">par ' + messages[message].garage + '</span></li>';
+			table_html += '<li class="list-group-item mypanel-msg-item">';
+			table_html += '<div class="mypanel-msg-line">Le ' + messages[message].date + ' à ' + km + ' km : <strong>' + cat + '</strong></div>';
+			table_html += '<div class="mypanel-msg-garage">par ' + messages[message].garage + '</div>';
+			table_html += '</li>';
 /*			table_html += '<tr>';
 			table_html += '<td class="myToyota_service_td"><span class="myToyota_service_td form-control input-sm" style="background-color: transparent !important; text-align:left; width:430px;">';
 			table_html += 'Le ' + messages[message].date+' à ' + messages[message].compteur+' km : ' + cat + '</span></td>';
@@ -1138,7 +1233,8 @@
 	dateDebut.setDate(dateDebut.getDate() - 60);		// Historique sur les 60 derniers jours
 	dateDebut = formattedDateForCode(dateDebut);
         
-	var km_chart#id# = new Highcharts.chart('km_chart#id#', {
+	var km_chart#id#;
+	if ($('#km_chart#id#').length) { km_chart#id# = new Highcharts.chart('km_chart#id#', {
         
 		chart: {
             zoomType: 'x',
@@ -1148,7 +1244,7 @@
             text: '{{Kilométrage véhicule}}',
 			align: 'left',
 			style: {
-				color: 'white',
+				color: (theme_jeedom == 'black' || theme_jeedom == 'legacy') ? '#FFFFFF' : '#333333',
 			}
         },
         yAxis: {
@@ -1203,7 +1299,7 @@
 		credits: {
 			enabled: false
 		}
-    });
+    }); }
 
 	var fuel_chart#id# = new Highcharts.chart('fuel_chart#id#', {
         
@@ -1215,7 +1311,7 @@
             text: '{{Niveau carburant}}',
 			align: 'left',
 			style: {
-				color: 'white',
+				color: (theme_jeedom == 'black' || theme_jeedom == 'legacy') ? '#FFFFFF' : '#333333',
 			}
         },
         yAxis: {
@@ -1283,13 +1379,15 @@
             text: '{{Charge restante}}',
 			align: 'left',
 			style: {
-				color: 'white',
+				color: (theme_jeedom == 'black' || theme_jeedom == 'legacy') ? '#FFFFFF' : '#333333',
 			}
         },
         yAxis: {
             title: {
 	            text: "{{% restant}}"
-            }
+            },
+            min: 0,
+            max: 100
         },
         xAxis: {
             type: 'datetime',
@@ -1340,48 +1438,220 @@
 		}
     });
 	
+	if (typeof km_chart#id# !== 'undefined') {
 	jeedom.history.get ({
     	cmd_id: '#mileage_id#',
-        dateStart: dateDebut, 
+        dateStart: dateDebut,
         dateEnd: dateFin,
         success:  function(result) {
         	for(let i = 0; i<result.data.length; i++) {
-                km_chart#id#.series[0].addPoint(result.data[i][1], false) 	// false permet de ne pas redesiner le chart à chaque ajout
-            	date.push(formattedDate(new Date(result.data[i][0])))
+        		var val = parseFloat(result.data[i][1]);
+        		if (!isNaN(val) && val > 0) {
+	                km_chart#id#.series[0].addPoint(val, false);
+	            	date.push(formattedDate(new Date(result.data[i][0])));
+	            }
           	}
           	km_chart#id#.redraw();
           	km_chart#id#.xAxis[0].setCategories(date);
         }
     });
+	}
 
-	jeedom.history.get ({
-    	cmd_id: '#remaining_fuel_id#',
-        dateStart: dateDebut, 
-        dateEnd: dateFin,
-        success:  function(result) {
-        	for(let i = 0; i<result.data.length; i++) {
-                fuel_chart#id#.series[0].addPoint(result.data[i][1], false) 	// false permet de ne pas redesiner le chart à chaque ajout
-            	date2.push(formattedDate(new Date(result.data[i][0])))
-          	}
-          	fuel_chart#id#.redraw();
-          	fuel_chart#id#.xAxis[0].setCategories(date2);
-        }
-    });
+	// ----- Navigation période graphique carburant
+	var _fuelPeriodEnd#id# = new Date();
+	var _chargePeriodEnd#id# = new Date();
+	var CHART_PERIOD_DAYS = 30;
 
-	jeedom.history.get ({
-    	cmd_id: '#chargingLevelHv_id#',
-        dateStart: dateDebut, 
-        dateEnd: dateFin,
-        success:  function(result) {
-        	for(let i = 0; i<result.data.length; i++) {
-                charge_chart#id#.series[0].addPoint(result.data[i][1], false) // false permet de ne pas redesiner le chart à chaque ajout
-            	date3.push(formattedDate(new Date(result.data[i][0])))
-          	}
-          	charge_chart#id#.redraw();
-          	charge_chart#id#.xAxis[0].setCategories(date3);
-        }
-    });
+	var _fmtDate = function(d) { return ('0'+d.getDate()).slice(-2)+'/'+ ('0'+(d.getMonth()+1)).slice(-2)+'/'+d.getFullYear(); };
 
+	function loadFuelChart#id#(periodEnd) {
+		var periodStart = new Date(+periodEnd);
+		periodStart.setDate(periodStart.getDate() - CHART_PERIOD_DAYS);
+		var ds = formattedDateForCode(periodStart);
+		var de = formattedDateForCode(new Date(+periodEnd));
+		var todayMid = new Date(); todayMid.setHours(23,59,59,0);
+		$('#fuel_period#id#').text(_fmtDate(periodStart) + ' — ' + _fmtDate(new Date(+periodEnd)));
+		$('#fuel_next#id#').prop('disabled', new Date(+periodEnd) >= todayMid);
+		var fuelCmdId = parseInt('#remaining_fuel_id#');
+		if (typeof fuel_chart#id# !== 'undefined' && fuelCmdId > 0) {
+			jeedom.history.get({
+				cmd_id: fuelCmdId,
+				dateStart: ds, dateEnd: de,
+				success: function(result) {
+					var pts = [];
+					if (result && result.data) {
+						for (var i = 0; i < result.data.length; i++) {
+							var v = parseFloat(result.data[i][1]);
+							if (!isNaN(v)) pts.push([new Date(result.data[i][0]).getTime(), v]);
+						}
+					}
+					fuel_chart#id#.series[0].setData(pts, true);
+					fuel_chart#id#.setTitle(null, {text: pts.length === 0 ? '{{Aucune donnée — vérifier historisation}}' : ''});
+				},
+				error: function(err) {
+					if (typeof fuel_chart#id# !== 'undefined') fuel_chart#id#.setTitle(null, {text: '{{Erreur chargement historique}}'});
+				}
+			});
+		}
+	}
+
+	function loadChargeChart#id#(periodEnd) {
+		var periodStart = new Date(+periodEnd);
+		periodStart.setDate(periodStart.getDate() - CHART_PERIOD_DAYS);
+		var ds = formattedDateForCode(periodStart);
+		var de = formattedDateForCode(new Date(+periodEnd));
+		var todayMid = new Date(); todayMid.setHours(23,59,59,0);
+		$('#charge_period#id#').text(_fmtDate(periodStart) + ' — ' + _fmtDate(new Date(+periodEnd)));
+		$('#charge_next#id#').prop('disabled', new Date(+periodEnd) >= todayMid);
+		var chargeCmdId = parseInt('#chargingLevelHv_id#');
+		if (typeof charge_chart#id# !== 'undefined' && chargeCmdId > 0) {
+			jeedom.history.get({
+				cmd_id: chargeCmdId,
+				dateStart: ds, dateEnd: de,
+				success: function(result) {
+					var pts = [];
+					if (result && result.data) {
+						for (var i = 0; i < result.data.length; i++) {
+							var v = parseFloat(result.data[i][1]);
+							if (!isNaN(v)) pts.push([new Date(result.data[i][0]).getTime(), v]);
+						}
+					}
+					charge_chart#id#.series[0].setData(pts, true);
+					charge_chart#id#.setTitle(null, {text: pts.length === 0 ? '{{Aucune donnée — vérifier historisation}}' : ''});
+				},
+				error: function(err) {
+					if (typeof charge_chart#id# !== 'undefined') charge_chart#id#.setTitle(null, {text: '{{Erreur chargement historique}}'});
+				}
+			});
+		}
+	}
+
+	$('#fuel_prev#id#').on('click', function() {
+		_fuelPeriodEnd#id#.setDate(_fuelPeriodEnd#id#.getDate() - CHART_PERIOD_DAYS);
+		loadFuelChart#id#(_fuelPeriodEnd#id#);
+	});
+	$('#fuel_next#id#').on('click', function() {
+		_fuelPeriodEnd#id#.setDate(_fuelPeriodEnd#id#.getDate() + CHART_PERIOD_DAYS);
+		loadFuelChart#id#(_fuelPeriodEnd#id#);
+	});
+	$('#charge_prev#id#').on('click', function() {
+		_chargePeriodEnd#id#.setDate(_chargePeriodEnd#id#.getDate() - CHART_PERIOD_DAYS);
+		loadChargeChart#id#(_chargePeriodEnd#id#);
+	});
+	$('#charge_next#id#').on('click', function() {
+		_chargePeriodEnd#id#.setDate(_chargePeriodEnd#id#.getDate() + CHART_PERIOD_DAYS);
+		loadChargeChart#id#(_chargePeriodEnd#id#);
+	});
+
+	loadFuelChart#id#(_fuelPeriodEnd#id#);
+	loadChargeChart#id#(_chargePeriodEnd#id#);
+
+
+	// Graphique EVlink + tableau sessions (7 derniers jours)
+	if (!isNaN(parseInt('#evlink_puissance_id#'))) {
+		var dateDebutEvlink = new Date();
+		dateDebutEvlink.setDate(dateDebutEvlink.getDate() - 7);
+		dateDebutEvlink = formattedDateForCode(dateDebutEvlink);
+
+		var evlink_chart#id# = new Highcharts.chart('evlink_chart#id#', {
+			chart: { zoomType: 'x', marginLeft: 60, backgroundColor: 'transparent' },
+			title: { text: null },
+			yAxis: { title: { text: 'W' }, min: 0 },
+			xAxis: {
+				type: 'datetime',
+				dateTimeLabelFormats: { day: '%d/%m', hour: '%d/%m %H:%M' },
+				labels: { style: { color: (theme_jeedom == 'black' || theme_jeedom == 'legacy') ? '#aaaaaa' : '#555555' } }
+			},
+			legend: { enabled: false },
+			plotOptions: {
+				area: {
+					fillColor: {
+						linearGradient: { x1:0, y1:0, x2:0, y2:1 },
+						stops: [
+							[0, "#5078aa"],
+							[1, Highcharts.color("#5078aa").setOpacity(0).get('rgba')]
+						]
+					},
+					marker: { radius: 2, enabled: false },
+					lineWidth: 1, lineColor: "#5078aa", threshold: null
+				}
+			},
+			series: [{ type: 'area', name: '{{Puissance borne}}', data: [], tooltip: { valueSuffix: ' W' } }],
+			credits: { enabled: false }
+		});
+
+		// reflow quand l'onglet Charges devient visible (tabs standards avec href)
+		$('#myToyota_panel_flat_#id# a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
+			if ($(e.target).attr('href') === '#eqlogictabcharge') {
+				setTimeout(function(){ if (typeof evlink_chart#id# !== 'undefined') evlink_chart#id#.reflow(); }, 10);
+			}
+		});
+
+		jeedom.history.get({
+			cmd_id: '#evlink_puissance_id#',
+			dateStart: dateDebutEvlink,
+			dateEnd: dateFin,
+			success: function(result) {
+				var sessions = [];
+				var inSession = false, sessStart = null, sessStartTs = 0;
+				var sessPoints = [], sessWh = 0;
+				var prevTs = null, prevW = 0;
+
+				for (var i = 0; i < result.data.length; i++) {
+					var ts = new Date(result.data[i][0]);
+					var w  = parseFloat(result.data[i][1]) || 0;
+					evlink_chart#id#.series[0].addPoint([ts.getTime(), w], false);
+
+					if (!inSession && w > 0) {
+						inSession = true; sessStart = ts; sessWh = 0;
+					} else if (inSession && w > 0 && prevTs !== null) {
+						var dtH = (ts - prevTs) / 3600000;
+						sessWh += ((prevW + w) / 2) * dtH;
+					} else if (inSession && w === 0) {
+						var sessEnd = new Date(result.data[i > 0 ? i-1 : 0][0]);
+						var dur = Math.round((sessEnd - sessStart) / 60000);
+						sessions.push({ date: sessStart, end: sessEnd, dur: dur, kwh: sessWh / 1000 });
+						inSession = false; sessWh = 0;
+					}
+					prevTs = ts; prevW = w;
+				}
+				if (inSession && result.data.length > 0) {
+					var sessEnd = new Date(result.data[result.data.length-1][0]);
+					sessions.push({ date: sessStart, end: sessEnd, dur: Math.round((sessEnd - sessStart)/60000), kwh: sessWh / 1000 });
+				}
+
+				evlink_chart#id#.redraw();
+				setTimeout(function(){ evlink_chart#id#.reflow(); }, 50);
+
+				// Tableau sessions
+				var pad = function(n){ return String(n).padStart(2,'0'); };
+				var fmtDur = function(m){ return Math.floor(m/60)+'h'+pad(m%60); };
+				var html = '<table class="tableCmdCharge" style="width:100%;"><thead><tr>';
+				html += '<th class="myToyota_stat_th">{{Date}}</th>';
+				html += '<th class="myToyota_stat_th">{{Début}}</th>';
+				html += '<th class="myToyota_stat_th">{{Fin}}</th>';
+				html += '<th class="myToyota_stat_th">{{Durée}}</th>';
+				html += '<th class="myToyota_stat_th">{{Énergie}}</th>';
+				html += '</tr></thead><tbody>';
+				if (sessions.length === 0) {
+					html += '<tr><td class="myToyota_stat_td" colspan="5" style="text-align:center;">{{Aucune session détectée}}</td></tr>';
+				} else {
+					for (var s = sessions.length - 1; s >= 0; s--) {
+						var sess = sessions[s], d = sess.date;
+						html += '<tr class="myToyota_stat_tr_body">';
+						html += '<td class="myToyota_stat_td">'+pad(d.getDate())+'/'+pad(d.getMonth()+1)+'/'+d.getFullYear()+'</td>';
+						html += '<td class="myToyota_stat_td">'+pad(d.getHours())+':'+pad(d.getMinutes())+'</td>';
+						html += '<td class="myToyota_stat_td">'+pad(sess.end.getHours())+':'+pad(sess.end.getMinutes())+'</td>';
+						html += '<td class="myToyota_stat_td">'+fmtDur(sess.dur)+'</td>';
+						html += '<td class="myToyota_stat_td">'+sess.kwh.toFixed(2)+' kWh</td>';
+						html += '</tr>';
+					}
+				}
+				html += '</tbody></table>';
+				$('#evlink_sessions#id#').html(html);
+			}
+		});
+	}
 
 	//----- Statistics
 	jeedom.cmd.update['#totalEnergyCharged_id#'] = function(_options) {
@@ -1416,59 +1686,358 @@
 */
 
 
+	//----- EVLink (borne de recharge externe)
+	(function() {
+		var evlinkEtatId     = '#evlink_etat_id#';
+		var evlinkPuissId    = '#evlink_puissance_id#';
+		var evlinkConsoId    = '#evlink_conso_id#';
+		var evlinkCourantId  = '#evlink_courant_id#';
+
+		if (evlinkEtatId !== '') {
+			$('.evlink_bloc#id#').show();
+
+			// Abonnement état borne
+			jeedom.cmd.update[evlinkEtatId] = function(_options) {
+				var etat = parseInt(_options.display_value);
+				var label = etat ? '<span style="color:rgb(150,201,39);"><i class="fas fa-bolt"></i> {{En charge}}</span>'
+				                 : '<span>{{Non connectée}}</span>';
+				$('.evlink_etat#id#').empty().append(label);
+			};
+			jeedom.cmd.execute({ id: evlinkEtatId, success: function(r) {
+				jeedom.cmd.update[evlinkEtatId]({ display_value: r });
+			}});
+
+			// Abonnement puissance
+			if (evlinkPuissId !== '') {
+				jeedom.cmd.update[evlinkPuissId] = function(_options) {
+					$('.evlink_puissance#id#').empty().append('<span>'+parseFloat(_options.display_value).toFixed(0)+'</span>');
+				};
+				jeedom.cmd.execute({ id: evlinkPuissId, success: function(r) {
+					jeedom.cmd.update[evlinkPuissId]({ display_value: r });
+				}});
+			}
+
+			// Abonnement consommation totale
+			if (evlinkConsoId !== '') {
+				jeedom.cmd.update[evlinkConsoId] = function(_options) {
+					$('.evlink_conso#id#').empty().append('<span>'+parseFloat(_options.display_value).toFixed(2)+'</span>');
+				};
+				jeedom.cmd.execute({ id: evlinkConsoId, success: function(r) {
+					jeedom.cmd.update[evlinkConsoId]({ display_value: r });
+				}});
+			}
+
+			// Abonnement courant (optionnel)
+			if (evlinkCourantId !== '') {
+				$('.evlink_courant_bloc#id#').show();
+				jeedom.cmd.update[evlinkCourantId] = function(_options) {
+					$('.evlink_courant#id#').empty().append('<span>'+parseFloat(_options.display_value).toFixed(1)+'</span>');
+				};
+				jeedom.cmd.execute({ id: evlinkCourantId, success: function(r) {
+					jeedom.cmd.update[evlinkCourantId]({ display_value: r });
+				}});
+			}
+		}
+	})();
+
 	//------ Stat et trajets
 	jeedom.cmd.update['#moy_sem_id#'] = function(_options) {
 			$(function() {
 				var x = JSON.parse(_options.display_value);
 				if (x.duree_tot!=undefined){
+					// Stats onglet Hybride
 					$('.FONC_hyd_trajets').empty().append('<span>'+x.nb_trajets+'</span>');
-					$('.FONC_hyd_duree_totale').empty().append('<span>'+x.duree_tot+'</span>'); //
-					$('.FONC_hyd_distance_totale').empty().append('<span>'+x.distance_tot+'</span>'); //
-					$('.FONC_hyd_vitesse_moyenne').empty().append('<span>'+x.vit_moy+'</span>'); //
-					$('.FONC_hyd_duree_ev').empty().append('<span>'+x.duree_ev+'</span>'); //
-					$('.FONC_hyd_distance_ev').empty().append('<span>'+x.distance_ev+'</span>'); //
-					$('.FONC_hyd_conso_essence').empty().append('<span>'+x.conso_essence+'</span>'); 
-					$('.FONC_hyd_conso_moy').empty().append('<span>'+x.conso_moy+'</span>'); 
+					$('.FONC_hyd_duree_totale').empty().append('<span>'+x.duree_tot+'</span>');
+					$('.FONC_hyd_distance_totale').empty().append('<span>'+x.distance_tot+'</span>');
+					$('.FONC_hyd_vitesse_moyenne').empty().append('<span>'+x.vit_moy+'</span>');
+					$('.FONC_hyd_duree_ev').empty().append('<span>'+x.duree_ev+'</span>');
+					$('.FONC_hyd_distance_ev').empty().append('<span>'+x.distance_ev+'</span>');
+					$('.FONC_hyd_conso_essence').empty().append('<span>'+x.conso_essence+'</span>');
+					$('.FONC_hyd_conso_moy').empty().append('<span>'+x.conso_moy+'</span>');
+					// Stats onglet PHEV
+					$('.FONC_phev_trajets').empty().append('<span>'+x.nb_trajets+'</span>');
+					$('.FONC_phev_duree_totale').empty().append('<span>'+x.duree_tot+'</span>');
+					$('.FONC_phev_distance_totale').empty().append('<span>'+x.distance_tot+'</span>');
+					$('.FONC_phev_vitesse_moyenne').empty().append('<span>'+x.vit_moy+'</span>');
+					$('.FONC_phev_distance_ev').empty().append('<span>'+(x.distance_ev||'---')+'</span>');
+					$('.FONC_phev_charge_dist').empty().append('<span>'+(x.charge_dist||'---')+'</span>');
+					$('.FONC_phev_eco_dist').empty().append('<span>'+(x.eco_dist||'---')+'</span>');
+					$('.FONC_phev_power_dist').empty().append('<span>'+(x.power_dist||'---')+'</span>');
+					// Stats onglet Charges (HDC récupération d'énergie)
+					var chargeDist = parseFloat(x.charge_dist) || 0;
+					var chargeTime = x.charge_time || '---';
+					var nbTrajets = parseInt(x.nb_trajets) || 0;
+					var avgDist = (nbTrajets > 0 && chargeDist > 0) ? Math.round(chargeDist / nbTrajets * 100) / 100 : 0;
+					$('.FONC_charging_count').empty().append('<span>'+nbTrajets+'</span>');
+					$('.FONC_charging_total_energy').empty().append('<span>'+chargeDist+'</span>');
+					$('.FONC_charging_total_duration').empty().append('<span>'+chargeTime+'</span>');
+					$('.FONC_charging_avg_power').empty().append('<span>'+avgDist+'</span>');
 				}
 			});
 		}
-		jeedom.cmd.update['#moy_sem_id#']({display_value:'#moy_sem#'});	
+		jeedom.cmd.update['#moy_sem_id#']({display_value:'#moy_sem#'});
+
+		function fmtDuree(hms) {
+			if (!hms || hms === '---' || hms === '0:0:0') return '---';
+			var parts = hms.toString().split(':');
+			var h = parseInt(parts[0]) || 0;
+			var m = parseInt(parts[1]) || 0;
+			var s = parseInt(parts[2]) || 0;
+			var out = [];
+			if (h > 0) out.push(h + ' h');
+			if (m > 0) out.push(m + ' m');
+			if (s > 0) out.push(s + ' s');
+			return out.length ? out.join(' ') : '---';
+		}
+
+	// ----- Variables historique persistant
+	var _tripsHistory#id# = [];
+	var _tripsPhevPage#id# = 0;
+	var _tripsHdcPage#id# = 0;
+	var TRIPS_PER_PAGE = 10;
 
 		jeedom.cmd.update['#trajets_id#'] = function(_options) {
-			$(function() {
+			try {
 				var trajets = JSON.parse(_options.display_value);
+				if (!trajets || typeof trajets !== 'object') { return; }
 
-				var table_html= "";
-				table_html += '<thead><tr class="myToyota_stat_tr">';
-				table_html += '<th class="myToyota_stat_th" style="width: 15%; height: 25px; padding-left: 12px;">{{Début (cliquer pour voir)}}</th>';
-				table_html += '<th class="myToyota_stat_th" style="width: 10%; height: 25px; padding-left: 12px;">{{Durée}}</th>';
-				table_html += '<th class="myToyota_stat_th" style="width: 10%; height: 25px; padding-left: 12px;">{{Distance}}</th>';
-				table_html += '<th class="myToyota_stat_th" style="width: 10%; height: 25px; padding-left: 12px;">{{Vit. moyenne}}</th>';
-				table_html += '<th class="myToyota_stat_th" style="width: 10%; height: 25px; padding-left: 12px;">{{Temps en ev}}</th>';
-				table_html += '<th class="myToyota_stat_th" style="width: 10%; height: 25px; padding-left: 12px;">{{Distance en ev}}</th>';
-				table_html += '<th class="myToyota_stat_th" style="width: 10%; height: 25px; padding-left: 12px;">{{Conso Carburant}}</th>';
-				table_html += '<th class="myToyota_stat_th" style="width: 10%; height: 25px; padding-left: 12px;">{{Moyenne de conso}}</th>';
-				table_html += '</tr></thead>';
-				table_html += '<tbody>';
-				for(trajet in trajets){
-					console.log('-------- Tab cmd HYD -----' + trajet);
-					table_html += '<tr>'
-					table_html += '<td class="myToyota_stat_td"><span class="myToyota_stat_td form-control input-sm" style="background-color: transparent !important;"><a href="index.php?v=d&plugin=myToyota&modal=AfficheTrajetMap.myToyota&eqLogic_id="'+'"#id#">'+trajets[trajet].debut_trajet+'</a></span></td>';
-					table_html += '<td class="myToyota_stat_td"><span class="myToyota_stat_td form-control input-sm" style="background-color: transparent !important;">'+trajets[trajet].duree_tot+'</span></td>';
-					table_html += '<td class="myToyota_stat_td"><span class="myToyota_stat_td form-control input-sm" style="background-color: transparent !important;">'+trajets[trajet].distance_tot+' km</span></td>';
-					table_html += '<td class="myToyota_stat_td"><span class="myToyota_stat_td form-control input-sm" style="background-color: transparent !important;">'+trajets[trajet].vit_moy+' km/h</span></td>';
-					table_html += '<td class="myToyota_stat_td"><span class="myToyota_stat_td form-control input-sm" style="background-color: transparent !important;">'+trajets[trajet].duree_ev+'</span></td>';
-					table_html += '<td class="myToyota_stat_td"><span class="myToyota_stat_td form-control input-sm" style="background-color: transparent !important;">'+trajets[trajet].distance_ev+' km</span></td>';
-					table_html += '<td class="myToyota_stat_td"><span class="myToyota_stat_td form-control input-sm" style="background-color: transparent !important;">'+trajets[trajet].conso_essence+' litre(s)</span></td>';
-					table_html += '<td class="myToyota_stat_td"><span class="myToyota_stat_td form-control input-sm" style="background-color: transparent !important;">'+trajets[trajet].conso_moy+' l/100km</span></td>';;
-					table_html += '</tr>';
-				};
-				table_html += '</tbody>';
-				$('.tableCmdHyd').empty().append(table_html);
-			});
+				// --- Table Hybride (onglet HYD) ---
+				var table_hyd = "";
+				table_hyd += '<thead><tr class="myToyota_stat_tr">';
+				table_hyd += '<th class="myToyota_stat_th" style="width:15%;">{{Début}}</th>';
+				table_hyd += '<th class="myToyota_stat_th" style="width:13%;">{{Durée}}</th>';
+				table_hyd += '<th class="myToyota_stat_th" style="width:10%;">{{Distance}}</th>';
+				table_hyd += '<th class="myToyota_stat_th" style="width:10%;">{{Vit. moy.}}</th>';
+				table_hyd += '<th class="myToyota_stat_th" style="width:13%;">{{Temps EV}}</th>';
+				table_hyd += '<th class="myToyota_stat_th" style="width:10%;">{{Dist. EV}}</th>';
+				table_hyd += '<th class="myToyota_stat_th" style="width:10%;">{{Conso carbu.}}</th>';
+				table_hyd += '<th class="myToyota_stat_th" style="width:10%;">{{Conso moy.}}</th>';
+				table_hyd += '</tr></thead><tbody>';
+				for(var trajet in trajets){
+					var t0 = trajets[trajet];
+					var trajetHydLoc = (t0.ville_depart && t0.ville_arrivee) ? '<br><span style="font-size:10px;opacity:0.7;">'+t0.ville_depart+' → '+t0.ville_arrivee+'</span>' : '';
+					table_hyd += '<tr class="myToyota_stat_tr_body">';
+					table_hyd += '<td class="myToyota_stat_td">'+t0.debut_trajet+trajetHydLoc+'</td>';
+					table_hyd += '<td class="myToyota_stat_td">'+fmtDuree(t0.duree_tot)+'</td>';
+					table_hyd += '<td class="myToyota_stat_td">'+trajets[trajet].distance_tot+' km</td>';
+					table_hyd += '<td class="myToyota_stat_td">'+trajets[trajet].vit_moy+' km/h</td>';
+					table_hyd += '<td class="myToyota_stat_td">'+fmtDuree(trajets[trajet].duree_ev)+'</td>';
+					table_hyd += '<td class="myToyota_stat_td">'+trajets[trajet].distance_ev+' km</td>';
+					table_hyd += '<td class="myToyota_stat_td">'+trajets[trajet].conso_essence+' L</td>';
+					table_hyd += '<td class="myToyota_stat_td">'+trajets[trajet].conso_moy+' L/100</td>';
+					table_hyd += '</tr>';
+				}
+				table_hyd += '</tbody>';
+				$('.tableCmdHyd').empty().append(table_hyd);
+
+				// --- Table PHEV (onglet PHEV) ---
+				var table_phev = "";
+				table_phev += '<thead><tr class="myToyota_stat_tr">';
+				table_phev += '<th class="myToyota_stat_th" style="width:13%;">{{Début}}</th>';
+				table_phev += '<th class="myToyota_stat_th" style="width:10%;">{{Durée}}</th>';
+				table_phev += '<th class="myToyota_stat_th" style="width:8%;">{{Distance}}</th>';
+				table_phev += '<th class="myToyota_stat_th" style="width:8%;">{{Vit. moy.}}</th>';
+				table_phev += '<th class="myToyota_stat_th" style="width:8%;">{{Dist. EV}}</th>';
+				table_phev += '<th class="myToyota_stat_th" style="width:10%;">{{T. en charge}}</th>';
+				table_phev += '<th class="myToyota_stat_th" style="width:9%;">{{Dist. charge}}</th>';
+				table_phev += '<th class="myToyota_stat_th" style="width:10%;">{{T. Eco}}</th>';
+				table_phev += '<th class="myToyota_stat_th" style="width:8%;">{{Dist. Eco}}</th>';
+				table_phev += '<th class="myToyota_stat_th" style="width:10%;">{{T. Power}}</th>';
+				table_phev += '<th class="myToyota_stat_th" style="width:8%;">{{Dist. Power}}</th>';
+				table_phev += '</tr></thead><tbody>';
+				for(var trajet in trajets){
+					var t = trajets[trajet];
+					var trajetPhevLoc = (t.ville_depart && t.ville_arrivee) ? '<br><span style="font-size:10px;opacity:0.7;">'+t.ville_depart+' → '+t.ville_arrivee+'</span>' : '';
+					table_phev += '<tr class="myToyota_stat_tr_body">';
+					table_phev += '<td class="myToyota_stat_td">'+t.debut_trajet+trajetPhevLoc+'</td>';
+					table_phev += '<td class="myToyota_stat_td">'+fmtDuree(t.duree_tot)+'</td>';
+					table_phev += '<td class="myToyota_stat_td">'+t.distance_tot+' km</td>';
+					table_phev += '<td class="myToyota_stat_td">'+t.vit_moy+' km/h</td>';
+					table_phev += '<td class="myToyota_stat_td">'+(t.distance_ev||'---')+' km</td>';
+					table_phev += '<td class="myToyota_stat_td">'+fmtDuree(t.charge_time)+'</td>';
+					table_phev += '<td class="myToyota_stat_td">'+(t.charge_dist||'---')+' km</td>';
+					table_phev += '<td class="myToyota_stat_td">'+fmtDuree(t.eco_time)+'</td>';
+					table_phev += '<td class="myToyota_stat_td">'+(t.eco_dist||'---')+' km</td>';
+					table_phev += '<td class="myToyota_stat_td">'+fmtDuree(t.power_time)+'</td>';
+					table_phev += '<td class="myToyota_stat_td">'+(t.power_dist||'---')+' km</td>';
+					table_phev += '</tr>';
+				}
+				table_phev += '</tbody>';
+
+				// Merge current trips into in-memory history (dedup by debut_trajet)
+				var _curKeys = {};
+				for (var _i = 0; _i < _tripsHistory#id#.length; _i++) {
+					if (_tripsHistory#id#[_i].debut_trajet) _curKeys[_tripsHistory#id#[_i].debut_trajet] = true;
+				}
+				for (var _k in trajets) {
+					var _tr = trajets[_k];
+					if (_tr.debut_trajet && !_curKeys[_tr.debut_trajet]) {
+						_tripsHistory#id#.push(_tr);
+						_curKeys[_tr.debut_trajet] = true;
+					}
+				}
+				_tripsHistory#id#.sort(function(a,b){ return (b.debut_trajet||'').localeCompare(a.debut_trajet||''); });
+				renderPhevPage#id#(0);
+				renderHdcPage#id#(0);
+			} catch(e) {
+				console.error('myToyota trajets parse error:', e);
+			}
 		}
-		jeedom.cmd.update['#trajets_id#']({display_value:'#trajets#'});	
+		jeedom.cmd.update['#trajets_id#']({display_value:'#trajets#'});
 
+	function loadTripsHistory#id#() {
+		$.ajax({
+			url: 'plugins/myToyota/core/ajax/myToyota.ajax.php',
+			data: { action: 'getTripsHistory', vin: '#vehicle_vin#id##' },
+			dataType: 'json',
+			success: function(res) {
+				if (res && res.result && res.result.length > 0) {
+					// Merge file history (older trips) into in-memory history
+					var existingKeys = {};
+					for (var i = 0; i < _tripsHistory#id#.length; i++) {
+						if (_tripsHistory#id#[i].debut_trajet) existingKeys[_tripsHistory#id#[i].debut_trajet] = true;
+					}
+					var added = false;
+					for (var j = 0; j < res.result.length; j++) {
+						var t = res.result[j];
+						if (t.debut_trajet && !existingKeys[t.debut_trajet]) {
+							_tripsHistory#id#.push(t);
+							existingKeys[t.debut_trajet] = true;
+							added = true;
+						}
+					}
+					if (added) {
+						_tripsHistory#id#.sort(function(a,b){ return (b.debut_trajet||'').localeCompare(a.debut_trajet||''); });
+					}
+					renderPhevPage#id#(_tripsPhevPage#id#);
+					renderHdcPage#id#(_tripsHdcPage#id#);
+				}
+			}
+		});
+	}
+
+	function renderPhevPage#id#(page) {
+		var data = _tripsHistory#id#;
+		var total = data.length;
+		var totalPages = Math.max(1, Math.ceil(total / TRIPS_PER_PAGE));
+		page = Math.max(0, Math.min(page, totalPages - 1));
+		_tripsPhevPage#id# = page;
+		var slice = data.slice(page * TRIPS_PER_PAGE, (page + 1) * TRIPS_PER_PAGE);
+		var html = '<thead><tr class="myToyota_stat_tr">';
+		html += '<th class="myToyota_stat_th">{{Début}}</th>';
+		html += '<th class="myToyota_stat_th">{{Durée}}</th>';
+		html += '<th class="myToyota_stat_th">{{Distance}}</th>';
+		html += '<th class="myToyota_stat_th">{{Vit. moy.}}</th>';
+		html += '<th class="myToyota_stat_th">{{Dist. EV}}</th>';
+		html += '<th class="myToyota_stat_th">{{T. charge}}</th>';
+		html += '<th class="myToyota_stat_th">{{Dist. charge}}</th>';
+		html += '<th class="myToyota_stat_th">{{T. Eco}}</th>';
+		html += '<th class="myToyota_stat_th">{{Dist. Eco}}</th>';
+		html += '<th class="myToyota_stat_th">{{T. Power}}</th>';
+		html += '<th class="myToyota_stat_th">{{Dist. Power}}</th>';
+		html += '</tr></thead><tbody>';
+		for (var i = 0; i < slice.length; i++) {
+			var t = slice[i];
+			var loc = (t.ville_depart && t.ville_arrivee) ? '<br><span style="font-size:10px;opacity:0.7;">'+t.ville_depart+' → '+t.ville_arrivee+'</span>' : '';
+			html += '<tr class="myToyota_stat_tr_body">';
+			html += '<td class="myToyota_stat_td">'+(t.debut_trajet||'---')+loc+'</td>';
+			html += '<td class="myToyota_stat_td">'+fmtDuree(t.duree_tot)+'</td>';
+			html += '<td class="myToyota_stat_td">'+(t.distance_tot||'0')+' km</td>';
+			html += '<td class="myToyota_stat_td">'+(t.vit_moy||'0')+' km/h</td>';
+			html += '<td class="myToyota_stat_td">'+(t.distance_ev||'0')+' km</td>';
+			html += '<td class="myToyota_stat_td">'+fmtDuree(t.charge_time)+'</td>';
+			html += '<td class="myToyota_stat_td">'+(t.charge_dist||'0')+' km</td>';
+			html += '<td class="myToyota_stat_td">'+fmtDuree(t.eco_time)+'</td>';
+			html += '<td class="myToyota_stat_td">'+(t.eco_dist||'0')+' km</td>';
+			html += '<td class="myToyota_stat_td">'+fmtDuree(t.power_time)+'</td>';
+			html += '<td class="myToyota_stat_td">'+(t.power_dist||'0')+' km</td>';
+			html += '</tr>';
+		}
+		html += '</tbody>';
+		$('.tableCmdPhev').empty().append(html);
+		$('#phev_page_info#id#').text((page+1) + ' / ' + totalPages + '  (' + total + ' {{trajets}})');
+		$('#phev_prev#id#').prop('disabled', page === 0);
+		$('#phev_next#id#').prop('disabled', page >= totalPages - 1);
+		$('#phev_pagination#id#').css('display', totalPages > 1 ? 'flex' : 'none');
+	}
+
+	function renderHdcPage#id#(page) {
+		var data = _tripsHistory#id#.filter(function(t){ return parseFloat(t.charge_dist) > 0; });
+		var total = data.length;
+		var totalPages = Math.max(1, Math.ceil(total / TRIPS_PER_PAGE));
+		page = Math.max(0, Math.min(page, totalPages - 1));
+		_tripsHdcPage#id# = page;
+		var slice = data.slice(page * TRIPS_PER_PAGE, (page + 1) * TRIPS_PER_PAGE);
+		var html = '<thead><tr class="myToyota_stat_tr">';
+		html += '<th class="myToyota_stat_th">{{Début}}</th>';
+		html += '<th class="myToyota_stat_th">{{Durée trajet}}</th>';
+		html += '<th class="myToyota_stat_th">{{Dist. en charge}}</th>';
+		html += '<th class="myToyota_stat_th">{{Temps en charge}}</th>';
+		html += '</tr></thead><tbody>';
+		for (var i = 0; i < slice.length; i++) {
+			var t = slice[i];
+			var loc = (t.ville_depart && t.ville_arrivee) ? '<br><span style="font-size:10px;opacity:0.7;">'+t.ville_depart+' → '+t.ville_arrivee+'</span>' : '';
+			html += '<tr class="myToyota_stat_tr_body">';
+			html += '<td class="myToyota_stat_td">'+t.debut_trajet+loc+'</td>';
+			html += '<td class="myToyota_stat_td">'+fmtDuree(t.duree_tot)+'</td>';
+			html += '<td class="myToyota_stat_td">'+parseFloat(t.charge_dist)+' km</td>';
+			html += '<td class="myToyota_stat_td">'+fmtDuree(t.charge_time)+'</td>';
+			html += '</tr>';
+		}
+		html += '</tbody>';
+		$('.tableCmdCharge').empty().append(html);
+		$('#hdc_page_info#id#').text((page+1) + ' / ' + totalPages + '  (' + total + ' {{trajets}})');
+		$('#hdc_prev#id#').prop('disabled', page === 0);
+		$('#hdc_next#id#').prop('disabled', page >= totalPages - 1);
+		$('#hdc_pagination#id#').css('display', totalPages > 1 ? 'flex' : 'none');
+	}
+
+	$('#btn_refresh#id#').on('click', function() {
+		var $icon = $(this).find('i');
+		$icon.addClass('fa-spin');
+		jeedom.cmd.execute({
+			id: '#refresh_id#',
+			success: function() { $icon.removeClass('fa-spin'); },
+			error:   function() { $icon.removeClass('fa-spin'); }
+		});
+		setTimeout(function() { $icon.removeClass('fa-spin'); }, 30000);
+	});
+
+	$('#phev_prev#id#').on('click', function() { renderPhevPage#id#(_tripsPhevPage#id# - 1); });
+	$('#phev_next#id#').on('click', function() { renderPhevPage#id#(_tripsPhevPage#id# + 1); });
+	$('#hdc_prev#id#').on('click',  function() { renderHdcPage#id#(_tripsHdcPage#id# - 1); });
+	$('#hdc_next#id#').on('click',  function() { renderHdcPage#id#(_tripsHdcPage#id# + 1); });
+
+	// Onglets PHEV et Charges : click handler manuel (pas de href, pas de hash URL)
+	$(document).on('click', '#TAB_phev#id# a[data-pane], #TAB_charge#id# a[data-pane]', function(e) {
+		e.preventDefault();
+		var paneId = $(this).data('pane');
+		// Activer li
+		$(this).closest('ul').find('li').removeClass('active');
+		$(this).closest('li').addClass('active');
+		// Activer pane
+		var $pane = $('#' + paneId);
+		$pane.closest('.tab-content').find('.tab-pane').removeClass('active in');
+		$pane.addClass('active in');
+		// Historique trajets
+		if (_tripsHistory#id#.length === 0) { loadTripsHistory#id#(); }
+		// Reflow EVLink si onglet Charges
+		if (paneId === 'eqlogictabcharge' && typeof evlink_chart#id# !== 'undefined') {
+			setTimeout(function() { evlink_chart#id#.reflow(); }, 50);
+		}
+		// Scroll vers le titre de section
+		setTimeout(function() {
+			var $section = $('.FONC_trajet.mypanel-section-title').first();
+			if ($section.length) {
+				var menuH = ($('.navbar-fixed-top').outerHeight() || 50) + 5;
+				$('html, body').scrollTop($section.offset().top - menuH);
+			}
+		}, 50);
+	});
+	// Chargement initial si déjà sur l'onglet PHEV ou Charges
+	if ($('#eqlogictabphev').hasClass('active') || $('#eqlogictabcharge').hasClass('active')) {
+		loadTripsHistory#id#();
+	}
 
 	//----- Last update
 	jeedom.cmd.update['#lastUpdate_id#'] = function(_options) {
@@ -1481,9 +2050,10 @@
 		jeedom.cmd.update['#lastUpdate_id#']({display_value:'#lastUpdate#'});	
 
 	//----- Last communication
+	if (!isNaN(parseInt('#lastCommunication_id#'))) {
 	jeedom.cmd.update['#lastCommunication_id#'] = function(_options) {
-			if ( _options.display_value == "not available")  { 
-				$('.Cmd#lastCommunication_id#').empty().append('<span>'+"{{inconnue}}"+'</span>');
+			if ( !_options.display_value || _options.display_value == "" || _options.display_value == "not available")  {
+				$('.Cmd#lastCommunication_id#').empty().append('<span>{{En attente du prochain rafraîchissement...}}</span>');
 			} else { 
 				var now = new Date().getTime();
 				var comm = new Date(_options.display_value).getTime();
@@ -1502,7 +2072,8 @@
 				}
 			}
 		}
-		jeedom.cmd.update['#lastCommunication_id#']({display_value:'#lastCommunication#'});	
+		jeedom.cmd.update['#lastCommunication_id#']({display_value:'#lastCommunication#'});
+	} // end if lastCommunication_id
 
 
 	//--'ional parameters
