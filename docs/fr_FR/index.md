@@ -25,7 +25,7 @@ Précision pour l’installation, après avoir installé puis activé le plugin,
 
 Ci dessous à gauche un équipement avec le template à droite en brut
 
-![dashboard](dashboard.PNG?v=2)
+![dashboard](dashboard.PNG?v=3)
 
 - Panel
 
