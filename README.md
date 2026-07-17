@@ -16,6 +16,6 @@ Lien vers le forum [ici](https://community.jeedom.com/tag/plugin-myToyota)
 
 ## Documentation
 
-Version stable: [Cliquer ici](https://github.com/Noyax-37/myToyota/blob/master/docs/fr_FR/index.md)
+Version stable: [Cliquer ici](https://github.com/CedjaY/myToyota/blob/master/docs/fr_FR/index.md)
 
-Version bêta: [Cliquer ici](https://github.com/Noyax-37/myToyota/blob/develop/docs/fr_FR/index.md)
+Version bêta: [Cliquer ici](https://github.com/CedjaY/myToyota/blob/develop/docs/fr_FR/index.md)
