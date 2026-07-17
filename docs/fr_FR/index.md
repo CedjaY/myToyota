@@ -8,7 +8,7 @@ Précision pour l’installation, après avoir installé puis activé le plugin,
 
 ![Plugin_Objet_Connecté](plugin.PNG?v=2)
 
-![equipement](equipement.PNG?v=2)
+![equipement](equipement.PNG?v=3)
 
 1, 2 et 3: besoin d'expliquer?
 4: cocher cette case si vous voulez utiliser le template fourni sur le dashboard sinon les commandes seront affichées brutes
