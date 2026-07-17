@@ -1,5 +1,7 @@
 # Plugin myToyota
 
+> Ce plugin est repris et maintenu par [CedjaY](https://github.com/CedjaY), basé sur le travail original de [Noyax-37](https://github.com/Noyax-37).
+
 Fonctionnel mais pourra être développé car je n'ai pas toutes les sortes de véhicules à disposition
 
 Il reste encore quelques finitions: l’écriture de la doc (en cours ici même) et la partie trajets affichés sur une carte (si possible). 
