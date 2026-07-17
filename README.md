@@ -4,7 +4,7 @@ Plugin pour récupérer les informations de véhicules Toyota et Lexus qui sont 
 
 <img src="/plugin_info/myToyota_icon.png" align="right" height="160" width="150">
 
-![mytoyota](/docs/fr_FR/panel3.PNG)
+![mytoyota](/docs/fr_FR/panel3.PNG?v=2)
 
 ### Market
 
