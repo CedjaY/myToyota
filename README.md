@@ -1,5 +1,7 @@
 # Plugin myToyota
 
+> Ce plugin est repris et maintenu par [CedjaY](https://github.com/CedjaY), basé sur le travail original de [Noyax-37](https://github.com/Noyax-37).
+
 Plugin pour récupérer les informations de véhicules Toyota et Lexus qui sont enregistrés dans l'application myToyota (attention, pas myT)
 
 <img src="/plugin_info/myToyota_icon.png" align="right" height="160" width="150">
