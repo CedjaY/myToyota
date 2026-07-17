@@ -544,7 +544,7 @@
 		link.rel = 'stylesheet';
 		
 		if ($('body').attr('data-theme').endsWith('Dark')) {
-			link.href = 'plugins/myToyota/core/template/dashboard/myToyota_panel_style_dark.css';
+			link.href = 'plugins/myToyota/core/template/dashboard/myToyota_panel_style_dark.css?v=3';
 			theme = 'black';
 			if ( '#vehicle_brand#id##' == 1 )  {
 				source = "plugins/myToyota/core/img/logo_Toyota_white.png";
@@ -554,7 +554,7 @@
 			}
 		}
 		else if ($('body').attr('data-theme').endsWith('Light')) {
-			link.href = 'plugins/myToyota/core/template/dashboard/myToyota_panel_style_light.css';
+			link.href = 'plugins/myToyota/core/template/dashboard/myToyota_panel_style_light.css?v=3';
 			theme = 'white';
 			if ( '#vehicle_brand#id##' == 1 )  {
 				source = "plugins/myToyota/core/img/logo_Toyota_black.png";
