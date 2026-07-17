@@ -798,7 +798,8 @@ class myToyota extends eqLogic {
             foreach ($doorMap as $key => $cmdName) {
                 if (!isset($doorsData->$key)) continue;
                 $door = $doorsData->$key;
-                $openStatus = isset($door->openStatus->status) ? strtoupper($door->openStatus->status) : 'UNKNOWN';
+                $openStatusRaw = isset($door->openStatus->status) ? strtoupper($door->openStatus->status) : 'UNKNOWN';
+                $openStatus = ($openStatusRaw === 'CLOSE') ? 'CLOSED' : $openStatusRaw;
                 $lockStatus = isset($door->lockStatus->status) ? strtoupper($door->lockStatus->status) : null;
                 $doors++;
                 if ($openStatus === 'OPEN') $doorOpen++; else $doorClosed++;
@@ -839,7 +840,8 @@ class myToyota extends eqLogic {
             foreach ($windowMap as $key => $cmdName) {
                 if (!isset($windowsData->$key)) continue;
                 $win = $windowsData->$key;
-                $winStatus = isset($win->status) ? strtoupper($win->status) : 'UNKNOWN';
+                $winStatusRaw = isset($win->status) ? strtoupper($win->status) : 'UNKNOWN';
+                $winStatus = ($winStatusRaw === 'CLOSE') ? 'CLOSED' : $winStatusRaw;
                 $windows++;
                 if ($winStatus === 'OPEN') $windowOpen++; else $windowClosed++;
                 $eqLogic->checkAndUpdateCmd($cmdName, $winStatus);
