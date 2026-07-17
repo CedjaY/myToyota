@@ -791,12 +791,15 @@ class myToyota extends eqLogic {
             'rearRight'   => 'windowPassengerRear',
         ];
 
-        if (isset($remoteStatus->doors)) {
+        $doorsData = $remoteStatus->payload->doors ?? $remoteStatus->doors ?? null;
+        $windowsData = $remoteStatus->payload->windows ?? $remoteStatus->windows ?? null;
+
+        if (isset($doorsData)) {
             foreach ($doorMap as $key => $cmdName) {
-                if (!isset($remoteStatus->doors->$key)) continue;
-                $door = $remoteStatus->doors->$key;
-                $openStatus = isset($door->openStatus) ? strtoupper($door->openStatus) : 'UNKNOWN';
-                $lockStatus = isset($door->lockStatus) ? strtoupper($door->lockStatus) : null;
+                if (!isset($doorsData->$key)) continue;
+                $door = $doorsData->$key;
+                $openStatus = isset($door->openStatus->status) ? strtoupper($door->openStatus->status) : 'UNKNOWN';
+                $lockStatus = isset($door->lockStatus->status) ? strtoupper($door->lockStatus->status) : null;
                 $doors++;
                 if ($openStatus === 'OPEN') $doorOpen++; else $doorClosed++;
                 if ($lockStatus === 'UNLOCKED') $doorUnlocked++;
@@ -832,10 +835,10 @@ class myToyota extends eqLogic {
           log::add('myToyota', 'info', __('| Status du véhicules (portes, fenêtres, ...) non disponible.', __FILE__));
         }
 
-        if (isset($remoteStatus->windows)) {
+        if (isset($windowsData)) {
             foreach ($windowMap as $key => $cmdName) {
-                if (!isset($remoteStatus->windows->$key)) continue;
-                $win = $remoteStatus->windows->$key;
+                if (!isset($windowsData->$key)) continue;
+                $win = $windowsData->$key;
                 $winStatus = isset($win->status) ? strtoupper($win->status) : 'UNKNOWN';
                 $windows++;
                 if ($winStatus === 'OPEN') $windowOpen++; else $windowClosed++;
