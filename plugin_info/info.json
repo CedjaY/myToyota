@@ -17,10 +17,10 @@
 	"hasDependency": true,
 	"hasOwnDeamon": false,
 	"maxDependancyInstallTime": 120,
-	"changelog": "https://github.com/Noyax-37/myToyota/blob/master/docs/fr_FR/changelog.md",
-	"documentation": "https://github.com/Noyax-37/myToyota/blob/master/docs/fr_FR/index.md",
-	"changelog_beta": "https://github.com/Noyax-37/myToyota/blob/develop/docs/fr_FR/changelog.md",
-	"documentation_beta": "https://github.com/Noyax-37/myToyota/blob/develop/docs/fr_FR/index.md",
+	"changelog": "https://github.com/CedjaY/myToyota/blob/master/docs/fr_FR/changelog.md",
+	"documentation": "https://github.com/CedjaY/myToyota/blob/master/docs/fr_FR/index.md",
+	"changelog_beta": "https://github.com/CedjaY/myToyota/blob/develop/docs/fr_FR/changelog.md",
+	"documentation_beta": "https://github.com/CedjaY/myToyota/blob/develop/docs/fr_FR/index.md",
 	"link": {
 		"forum": "https://community.jeedom.com/tag/plugin-mytoyota"
 	},
