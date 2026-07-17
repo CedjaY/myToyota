@@ -6,9 +6,9 @@ Il reste encore quelques finitions: l’écriture de la doc (en cours ici même)
 
 Précision pour l’installation, après avoir installé puis activé le plugin, attendre la fin de l'installtion des dépendances, une fois terminés lorsque vous allez créer votre équipement il est nécessaire de cliquer sur le bouton « synchroniser » pour initialiser certains paramètres puis sauvegarder. Si vous ne connaissez pas le VIN de votre véhicule, tapez n’importe quoi et allez dans les fichiers de logs, vous verrez apparaitre tous les VIN des véhicules associés à votre compte. Une fois tout paramétré les données sont mises à jour toutes les 30 minutes
 
-![Plugin_Objet_Connecté](plugin.PNG)
+![Plugin_Objet_Connecté](plugin.PNG?v=2)
 
-![equipement](equipement.PNG)
+![equipement](equipement.PNG?v=2)
 
 1, 2 et 3: besoin d'expliquer?
 4: cocher cette case si vous voulez utiliser le template fourni sur le dashboard sinon les commandes seront affichées brutes
@@ -25,19 +25,19 @@ Précision pour l’installation, après avoir installé puis activé le plugin,
 
 Ci dessous à gauche un équipement avec le template à droite en brut
 
-![dashboard](dashboard.PNG)
+![dashboard](dashboard.PNG?v=2)
 
 - Panel
 
 Si dans la configuration du plugin vous cochez "afficher le panneau desktop" alors vous verrez apparaitre une nouvelle option dans le menu accueil
 
-![panel1](panel1.PNG)
+![panel1](panel1.PNG?v=2)
 
-![panel2](panel2.PNG)
+![panel2](panel2.PNG?v=2)
 
 ce nouveau menu ammène au panel suivant:
 
-![panel3](panel3.PNG)
+![panel3](panel3.PNG?v=2)
 
 
 Merci à @Xav-74 pour son aide précieuse et la permission de reprendre l'aspect visuel de son plugin, à @OUARZA pour ses remarques pertinentes et l'aide pour le debuggage de ce plugin
