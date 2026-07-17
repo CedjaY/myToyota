@@ -13,7 +13,7 @@ class myToyota_API
     const VEHICLE_GUID_ENDPOINT = '/v2/vehicle/guid';
     const VEHICLE_LOCATION_ENDPOINT = '/v1/location';
     const VEHICLE_HEALTH_STATUS_ENDPOINT = '/v1/vehiclehealth/status';
-    const VEHICLE_GLOBAL_REMOTE_STATUS_ENDPOINT = '/v1/global/remote/status'; // update device 
+    const VEHICLE_GLOBAL_REMOTE_STATUS_ENDPOINT = '/v1/vehicle/status'; // migré depuis /v1/global/remote/status (retiré par Toyota)
     const VEHICLE_GLOBAL_REMOTE_ELECTRIC_STATUS_ENDPOINT = '/v1/global/remote/electric/status';
     const VEHICLE_TELEMETRY_ENDPOINT = '/v3/telemetry'; // update device 
     const VEHICLE_NOTIFICATION_HISTORY_ENDPOINT = '/v2/notification/history';
