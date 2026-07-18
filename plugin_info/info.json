@@ -10,7 +10,7 @@
 		"es_ES": "Plugin para consultar los servicios myToyota (advertencia: no funciona para los vehículos que aún ejecutan myT) para Jeedom"
 	},
 	"licence": "AGPL",
-	"author": "Noyax37",
+	"author": "CedjaY",
 	"require": "4.2.0",
 	"display": "panel",
 	"category": "devicecommunication",
