@@ -5,6 +5,10 @@
 >S'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte.
 
 
+# V1.7
+
+- Prise en charge de tous les types de carburant de l'API Toyota (Essence, Diesel, Hybride, Electrique, PHEV)
+
 # V1.6
 
 - Reprise du projet par [CedjaY](https://github.com/CedjaY), basé sur le travail original de [Noyax-37](https://github.com/Noyax-37)
@@ -13,7 +17,6 @@
 - Refonte complète du design du dashboard et du widget (flat design, thèmes dark/light)
 - Liaison d'une prise renforcée connectée (EVLink) : état, puissance, consommation, courant
 - Nouvelles commandes PHEV/EV : autonomie électrique avec/sans climatisation, niveau de charge batterie
-- Prise en charge de tous les types de carburant de l'API Toyota (Essence, Diesel, Hybride, Electrique, PHEV)
 
 # V1.5
 
