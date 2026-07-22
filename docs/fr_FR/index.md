@@ -12,20 +12,20 @@ Précision pour l’installation, après avoir installé puis activé le plugin,
 
 ![equipement](equipement.PNG?v=3)
 
-1, 2 et 3: besoin d'expliquer?
-4: cocher cette case si vous voulez utiliser le template fourni sur le dashboard sinon les commandes seront affichées brutes
-5: compléter avec les informations qui vous permettent d'accéder à votre application myToyota (attention, ne fonctionne pas si vous êtes encore sous myT) et pour le VIN voir ci dessus
-6: cette partie se remplira toute seule lorsque vous aurez cliqué sur le bouton 7
-7: permet de synchroniser vos données pour la 1ère utilisation et compléter le point 6 ci dessus
-8: données brutes de l'ensemble de ce qui est disponible issue du serveur Toyota pour votre véhicule, à vous de voir si dedans il y aurait des choses intéressantes que je pourrai rajouter au plugin
-9: choix de la méthode pour connaitre l'emplacement de stationnement habituel de votre véhicule. Les choix de config sont "jeedom" si vous avez complété cela dans les configurations de jeedom, "position actuelle du véhicule" et "manuelle" pour saisir long et lat à la main
-10: apparaitra ici la distance entre le lieux de stationnement actuel de votre véhicule et son emplacement habituel
-11: apparaitra ici l'image de votre véhicule
+1, 2 et 3: besoin d'expliquer?  
+4: cocher cette case si vous voulez utiliser le template fourni sur le dashboard sinon les commandes seront affichées brutes  
+5: compléter avec les informations qui vous permettent d'accéder à votre application myToyota (attention, ne fonctionne pas si vous êtes encore sous myT) et pour le VIN voir ci dessus  
+6: cette partie se remplira toute seule lorsque vous aurez cliqué sur le bouton 7  
+7: permet de synchroniser vos données pour la 1ère utilisation et compléter le point 6 ci dessus  
+8: données brutes de l'ensemble de ce qui est disponible issue du serveur Toyota pour votre véhicule, à vous de voir si dedans il y aurait des choses intéressantes que je pourrai rajouter au plugin  
+9: choix de la méthode pour connaitre l'emplacement de stationnement habituel de votre véhicule. Les choix de config sont "jeedom" si vous avez complété cela dans les configurations de jeedom, "position actuelle du véhicule" et "manuelle" pour saisir long et lat à la main  
+10: apparaitra ici la distance entre le lieux de stationnement actuel de votre véhicule et son emplacement habituel  
+11: apparaitra ici l'image de votre véhicule  
 
 
 - Dashboard
 
-Ci dessous à gauche un équipement avec le template à droite en brut
+Ci dessous à gauche un équipement avec le template
 
 ![dashboard](dashboard.PNG?v=3)
 
