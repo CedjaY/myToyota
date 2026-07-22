@@ -570,10 +570,19 @@ class myToyota extends eqLogic {
             }
             log::add('myToyota', 'info', __('| Résultat type de motorisation :', __FILE__) . ' ' . $return['driveTrain']);
             if (isset($vehicle->fuelType)){
-              if ($vehicle->fuelType == 'B'){
-                $eqLogic->checkAndUpdateCmd('carburant', 'Essence');
-              } else {
-                $eqLogic->checkAndUpdateCmd('carburant', 'Diesel');
+              switch ($vehicle->fuelType) {
+                case 'B': case 'I':
+                  $eqLogic->checkAndUpdateCmd('carburant', 'Essence'); break;
+                case 'D':
+                  $eqLogic->checkAndUpdateCmd('carburant', 'Diesel'); break;
+                case 'H':
+                  $eqLogic->checkAndUpdateCmd('carburant', 'Hybride'); break;
+                case 'E':
+                  $eqLogic->checkAndUpdateCmd('carburant', 'Electrique'); break;
+                case 'P':
+                  $eqLogic->checkAndUpdateCmd('carburant', 'PHEV'); break;
+                default:
+                  $eqLogic->checkAndUpdateCmd('carburant', $vehicle->fuelType); break;
               }
               log::add('myToyota', 'info', __('| Résultat carburant type :', __FILE__) . ' ' . $vehicle->fuelType);
             }
