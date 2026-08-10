@@ -5,6 +5,10 @@
 >S'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte.
 
 
+# V1.8
+
+- Correction d'un bug JavaScript causé par les apostrophes dans les noms de villes (ex: L'Aunis)
+
 # V1.7
 
 - Prise en charge de tous les types de carburant de l'API Toyota (Essence, Diesel, Hybride, Electrique, PHEV)
