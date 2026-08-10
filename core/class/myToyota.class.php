@@ -1260,6 +1260,7 @@ class myToyota extends eqLogic {
                  ?? '';
         }
 
+        $city = str_replace("'", "\\'", $city);
         $cache[$cacheKey] = $city;
         if (!is_dir(dirname($cacheFile))) { mkdir(dirname($cacheFile), 0755, true); }
         file_put_contents($cacheFile, json_encode($cache, JSON_PRETTY_PRINT));
