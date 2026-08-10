@@ -1132,7 +1132,7 @@ class myToyota extends eqLogic {
             ];
             log::add('myToyota', 'info', __('| retour résumé trajet n°', __FILE__) . ' ' . strval($i) . ' : ' . json_encode($trajet['trajet' . strval($i++)]));
           }
-          $tripsJson = json_encode($trajet);
+          $tripsJson = json_encode($trajet, JSON_HEX_APOS);
           $eqLogic->checkAndUpdateCmd('trajets', $tripsJson);
 
           // Fusion dans l'historique persistant
@@ -1260,7 +1260,6 @@ class myToyota extends eqLogic {
                  ?? '';
         }
 
-        $city = str_replace("'", "\\'", $city);
         $cache[$cacheKey] = $city;
         if (!is_dir(dirname($cacheFile))) { mkdir(dirname($cacheFile), 0755, true); }
         file_put_contents($cacheFile, json_encode($cache, JSON_PRETTY_PRINT));
