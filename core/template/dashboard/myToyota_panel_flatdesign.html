@@ -1,3 +1,4 @@
+<div id="trajets_raw_#id#" style="display:none">#trajets#</div>
 <div id="myToyota_panel_flat_ID" class="eqLogic-widget eqLogic noResize myToyota_panel_flat myToyota_panel_flat_#id# myToyota" style="min-width:1392px !important; max-width:1392px !important; text-align:center; border:#border#; border-radius:#border-radius#; background-color:#background-color#; color:#color#; #style#;" data-eqType="#eqType#" data-translate-category="#translate_category#" data-category="#category#" data-tags="#tags#" data-eqLogic_id="#id#" data-eqLogic_uid="#uid#" data-version="panel">
 
 	<a href="#eqLink#" id="titre" style="#hideEqLogicName#"><img class="logo_car#id#" id="logo" style="vertical-align: bottom !important" src=""><span style="padding-left:10px;"> #name_display#</span></a>
@@ -1883,7 +1884,7 @@
 				console.error('myToyota trajets parse error:', e);
 			}
 		}
-		jeedom.cmd.update['#trajets_id#']({display_value:'#trajets#'});
+		jeedom.cmd.update['#trajets_id#']({display_value:document.getElementById('trajets_raw_#id#').textContent});
 
 	function loadTripsHistory#id#() {
 		$.ajax({
