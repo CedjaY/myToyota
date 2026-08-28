@@ -5,6 +5,10 @@
 >S'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte.
 
 
+# V1.10
+
+- Correction de l'état de la prise toujours "Déconnectée" sur le widget : normalisation des valeurs de chargingStatus reçues de l'API Toyota (chargeInProgress → CHARGING, etc.) et mise à jour automatique de connectorStatus
+
 # V1.9
 
 - Correction d'erreurs 500 (Internal Server Error) causées par des réponses API Toyota invalides ou des erreurs réseau
