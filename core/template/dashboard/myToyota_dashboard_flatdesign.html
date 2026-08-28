@@ -300,21 +300,16 @@
 		}
 		jeedom.cmd.update['#connectorStatus_id#']({display_value:'#connectorStatus#'});
 
-		// Si EVLink configuré, son état pilote connectorStatus ET chargingStatus
+		// Si EVLink configuré, son état pilote uniquement connectorStatus
 		(function() {
 			var evlinkEtatId = '#evlink_etat_id#';
 			if (evlinkEtatId !== '') {
-				var _updateEvlink = function(val) {
-					var charging = parseInt(val);
-					var labelConn = charging ? '<span>{{Connectée}}</span>' : '<span>{{Déconnectée}}</span>';
-					var labelCharge = charging
-						? '<span style="color:rgb(150,201,39);font-weight:bold"><i class="fas fa-bolt"></i> {{En cours}}</span>'
-						: '<span>{{Aucune}}</span>';
-					$('.Cmd#connectorStatus_id#').empty().append(labelConn);
-					$('.Cmd#chargingStatus_id#').empty().append(labelCharge);
+				var _updateConnector = function(val) {
+					var label = parseInt(val) ? '<span>{{Connectée}}</span>' : '<span>{{Déconnectée}}</span>';
+					$('.Cmd#connectorStatus_id#').empty().append(label);
 				};
-				jeedom.cmd.update[evlinkEtatId] = function(_options) { _updateEvlink(_options.display_value); };
-				jeedom.cmd.execute({ id: evlinkEtatId, success: function(r) { _updateEvlink(r); } });
+				jeedom.cmd.update[evlinkEtatId] = function(_options) { _updateConnector(_options.display_value); };
+				jeedom.cmd.execute({ id: evlinkEtatId, success: function(r) { _updateConnector(r); } });
 			}
 		})();
 
