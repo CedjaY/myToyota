@@ -857,7 +857,20 @@
 		}
 	}
 	jeedom.cmd.update['#connectorStatus_id#']({display_value:'#connectorStatus#'});
-			
+
+	// Si EVLink configuré, son état prend le dessus sur connectorStatus
+	(function() {
+		var evlinkEtatId = '#evlink_etat_id#';
+		if (evlinkEtatId !== '') {
+			var _updateConnector = function(val) {
+				var label = parseInt(val) ? '<span>Connectée</span>' : '<span>Deconnectée</span>';
+				$('.Cmd#connectorStatus_id#').empty().append(label);
+			};
+			jeedom.cmd.update[evlinkEtatId] = function(_options) { _updateConnector(_options.display_value); };
+			jeedom.cmd.execute({ id: evlinkEtatId, success: function(r) { _updateConnector(r); } });
+		}
+	})();
+
 	jeedom.cmd.update['#chargingStatus_id#'] = function(_options) {
        	if ( _options.display_value == "DEFAULT" || _options.display_value == "ERROR" )  {	
 			$('.Cmd#chargingStatus_id#').empty().append('<span style="color:rgb(185,58,62) !important; font-weight:bold !important">{{Erreur}}</span>');
