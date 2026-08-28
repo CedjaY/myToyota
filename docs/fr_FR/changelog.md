@@ -5,6 +5,10 @@
 >S'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte.
 
 
+# V1.9
+
+- Correction d'erreurs 500 (Internal Server Error) causées par des réponses API Toyota invalides ou des erreurs réseau
+
 # V1.8
 
 - Correction d'un bug JavaScript causé par les apostrophes dans les noms de villes (ex: L'Aunis)
