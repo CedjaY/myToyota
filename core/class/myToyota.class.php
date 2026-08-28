@@ -997,15 +997,31 @@ class myToyota extends eqLogic {
               }
 
               if ( isset($telemetrie_elec->chargingStatus)){
-                $eqLogic->checkAndUpdateCmd('chargingStatus', $telemetrie_elec->chargingStatus);
-                log::add('myToyota', 'info', __('| Retour élement: status de la charge :', __FILE__) . ' ' . $telemetrie_elec->chargingStatus);
+                $chargingStatusMap = [
+                  'chargeInProgress'    => 'CHARGING',
+                  'chargeComplete'      => 'COMPLETE',
+                  'notInProgress'       => 'NOT_CHARGING',
+                  'pluggedIn'           => 'PLUGGED_IN',
+                  'waitingForCharging'  => 'WAITING_FOR_CHARGING',
+                  'targetReached'       => 'TARGET_REACHED',
+                  'finishedNotFull'     => 'FINISHED_NOT_FULL',
+                  'finishedFullyCharged'=> 'FINISHED_FULLY_CHARGED',
+                ];
+                $rawStatus = $telemetrie_elec->chargingStatus;
+                $normalizedStatus = $chargingStatusMap[$rawStatus] ?? strtoupper($rawStatus);
+                $eqLogic->checkAndUpdateCmd('chargingStatus', $normalizedStatus);
+                // connectorStatus = 1 si branchée (charge ou attente), 0 sinon
+                $connected = in_array($normalizedStatus, ['CHARGING', 'PLUGGED_IN', 'WAITING_FOR_CHARGING', 'COMPLETE', 'FINISHED_FULLY_CHARGED', 'FINISHED_NOT_FULL', 'TARGET_REACHED']) ? 1 : 0;
+                $eqLogic->checkAndUpdateCmd('connectorStatus', $connected);
+                log::add('myToyota', 'info', __('| Retour élement: status de la charge :', __FILE__) . ' ' . $rawStatus . ' → ' . $normalizedStatus . ' (prise: ' . $connected . ')');
               } else {
                 $eqLogic->checkAndUpdateCmd('chargingStatus', 'UNKNOWN');
+                $eqLogic->checkAndUpdateCmd('connectorStatus', 0);
                 log::add('myToyota', 'info', __('| Retour élement: status de la charge inconnue', __FILE__));
               }
 
               // chargingEndTime : si charge terminée, on utilise lastUpdateTimestamp comme horodatage de fin
-              if (isset($telemetrie_elec->chargingStatus) && $telemetrie_elec->chargingStatus == 'chargeComplete' && isset($telemetrie_elec->lastUpdateTimestamp)) {
+              if (isset($telemetrie_elec->chargingStatus) && in_array($telemetrie_elec->chargingStatus, ['chargeComplete', 'finishedFullyCharged', 'finishedNotFull']) && isset($telemetrie_elec->lastUpdateTimestamp)) {
                 $endTime = date('d-m-Y H:i:s', strtotime($telemetrie_elec->lastUpdateTimestamp));
                 $eqLogic->checkAndUpdateCmd('chargingEndTime', $endTime);
                 log::add('myToyota', 'info', __('| Retour élement: fin de charge :', __FILE__) . ' ' . $endTime);
