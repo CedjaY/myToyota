@@ -492,6 +492,10 @@ class myToyota extends eqLogic {
       $devices = json_decode($result->body);
       //$vin = $eqLogic->getConfiguration('vehicle_vin');
       log::add('myToyota', 'debug', '| Return devices body :' . $result->body);
+      if (!is_object($devices) || !isset($devices->payload)) {
+        log::add('myToyota', 'error', '| getDevice() : réponse API invalide ou erreur réseau : ' . $result->body);
+        return [];
+      }
       log::add('myToyota', 'debug', __('| Retour nombre de véhicules :', __FILE__) . count($devices->payload) );
 
       $return['erreur'] = 'erreur';
@@ -618,6 +622,10 @@ class myToyota extends eqLogic {
       $result = $myConnection->getDevice($fichierLog);
       $devices = json_decode($result->body);
       log::add($fichierLog, 'info', '| Return getDevices :' . $result->body );
+      if (!is_object($devices) || !isset($devices->payload)) {
+        log::add($fichierLog, 'error', '| getDevice() : réponse API invalide ou erreur réseau : ' . $result->body);
+        return;
+      }
       log::add($fichierLog, 'info', __('| Résultat => nombre de véhicules :', __FILE__) . ' ' . count($devices->payload) );
 
       if ( count($devices->payload) == 0 ){
@@ -897,7 +905,7 @@ class myToyota extends eqLogic {
         $body = json_decode($result->body);
         log::add('myToyota', 'debug', __('| Retour télémétrie :', __FILE__) . ' ' . $result->body);
 
-        if ($body->status == 'SUCCESS'){
+        if (is_object($body) && $body->status == 'SUCCESS'){
           $telemetrie = $body->payload;
           // km totaux
           if ( isset($telemetrie->odometer) ){
@@ -1165,7 +1173,7 @@ class myToyota extends eqLogic {
         $result = $myConnection->statusHealth(); //dernière localisation
         $body = json_decode($result->body);
         log::add('myToyota', 'debug', __('| Retour santé véhicule :', __FILE__) . ' ' . $result->body);
-        if ($body->status == 'SUCCESS'){
+        if (is_object($body) && $body->status == 'SUCCESS'){
           $sante = $body->payload;
           if ($sante->quantityOfEngOilIcon[0] == ''){
           $table_messages['checkControlMessages'] = array( "type" => "ENGINE_OIL ", "date" => '', "mileage" => '', "state" => '', "title" => "Huile moteur", "description" => "", "severity" => 'OK' );
