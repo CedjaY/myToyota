@@ -327,10 +327,15 @@ class myToyota_API
         ];
                        
         $result4 = $this->_request($url, $method, $data3, $headers);
+        log::add($fichierLog, 'info', '| Result getToken() myToyota - Stage 4 - body : ' . $result4->body);
         $data4 = json_decode($result4->body, true);
-        $tokenId = $data4['tokenId'];
+        $tokenId = $data4['tokenId'] ?? null;
         log::add($fichierLog, 'info', '| Result getToken() myToyota - Stage 4 - tokenId : ' . $tokenId);
 
+        if (empty($tokenId)) {
+            log::add($fichierLog, 'error', '| getToken() Stage 4 : tokenId vide — identifiants incorrects, compte bloqué, ou nouveau step MFA requis. Réponse Toyota : ' . $result4->body);
+            return;
+        }
 
         //Stage 5 - get authorizationCode
         $url = $this::AUTHORIZE_URL;
@@ -339,14 +344,20 @@ class myToyota_API
             'x-correlationid: 0F34C246-11F3-4584-AB13-0EA5DA96CB41',
             'Cookie: iPlanetDirectoryPro='.$tokenId,
         ];
-                       
+
         $result5 = $this->_request($url, $method, null, $headers);
         $data5 = $result5->headers;
+        $authorizationCode = null;
         if (preg_match('/code=([^&\s]+)/', $data5, $matches))
         {
             $authorizationCode = $matches[1];
         }
         log::add($fichierLog, 'info', '| Result getToken() myToyota - Stage 5 - authorizationCode : ' . $authorizationCode);
+
+        if (empty($authorizationCode)) {
+            log::add($fichierLog, 'error', '| getToken() Stage 5 : authorizationCode vide — échec de l\'autorisation. Headers reçus : ' . $data5);
+            return;
+        }
 
 
         //Stage 6 - exchangeToken
@@ -369,17 +380,19 @@ class myToyota_API
         $result6 = $this->_request($url, $method, $data, $headers);
         log::add($fichierLog, 'info', '| Result getToken() myToyota - Stage 6 - body : ' . $result6->body);
         $data6 = json_decode($result6->body, true);
-        
-        //$this->uuid = '';
+
+        if (empty($data6['access_token'])) {
+            log::add($fichierLog, 'error', '| getToken() Stage 6 : access_token absent — échange du code échoué. Réponse : ' . $result6->body);
+            return;
+        }
+
       	$expToken = explode('.', $data6['access_token']);
-      
-      	
-        $uuid = json_decode(base64_decode(strtr($expToken[1], '-_', '+/,'), true));
-      	log::add($fichierLog, 'info', '| uuid: ' . $uuid->{'uuid'});
-        $this->uuid = $uuid->{'uuid'};
+        $uuid = json_decode(base64_decode(strtr($expToken[1] ?? '', '-_', '+/'), true));
+      	log::add($fichierLog, 'info', '| uuid: ' . ($uuid->{'uuid'} ?? 'inconnu'));
+        $this->uuid = $uuid->{'uuid'} ?? '';
         $this->access_token = $data6['access_token'];
-        $this->refresh_token = $data6['refresh_token'];
-        $this->token_expiration = time() + $data6['expires_in'];
+        $this->refresh_token = $data6['refresh_token'] ?? '';
+        $this->token_expiration = time() + ($data6['expires_in'] ?? 3600);
         $this->saveToken();
         log::add($fichierLog, 'info', '| Result getToken() myToyota : ' . __('Token sauvegardé', __FILE__));
 
