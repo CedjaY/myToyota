@@ -759,11 +759,11 @@
 		if (_locMap#id#) { _locMap#id#.setView([lat, lon], 17); if (_locMarker#id#) _locMarker#id#.setLatLng([lat, lon]); return; }
 		_locMap#id# = L.map(container, { zoomControl: true, attributionControl: false }).setView([lat, lon], 17);
 		L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19 }).addTo(_locMap#id#);
-		var carIcon = L.icon({
-			iconUrl: 'plugins/myToyota/data/#vehicle_vin#id##.png',
-			iconSize: [90, 56],
-			iconAnchor: [45, 28],
-			className: 'mytoyota-car-marker'
+		var carIcon = L.divIcon({
+			className: 'mytoyota-car-marker-wrap',
+			html: '<img src="plugins/myToyota/data/#vehicle_vin#id##.png" class="mytoyota-car-marker">',
+			iconSize: [120, 75],
+			iconAnchor: [60, 37]
 		});
 		_locMarker#id# = L.marker([lat, lon], { icon: carIcon }).addTo(_locMap#id#);
 		setTimeout(function(){ _locMap#id#.invalidateSize(); }, 100);
@@ -2069,6 +2069,22 @@
 		$('#hdc_prev#id#').prop('disabled', page === 0);
 		$('#hdc_next#id#').prop('disabled', page >= totalPages - 1);
 		$('#hdc_pagination#id#').css('display', totalPages > 1 ? 'flex' : 'none');
+
+		// Recalcul des stats HDC depuis les données réelles du tableau
+		var totalChargeDist = 0, totalChargeTimeSec = 0;
+		for (var i = 0; i < data.length; i++) {
+			totalChargeDist += parseFloat(data[i].charge_dist) || 0;
+			var ct = (data[i].charge_time || '0:0:0').split(':');
+			totalChargeTimeSec += (parseInt(ct[0])||0)*3600 + (parseInt(ct[1])||0)*60 + (parseInt(ct[2])||0);
+		}
+		var avgDist = data.length > 0 ? Math.round(totalChargeDist / data.length * 100) / 100 : 0;
+		var hh = Math.floor(totalChargeTimeSec / 3600);
+		var mm = Math.floor((totalChargeTimeSec % 3600) / 60);
+		var ss = totalChargeTimeSec % 60;
+		$('.FONC_charging_count').empty().append('<span>'+data.length+'</span>');
+		$('.FONC_charging_total_energy').empty().append('<span>'+totalChargeDist.toFixed(3)+'</span>');
+		$('.FONC_charging_total_duration').empty().append('<span>'+fmtDuree(hh+':'+mm+':'+ss)+'</span>');
+		$('.FONC_charging_avg_power').empty().append('<span>'+avgDist+'</span>');
 	}
 
 	$('#btn_refresh#id#').on('click', function() {
@@ -2259,11 +2275,19 @@
 	</script>
 
 	<style>
+	.mytoyota-car-marker-wrap,
+	.leaflet-div-icon.mytoyota-car-marker-wrap,
+	.leaflet-marker-icon.mytoyota-car-marker-wrap {
+		background: transparent !important;
+		border: none !important;
+		box-shadow: none !important;
+	}
 	.mytoyota-car-marker {
-		border-radius: 6px;
-		box-shadow: 0 2px 8px rgba(0,0,0,0.45);
-		border: 2px solid #fff;
-		object-fit: cover;
+		display: block;
+		width: 120px;
+		height: 75px;
+		object-fit: contain;
+		filter: drop-shadow(0 2px 6px rgba(0,0,0,0.5));
 	}
 	.highcharts-root {
 		font-family: Roboto !important;
