@@ -759,11 +759,11 @@
 		if (_locMap#id#) { _locMap#id#.setView([lat, lon], 17); if (_locMarker#id#) _locMarker#id#.setLatLng([lat, lon]); return; }
 		_locMap#id# = L.map(container, { zoomControl: true, attributionControl: false }).setView([lat, lon], 17);
 		L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19 }).addTo(_locMap#id#);
-		var carIcon = L.icon({
-			iconUrl: 'plugins/myToyota/data/#vehicle_vin#id##.png',
+		var carIcon = L.divIcon({
+			className: 'mytoyota-car-marker-wrap',
+			html: '<img src="plugins/myToyota/data/#vehicle_vin#id##.png" class="mytoyota-car-marker">',
 			iconSize: [120, 75],
-			iconAnchor: [60, 37],
-			className: 'mytoyota-car-marker'
+			iconAnchor: [60, 37]
 		});
 		_locMarker#id# = L.marker([lat, lon], { icon: carIcon }).addTo(_locMap#id#);
 		setTimeout(function(){ _locMap#id#.invalidateSize(); }, 100);
@@ -2275,9 +2275,15 @@
 	</script>
 
 	<style>
+	.mytoyota-car-marker-wrap {
+		background: transparent !important;
+		border: none !important;
+	}
 	.mytoyota-car-marker {
-		filter: drop-shadow(0 2px 6px rgba(0,0,0,0.5));
+		width: 120px;
+		height: 75px;
 		object-fit: contain;
+		filter: drop-shadow(0 2px 6px rgba(0,0,0,0.5));
 	}
 	.highcharts-root {
 		font-family: Roboto !important;
