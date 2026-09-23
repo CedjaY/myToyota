@@ -1098,7 +1098,7 @@ class myToyota extends eqLogic {
             'conso_moy'    => $consoMoy,       'vit_moy'      => $averageSpeed,
             'distance_tot' => round($length / 1000, 3),        'duree_tot'    => $dureeTot,
             'distance_ev'  => round($evDistance / 1000, 3),    'duree_ev'     => $dureeEv,
-            'conso_essence'=> round($fuelConsumption / 1000, 3),'nb_trajets'  => $metatData->pagination->totalCount,
+            'conso_essence'=> round($fuelConsumption / 1000, 3),'nb_trajets'  => count($summarys),
             'charge_dist'  => round($chargeDist / 1000, 3),    'charge_time'  => $dureeCharge,
             'eco_dist'     => round($ecoDist / 1000, 3),        'eco_time'     => $dureeEco,
             'power_dist'   => round($powerDist / 1000, 3),     'power_time'   => $dureePower,
