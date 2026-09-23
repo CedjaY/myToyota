@@ -1933,6 +1933,32 @@
 				}
 				table_phev += '</tbody>';
 
+				// Recalcul des stats PHEV depuis les données réelles du tableau
+				var phevList = [];
+				for (var _pk in trajets) { phevList.push(trajets[_pk]); }
+				var phevNb = phevList.length, phevDist = 0, phevDurSec = 0;
+				var phevDistEv = 0, phevChargeDist = 0, phevEcoDist = 0, phevPowerDist = 0;
+				for (var pi = 0; pi < phevList.length; pi++) {
+					var pt = phevList[pi];
+					phevDist      += parseFloat(pt.distance_tot)  || 0;
+					phevDistEv    += parseFloat(pt.distance_ev)   || 0;
+					phevChargeDist+= parseFloat(pt.charge_dist)   || 0;
+					phevEcoDist   += parseFloat(pt.eco_dist)      || 0;
+					phevPowerDist += parseFloat(pt.power_dist)    || 0;
+					var dp = (pt.duree_tot || '0:0:0').split(':');
+					phevDurSec += (parseInt(dp[0])||0)*3600 + (parseInt(dp[1])||0)*60 + (parseInt(dp[2])||0);
+				}
+				var phevVitMoy = phevDurSec > 0 ? Math.round(phevDist / phevDurSec * 3600 * 100) / 100 : 0;
+				var phevH = Math.floor(phevDurSec/3600), phevM = Math.floor((phevDurSec%3600)/60), phevS = phevDurSec%60;
+				$('.FONC_phev_trajets').empty().append('<span>'+phevNb+'</span>');
+				$('.FONC_phev_duree_totale').empty().append('<span>'+fmtDuree(phevH+':'+phevM+':'+phevS)+'</span>');
+				$('.FONC_phev_distance_totale').empty().append('<span>'+Math.round(phevDist*1000)/1000+'</span>');
+				$('.FONC_phev_vitesse_moyenne').empty().append('<span>'+phevVitMoy+'</span>');
+				$('.FONC_phev_distance_ev').empty().append('<span>'+Math.round(phevDistEv*1000)/1000+'</span>');
+				$('.FONC_phev_charge_dist').empty().append('<span>'+Math.round(phevChargeDist*1000)/1000+'</span>');
+				$('.FONC_phev_eco_dist').empty().append('<span>'+Math.round(phevEcoDist*1000)/1000+'</span>');
+				$('.FONC_phev_power_dist').empty().append('<span>'+Math.round(phevPowerDist*1000)/1000+'</span>');
+
 				// Merge current trips into in-memory history (dedup by debut_trajet)
 				var _curKeys = {};
 				for (var _i = 0; _i < _tripsHistory#id#.length; _i++) {
