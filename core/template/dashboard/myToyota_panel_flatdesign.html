@@ -2275,11 +2275,15 @@
 	</script>
 
 	<style>
-	.mytoyota-car-marker-wrap {
+	.mytoyota-car-marker-wrap,
+	.leaflet-div-icon.mytoyota-car-marker-wrap,
+	.leaflet-marker-icon.mytoyota-car-marker-wrap {
 		background: transparent !important;
 		border: none !important;
+		box-shadow: none !important;
 	}
 	.mytoyota-car-marker {
+		display: block;
 		width: 120px;
 		height: 75px;
 		object-fit: contain;
