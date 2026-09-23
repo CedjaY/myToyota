@@ -1508,7 +1508,7 @@
 					if (result && result.data) {
 						for (var i = 0; i < result.data.length; i++) {
 							var v = parseFloat(result.data[i][1]);
-							if (!isNaN(v)) pts.push([new Date(result.data[i][0]).getTime(), v]);
+							if (!isNaN(v) && v > 0) pts.push([new Date(result.data[i][0]).getTime(), v]);
 						}
 					}
 					fuel_chart#id#.series[0].setData(pts, true);
