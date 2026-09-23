@@ -5,6 +5,10 @@
 >S'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte.
 
 
+# V2.1
+
+- Bouton carte dans les tableaux de trajets : cliquer sur l'icône <i class="fas fa-map-marked-alt"></i> pour afficher le trajet exact sur une carte OpenStreetMap (tracé GPS complet, marqueurs départ/arrivée)
+
 # V2.0
 
 - Correction du double tableau dans l'onglet Charges (HDC)

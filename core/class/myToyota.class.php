@@ -1115,6 +1115,7 @@ class myToyota extends eqLogic {
             $ville_depart  = '';
             $ville_arrivee = '';
             $routePoints = null;
+            $routeGps = [];
             if (isset($trip->route) && is_array($trip->route) && count($trip->route) > 0) {
                 $routePoints = $trip->route;
             } elseif (isset($trip->sections) && is_array($trip->sections) && count($trip->sections) > 0) {
@@ -1133,12 +1134,20 @@ class myToyota extends eqLogic {
                 if ($latL !== null && $lonL !== null) {
                     $ville_arrivee = myToyota::reverseGeocode($latL, $lonL);
                 }
+                foreach ($routePoints as $pt) {
+                    $lat = $pt->lat ?? ($pt->latitude ?? null);
+                    $lon = $pt->lon ?? ($pt->longitude ?? null);
+                    if ($lat !== null && $lon !== null) {
+                        $routeGps[] = [(float)$lat, (float)$lon];
+                    }
+                }
             }
 
             $trajet['trajet' . strval($i)] = [
               'debut_trajet'  => date("d-m-Y G:i:s", strtotime($trip->summary->startTs)),
               'ville_depart'  => $ville_depart,
               'ville_arrivee' => $ville_arrivee,
+              'route_points'  => $routeGps,
               'conso_moy'     => myToyota::consoMoyenne($trip->summary->fuelConsumption, $trip->summary->length),
               'vit_moy'       => $trip->summary->averageSpeed,
               'distance_tot'  => strval($trip->summary->length / 1000),
