@@ -5,6 +5,11 @@
 >S'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte.
 
 
+# V2.0
+
+- Correction du double tableau dans l'onglet Charges (HDC)
+- Les tableaux de trajets affichent désormais les 7 derniers trajets (au lieu des 7 derniers jours)
+
 # V1.9
 
 - Correction d'erreurs 500 (Internal Server Error) causées par des réponses API Toyota invalides ou des erreurs réseau

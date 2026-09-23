@@ -1057,13 +1057,13 @@ class myToyota extends eqLogic {
 
           // trips
           $to = date('Y-m-d');
-          $from = date('Y-m-d', strtotime('-7 days', strtotime($to)));
+          $from = date('Y-m-d', strtotime('-90 days', strtotime($to)));
           $route = true;
           $summary = true;
-          $limit = 50; // max 50 avec route=true
+          $limit = 7; // 7 derniers trajets
           $offset = 0;
-    
-          $result = $myConnection->getTripsEndpoint($from, $to, $route, $summary, $limit, $offset); //pour récupérer les 7 derniers jours
+
+          $result = $myConnection->getTripsEndpoint($from, $to, $route, $summary, $limit, $offset); //pour récupérer les 7 derniers trajets
           $tripsEndpoint = json_decode($result->body);
     
           log::add('myToyota', 'debug', __('| retour circuits', __FILE__) . $result->body);
