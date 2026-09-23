@@ -335,7 +335,7 @@
 								</div>
 
 								<pre><br></pre>
-								<div class="myToyota_panel_flat_titre_tile " id="titre_tile2">{{Trajets en Hybride des 7 derniers jours}}
+								<div class="myToyota_panel_flat_titre_tile " id="titre_tile2">{{Trajets en Hybride des 7 derniers trajets}}
                                 </div>
 								<br>
                                 <div class="tableHyd">
@@ -458,7 +458,7 @@
 
                         <!-- Graphique EVlink historique + sessions -->
                         <div class="col-xs-12 evlink_bloc#id#" style="display:none; margin-bottom:6px;">
-                            <div class="mypanel-section-title">{{Historique de charge (borne) — 7 derniers jours}}</div>
+                            <div class="mypanel-section-title">{{Historique de charge (borne) — 7 derniers trajets}}</div>
                             <div class="tile" style="width:100%; padding:10px 8px 6px;">
                                 <div id="evlink_chart#id#" style="height:220px; width:100%;"></div>
                             </div>
@@ -472,7 +472,7 @@
                         <!-- Bloc HDC (récupération d'énergie des trajets) -->
                         <div class="col-xs-12 FONC_charge" style="margin-bottom:10px;">
                             <div class="myToyota_stat_card">
-                                <div class="myToyota_stat_card_header"><i class="fas fa-bolt"></i> {{Récupération d'énergie (HDC) — 7 derniers jours}}</div>
+                                <div class="myToyota_stat_card_header"><i class="fas fa-bolt"></i> {{Récupération d'énergie (HDC) — 7 derniers trajets}}</div>
                                 <div class="myToyota_stat_card_body">
                                     <div class="myToyota_stat_item">
                                         <div class="myToyota_stat_label">{{Trajets avec récup.}}</div>
@@ -1561,7 +1561,7 @@
 	loadChargeChart#id#(_chargePeriodEnd#id#);
 
 
-	// Graphique EVlink + tableau sessions (7 derniers jours)
+	// Graphique EVlink + tableau sessions (7 derniers trajets)
 	if (!isNaN(parseInt('#evlink_puissance_id#'))) {
 		var dateDebutEvlink = new Date();
 		dateDebutEvlink.setDate(dateDebutEvlink.getDate() - 7);
@@ -1808,7 +1808,7 @@
 	var _tripsHistory#id# = [];
 	var _tripsPhevPage#id# = 0;
 	var _tripsHdcPage#id# = 0;
-	var TRIPS_PER_PAGE = 10;
+	var TRIPS_PER_PAGE = 7;
 
 		jeedom.cmd.update['#trajets_id#'] = function(_options) {
 			try {
@@ -1999,7 +1999,7 @@
 			html += '</tr>';
 		}
 		html += '</tbody>';
-		$('.tableCmdCharge').empty().append(html);
+		$('#table_cmdCharge').empty().append(html);
 		$('#hdc_page_info#id#').text((page+1) + ' / ' + totalPages + '  (' + total + ' {{trajets}})');
 		$('#hdc_prev#id#').prop('disabled', page === 0);
 		$('#hdc_next#id#').prop('disabled', page >= totalPages - 1);
