@@ -239,7 +239,7 @@
 				<div class="mypanel-section-title">{{Localisation}}</div>
 				<div class="col-xs-12 tile" style="width:440px;">
 					<div id="location">
-						<iframe class="myMap" id="myFrame#id#" style="height:486px;" src="https://maps.google.com/maps?hl=fr&ie=utf8&output=embed&q=#gps_coordinates#"></iframe>
+						<div id="myFrame#id#" style="height:486px; width:100%; border-radius:4px;"></div>
 					</div>
 				</div>
 
@@ -749,11 +749,44 @@
 		}
 
 
-	//----- Location
-	jeedom.cmd.update['#gps_coordinates_id#'] =function(_options) {
-        var myToyota_cmd  = $('#myFrame#id#')[0];
-		myToyota_cmd.src = "https://maps.google.com/maps?hl=fr&ie=utf8&output=embed&q="+_options.display_value;
+	//----- Location (Leaflet)
+	var _locMap#id# = null;
+	var _locMarker#id# = null;
+
+	function _initLocMap#id#(lat, lon) {
+		var container = document.getElementById('myFrame#id#');
+		if (!container) return;
+		if (_locMap#id#) { _locMap#id#.setView([lat, lon], 15); if (_locMarker#id#) _locMarker#id#.setLatLng([lat, lon]); return; }
+		_locMap#id# = L.map(container, { zoomControl: true, attributionControl: false }).setView([lat, lon], 15);
+		L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19 }).addTo(_locMap#id#);
+		var carIcon = L.icon({
+			iconUrl: 'plugins/myToyota/data/#vehicle_vin#id##.png',
+			iconSize: [90, 56],
+			iconAnchor: [45, 28],
+			className: 'mytoyota-car-marker'
+		});
+		_locMarker#id# = L.marker([lat, lon], { icon: carIcon }).addTo(_locMap#id#);
+		setTimeout(function(){ _locMap#id#.invalidateSize(); }, 100);
 	}
+
+	function _loadLocLeaflet#id#(lat, lon) {
+		if (typeof L !== 'undefined') { _initLocMap#id#(lat, lon); return; }
+		if (!document.getElementById('leaflet-css')) {
+			var link = document.createElement('link'); link.id = 'leaflet-css'; link.rel = 'stylesheet';
+			link.href = 'plugins/myToyota/3rdparty/leaflet/leaflet.min.css';
+			document.head.appendChild(link);
+		}
+		var s = document.createElement('script');
+		s.src = 'plugins/myToyota/3rdparty/leaflet/leaflet.min.js';
+		s.onload = function() { _initLocMap#id#(lat, lon); };
+		document.head.appendChild(s);
+	}
+
+	jeedom.cmd.update['#gps_coordinates_id#'] = function(_options) {
+		var parts = (_options.display_value || '').split(',');
+		var lat = parseFloat(parts[0]), lon = parseFloat(parts[1]);
+		if (!isNaN(lat) && !isNaN(lon)) { _loadLocLeaflet#id#(lat, lon); }
+	};
 	jeedom.cmd.update['#gps_coordinates_id#']({display_value: '#gps_coordinates#'});
 	
 	
@@ -2226,6 +2259,12 @@
 	</script>
 
 	<style>
+	.mytoyota-car-marker {
+		border-radius: 6px;
+		box-shadow: 0 2px 8px rgba(0,0,0,0.45);
+		border: 2px solid #fff;
+		object-fit: cover;
+	}
 	.highcharts-root {
 		font-family: Roboto !important;
     }
