@@ -1071,20 +1071,19 @@ class myToyota extends eqLogic {
           // moyennes sur 7 jours
           $fuelConsumption = 0; $length = 0; $evDistance = 0; $evTime = 0; $duration = 0;
           $chargeTime = 0; $chargeDist = 0; $ecoTime = 0; $ecoDist = 0; $powerTime = 0; $powerDist = 0;
-          $summarys = $tripsEndpoint->payload->summary;
-          $metatData = $tripsEndpoint->payload->_metadata;
-          foreach ($summarys as $summary){
-            $fuelConsumption += $summary->summary->fuelConsumption;
-            $length += $summary->summary->length;
-            $evDistance += $summary->hdc->evDistance;
-            $evTime += $summary->hdc->evTime;
-            $duration += $summary->summary->duration;
-            if (isset($summary->hdc->chargeTime)) { $chargeTime += $summary->hdc->chargeTime; }
-            if (isset($summary->hdc->chargeDist)) { $chargeDist += $summary->hdc->chargeDist; }
-            if (isset($summary->hdc->ecoTime))    { $ecoTime    += $summary->hdc->ecoTime; }
-            if (isset($summary->hdc->ecoDist))    { $ecoDist    += $summary->hdc->ecoDist; }
-            if (isset($summary->hdc->powerTime))  { $powerTime  += $summary->hdc->powerTime; }
-            if (isset($summary->hdc->powerDist))  { $powerDist  += $summary->hdc->powerDist; }
+          $trips = $tripsEndpoint->payload->trips;
+          foreach ($trips as $trip){
+            $fuelConsumption += $trip->summary->fuelConsumption;
+            $length += $trip->summary->length;
+            if (isset($trip->hdc->evDistance)) { $evDistance += $trip->hdc->evDistance; }
+            if (isset($trip->hdc->evTime))     { $evTime     += $trip->hdc->evTime; }
+            $duration += $trip->summary->duration;
+            if (isset($trip->hdc->chargeTime)) { $chargeTime += $trip->hdc->chargeTime; }
+            if (isset($trip->hdc->chargeDist)) { $chargeDist += $trip->hdc->chargeDist; }
+            if (isset($trip->hdc->ecoTime))    { $ecoTime    += $trip->hdc->ecoTime; }
+            if (isset($trip->hdc->ecoDist))    { $ecoDist    += $trip->hdc->ecoDist; }
+            if (isset($trip->hdc->powerTime))  { $powerTime  += $trip->hdc->powerTime; }
+            if (isset($trip->hdc->powerDist))  { $powerDist  += $trip->hdc->powerDist; }
           }
           $dureeTot   = myToyota::convertSecondes($duration);
           $dureeEv    = myToyota::convertSecondes($evTime);
@@ -1098,7 +1097,7 @@ class myToyota extends eqLogic {
             'conso_moy'    => $consoMoy,       'vit_moy'      => $averageSpeed,
             'distance_tot' => round($length / 1000, 3),        'duree_tot'    => $dureeTot,
             'distance_ev'  => round($evDistance / 1000, 3),    'duree_ev'     => $dureeEv,
-            'conso_essence'=> round($fuelConsumption / 1000, 3),'nb_trajets'  => count($summarys),
+            'conso_essence'=> round($fuelConsumption / 1000, 3),'nb_trajets'  => count($trips),
             'charge_dist'  => round($chargeDist / 1000, 3),    'charge_time'  => $dureeCharge,
             'eco_dist'     => round($ecoDist / 1000, 3),        'eco_time'     => $dureeEco,
             'power_dist'   => round($powerDist / 1000, 3),     'power_time'   => $dureePower,
@@ -1107,7 +1106,6 @@ class myToyota extends eqLogic {
           $eqLogic->checkAndUpdateCmd('moy_sem', $summarySem);
 
           // les trajets des 7 derniers jours
-          $trips = $tripsEndpoint->payload->trips;
           $i = 1;
           $trajet = [];
           foreach ($trips as $trip){
