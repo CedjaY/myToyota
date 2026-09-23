@@ -756,8 +756,8 @@
 	function _initLocMap#id#(lat, lon) {
 		var container = document.getElementById('myFrame#id#');
 		if (!container) return;
-		if (_locMap#id#) { _locMap#id#.setView([lat, lon], 15); if (_locMarker#id#) _locMarker#id#.setLatLng([lat, lon]); return; }
-		_locMap#id# = L.map(container, { zoomControl: true, attributionControl: false }).setView([lat, lon], 15);
+		if (_locMap#id#) { _locMap#id#.setView([lat, lon], 17); if (_locMarker#id#) _locMarker#id#.setLatLng([lat, lon]); return; }
+		_locMap#id# = L.map(container, { zoomControl: true, attributionControl: false }).setView([lat, lon], 17);
 		L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19 }).addTo(_locMap#id#);
 		var carIcon = L.icon({
 			iconUrl: 'plugins/myToyota/data/#vehicle_vin#id##.png',
