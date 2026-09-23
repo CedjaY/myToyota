@@ -530,11 +530,11 @@
 
 	<!-- Modal carte trajet -->
 	<div id="myToyota_map_modal#id#" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.65); z-index:9999; align-items:center; justify-content:center;">
-		<div style="border-radius:8px; width:88%; max-width:940px; position:relative; overflow:hidden; box-shadow:0 4px 24px rgba(0,0,0,0.5);">
-			<div class="modal-header" style="display:flex; align-items:center; padding:8px 14px;">
+		<div style="border-radius:8px; width:88%; max-width:940px; position:relative; overflow:hidden; box-shadow:0 4px 24px rgba(0,0,0,0.5); background:#fff;">
+			<div style="display:flex; align-items:center; padding:10px 14px; background:#337ab7; color:#fff; font-weight:600; font-size:13px;">
 				<i class="fas fa-route" style="margin-right:8px;"></i>
-				<span id="myToyota_map_title#id#" style="font-weight:600; font-size:13px; flex:1;">Trajet</span>
-				<button onclick="document.getElementById('myToyota_map_modal#id#').style.display='none';" class="close" style="margin-left:8px; font-size:22px; line-height:1; opacity:0.7;">&times;</button>
+				<span id="myToyota_map_title#id#" style="flex:1;">Trajet</span>
+				<button onclick="document.getElementById('myToyota_map_modal#id#').style.display='none';" style="background:transparent; border:none; color:#fff; font-size:22px; line-height:1; cursor:pointer; padding:0; margin-left:8px;">&times;</button>
 			</div>
 			<div id="myToyota_map_container#id#" style="width:100%; height:520px;"></div>
 		</div>
@@ -2205,11 +2205,11 @@
 			var link = document.createElement('link');
 			link.id = 'leaflet-css';
 			link.rel = 'stylesheet';
-			link.href = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css';
+			link.href = 'plugins/myToyota/core/vendor/leaflet.min.css';
 			document.head.appendChild(link);
 		}
 		var script = document.createElement('script');
-		script.src = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js';
+		script.src = 'plugins/myToyota/core/vendor/leaflet.min.js';
 		script.onload = function() { _mapLeafletLoaded#id# = true; _initMap(routePoints); };
 		script.onerror = function() { _mapLeafletError#id# = true; _showFallback(routePoints); };
 		document.head.appendChild(script);
