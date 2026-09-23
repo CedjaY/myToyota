@@ -529,14 +529,14 @@
 	#divGraphInfo#
 
 	<!-- Modal carte trajet -->
-	<div id="myToyota_map_modal#id#" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.75); z-index:9999; align-items:center; justify-content:center;">
-		<div style="background:#fff; border-radius:10px; width:90%; max-width:960px; height:75vh; position:relative; overflow:hidden; box-shadow:0 8px 32px rgba(0,0,0,0.4);">
-			<div style="display:flex; align-items:center; padding:10px 14px; background:#1a73e8; color:#fff; font-weight:600; font-size:14px;">
+	<div id="myToyota_map_modal#id#" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.65); z-index:9999; align-items:center; justify-content:center;">
+		<div style="border-radius:8px; width:88%; max-width:940px; position:relative; overflow:hidden; box-shadow:0 4px 24px rgba(0,0,0,0.5);">
+			<div class="modal-header" style="display:flex; align-items:center; padding:8px 14px;">
 				<i class="fas fa-route" style="margin-right:8px;"></i>
-				<span id="myToyota_map_title#id#">Trajet</span>
-				<button onclick="document.getElementById('myToyota_map_modal#id#').style.display='none';" style="margin-left:auto; background:transparent; border:none; color:#fff; font-size:20px; cursor:pointer; line-height:1;">&times;</button>
+				<span id="myToyota_map_title#id#" style="font-weight:600; font-size:13px; flex:1;">Trajet</span>
+				<button onclick="document.getElementById('myToyota_map_modal#id#').style.display='none';" class="close" style="margin-left:8px; font-size:22px; line-height:1; opacity:0.7;">&times;</button>
 			</div>
-			<div id="myToyota_map_container#id#" style="width:100%; height:calc(100% - 44px);"></div>
+			<div id="myToyota_map_container#id#" style="width:100%; height:520px;"></div>
 		</div>
 	</div>
 
@@ -2055,8 +2055,10 @@
 	$('#hdc_next#id#').on('click',  function() { renderHdcPage#id#(_tripsHdcPage#id# + 1); });
 
 	$(document).on('click', '.mytoyota-map-btn', function() {
-		var pts = JSON.parse(decodeURIComponent($(this).data('pts') || '[]'));
-		var lbl = $(this).data('lbl') || 'Trajet';
+		var raw = $(this).attr('data-pts') || '[]';
+		var pts = [];
+		try { pts = JSON.parse(decodeURIComponent(raw)); } catch(e) { pts = []; }
+		var lbl = $(this).attr('data-lbl') || 'Trajet';
 		openTripMap#id#(pts, lbl);
 	});
 
@@ -2134,46 +2136,91 @@
 	//----- Trip map modal
 	var _mapInstance#id# = null;
 	var _mapLeafletLoaded#id# = false;
+	var _mapLeafletError#id# = false;
+
+	function _gmapsUrl#id#(pts) {
+		// Construit une URL Google Maps avec waypoints échantillonnés (max 23)
+		if (!pts || pts.length < 2) return null;
+		var step = Math.max(1, Math.floor(pts.length / 21));
+		var sampled = [pts[0]];
+		for (var i = step; i < pts.length - 1; i += step) { sampled.push(pts[i]); }
+		sampled.push(pts[pts.length - 1]);
+		var url = 'https://www.google.com/maps/dir/';
+		for (var j = 0; j < sampled.length; j++) { url += sampled[j][0] + ',' + sampled[j][1] + '/'; }
+		return url;
+	}
 
 	function openTripMap#id#(routePoints, title) {
 		var modal = document.getElementById('myToyota_map_modal#id#');
 		document.getElementById('myToyota_map_title#id#').textContent = title || 'Trajet';
 		modal.style.display = 'flex';
 
-		function _initMap() {
-			var container = document.getElementById('myToyota_map_container#id#');
-			if (_mapInstance#id#) { _mapInstance#id#.remove(); _mapInstance#id# = null; }
-			var map = L.map(container);
-			_mapInstance#id# = map;
-			L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-				attribution: '© OpenStreetMap contributors', maxZoom: 18
-			}).addTo(map);
+		var container = document.getElementById('myToyota_map_container#id#');
 
-			if (!routePoints || routePoints.length === 0) {
-				map.setView([46.5, 2.5], 5);
-				return;
-			}
-			var latlngs = routePoints;
-			L.polyline(latlngs, { color: '#1a73e8', weight: 4, opacity: 0.85 }).addTo(map);
-			var start = latlngs[0], end = latlngs[latlngs.length - 1];
-			var greenIcon = L.divIcon({ html: '<div style="background:#2ecc71;border:2px solid #fff;border-radius:50%;width:14px;height:14px;box-shadow:0 1px 4px rgba(0,0,0,0.4);"></div>', iconSize:[14,14], iconAnchor:[7,7] });
-			var redIcon   = L.divIcon({ html: '<div style="background:#e74c3c;border:2px solid #fff;border-radius:50%;width:14px;height:14px;box-shadow:0 1px 4px rgba(0,0,0,0.4);"></div>', iconSize:[14,14], iconAnchor:[7,7] });
-			L.marker(start, {icon: greenIcon}).addTo(map);
-			L.marker(end,   {icon: redIcon}).addTo(map);
-			map.fitBounds(L.polyline(latlngs).getBounds(), { padding: [20, 20] });
+		function _showFallback(pts) {
+			var gmUrl = _gmapsUrl#id#(pts);
+			container.innerHTML = '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:16px;padding:20px;">'
+				+ '<i class="fas fa-map-marked-alt" style="font-size:3em;opacity:0.4;"></i>'
+				+ '<span style="opacity:0.7;">Impossible de charger la carte interactive.</span>'
+				+ (gmUrl ? '<a href="'+gmUrl+'" target="_blank" class="btn btn-default"><i class="fas fa-external-link-alt"></i> Voir sur Google Maps</a>' : '')
+				+ '</div>';
 		}
 
-		if (_mapLeafletLoaded#id#) {
-			setTimeout(_initMap, 50);
-			return;
+		function _initMap(pts) {
+			if (_mapLeafletError#id#) { _showFallback(pts); return; }
+			if (_mapInstance#id#) { try { _mapInstance#id#.remove(); } catch(e){} _mapInstance#id# = null; }
+			container.innerHTML = '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;"><i class="fas fa-spinner fa-spin" style="font-size:2em;opacity:0.5;"></i></div>';
+			setTimeout(function() {
+				try {
+					container.innerHTML = '';
+					var map = L.map(container, { zoomControl: true });
+					_mapInstance#id# = map;
+					L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+						attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>', maxZoom: 19
+					}).addTo(map);
+					if (!pts || pts.length === 0) {
+						map.setView([46.5, 2.5], 5);
+					} else {
+						var poly = L.polyline(pts, { color: '#2980b9', weight: 5, opacity: 0.9 }).addTo(map);
+						var greenIcon = L.divIcon({ className: '', html: '<div style="background:#27ae60;border:3px solid #fff;border-radius:50%;width:16px;height:16px;box-shadow:0 2px 6px rgba(0,0,0,0.5);"></div>', iconSize:[16,16], iconAnchor:[8,8] });
+						var redIcon   = L.divIcon({ className: '', html: '<div style="background:#e74c3c;border:3px solid #fff;border-radius:50%;width:16px;height:16px;box-shadow:0 2px 6px rgba(0,0,0,0.5);"></div>', iconSize:[16,16], iconAnchor:[8,8] });
+						L.marker(pts[0], {icon: greenIcon}).addTo(map);
+						L.marker(pts[pts.length-1], {icon: redIcon}).addTo(map);
+						map.fitBounds(poly.getBounds(), { padding: [30, 30] });
+					}
+					setTimeout(function(){ map.invalidateSize(); }, 100);
+				} catch(e) {
+					console.error('myToyota map error:', e);
+					_showFallback(pts);
+				}
+			}, 50);
 		}
-		var link = document.createElement('link');
-		link.rel = 'stylesheet'; link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
-		document.head.appendChild(link);
+
+		if (_mapLeafletLoaded#id#) { _initMap(routePoints); return; }
+		if (_mapLeafletError#id#)  { _showFallback(routePoints); return; }
+
+		container.innerHTML = '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;"><i class="fas fa-spinner fa-spin" style="font-size:2em;opacity:0.5;"></i></div>';
+
+		if (!document.getElementById('leaflet-css')) {
+			var link = document.createElement('link');
+			link.id = 'leaflet-css';
+			link.rel = 'stylesheet';
+			link.href = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css';
+			document.head.appendChild(link);
+		}
 		var script = document.createElement('script');
-		script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
-		script.onload = function() { _mapLeafletLoaded#id# = true; setTimeout(_initMap, 50); };
+		script.src = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js';
+		script.onload = function() { _mapLeafletLoaded#id# = true; _initMap(routePoints); };
+		script.onerror = function() { _mapLeafletError#id# = true; _showFallback(routePoints); };
 		document.head.appendChild(script);
+
+		// Fallback si CDN trop lent (5s)
+		setTimeout(function() {
+			if (!_mapLeafletLoaded#id# && !_mapLeafletError#id#) {
+				_mapLeafletError#id# = true;
+				_showFallback(routePoints);
+			}
+		}, 5000);
 	}
 
 	</script>
