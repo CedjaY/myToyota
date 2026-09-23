@@ -1698,9 +1698,9 @@
 					for (var s = sessions.length - 1; s >= 0; s--) {
 						var sess = sessions[s], d = sess.date;
 						html += '<tr class="myToyota_stat_tr_body">';
-						html += '<td class="myToyota_stat_td">'+pad(d.getDate())+'/'+pad(d.getMonth()+1)+'/'+d.getFullYear()+'</td>';
-						html += '<td class="myToyota_stat_td">'+pad(d.getHours())+':'+pad(d.getMinutes())+'</td>';
-						html += '<td class="myToyota_stat_td">'+pad(sess.end.getHours())+':'+pad(sess.end.getMinutes())+'</td>';
+						html += '<td class="myToyota_stat_td">'+pad(d.getUTCDate())+'/'+pad(d.getUTCMonth()+1)+'/'+d.getUTCFullYear()+'</td>';
+						html += '<td class="myToyota_stat_td">'+pad(d.getUTCHours())+':'+pad(d.getUTCMinutes())+'</td>';
+						html += '<td class="myToyota_stat_td">'+pad(sess.end.getUTCHours())+':'+pad(sess.end.getUTCMinutes())+'</td>';
 						html += '<td class="myToyota_stat_td">'+fmtDur(sess.dur)+'</td>';
 						html += '<td class="myToyota_stat_td">'+sess.kwh.toFixed(2)+' kWh</td>';
 						html += '</tr>';
