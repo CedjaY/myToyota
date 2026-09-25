@@ -1836,7 +1836,13 @@
 		}
 		jeedom.cmd.update['#moy_sem_id#']({display_value:'#moy_sem#'});
 
-		function fmtDuree(hms) {
+		function _parseTripDate(s) {
+		if (!s) return 0;
+		var p = s.split(' '), d = p[0].split('-');
+		return new Date(d[2]+'-'+d[1]+'-'+d[0]+'T'+(p[1]||'00:00:00')).getTime();
+	}
+
+	function fmtDuree(hms) {
 			if (!hms || hms === '---' || hms === '0:0:0') return '---';
 			var parts = hms.toString().split(':');
 			var h = parseInt(parts[0]) || 0;
@@ -1971,7 +1977,7 @@
 						_curKeys[_tr.debut_trajet] = true;
 					}
 				}
-				_tripsHistory#id#.sort(function(a,b){ return (b.debut_trajet||'').localeCompare(a.debut_trajet||''); });
+				_tripsHistory#id#.sort(function(a,b){ return _parseTripDate(b.debut_trajet) - _parseTripDate(a.debut_trajet); });
 				renderPhevPage#id#(0);
 				renderHdcPage#id#(0);
 			} catch(e) {
@@ -2002,7 +2008,7 @@
 						}
 					}
 					if (added) {
-						_tripsHistory#id#.sort(function(a,b){ return (b.debut_trajet||'').localeCompare(a.debut_trajet||''); });
+						_tripsHistory#id#.sort(function(a,b){ return _parseTripDate(b.debut_trajet) - _parseTripDate(a.debut_trajet); });
 					}
 					renderPhevPage#id#(_tripsPhevPage#id#);
 					renderHdcPage#id#(_tripsHdcPage#id#);
