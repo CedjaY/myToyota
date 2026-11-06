@@ -10,6 +10,7 @@
 - Correction du double tableau dans l'onglet Charges (HDC)
 - Les tableaux de trajets affichent désormais les 7 derniers trajets (au lieu des 7 derniers jours)
 - Bouton carte dans les tableaux de trajets : cliquer sur l'icône map pour afficher le trajet exact sur une carte OpenStreetMap (tracé GPS complet, marqueurs départ/arrivée)
+- Adaptation au nouveau flow d'authentification Toyota (novembre 2026) : Toyota a ajouté un `ChoiceCallback` au stage 2 (sélection méthode "Local") et au stage 3 (confirmation "continue") ; le plugin est désormais robuste aux réponses invalides (502/504) pendant l'authentification
 
 # V1.9
 
