@@ -293,15 +293,26 @@ class myToyota_API
             'x-correlationid: BDD02A22-CD76-4877-90A9-196EDA5DC695',
             'content-type: application/json',
         ];
-                      
+
         $result2 = $this->_request($url, $method, $data1, $headers);
         log::add($fichierLog, 'info', '| Result getToken() myToyota - Stage 2 - body : ' . $result2->body);
-        $data2 = $result2->body;
-        $data2 = json_decode($data2, true);
-        $data2['callbacks'][0]['input'][0]['value'] = $this->username;
+        $data2 = json_decode($result2->body, true);
+        if (empty($data2['callbacks'])) {
+            log::add($fichierLog, 'error', '| getToken() Stage 2 : réponse invalide (serveur Toyota indisponible ?). Réponse : ' . $result2->body);
+            return;
+        }
+        foreach ($data2['callbacks'] as &$cb2) {
+            if (($cb2['type'] ?? '') === 'NameCallback' && ($cb2['output'][0]['value'] ?? '') === 'User Name') {
+                $cb2['input'][0]['value'] = $this->username;
+            }
+            if (($cb2['type'] ?? '') === 'ChoiceCallback') {
+                $cb2['input'][0]['value'] = 0; // "Local"
+            }
+        }
+        unset($cb2);
         $data2 = json_encode($data2);
 
-        
+
         //Stage 3 - set Password
         $url = $this::AUTHENTICATE_URL;
         $method = 'POST';
@@ -309,12 +320,23 @@ class myToyota_API
             'x-correlationid: BDD02A22-CD76-4877-90A9-196EDA5DC695',
             'content-type: application/json',
         ];
-                       
+
         $result3 = $this->_request($url, $method, $data2, $headers);
         log::add($fichierLog, 'info', '| Result getToken() myToyota - Stage 3 - body : ' . $result3->body);
-        $data3 = $result3->body;
-        $data3 = json_decode($data3, true);
-        $data3['callbacks'][0]['input'][0]['value'] = $this->password;
+        $data3 = json_decode($result3->body, true);
+        if (empty($data3['callbacks'])) {
+            log::add($fichierLog, 'error', '| getToken() Stage 3 : réponse invalide (serveur Toyota indisponible ?). Réponse : ' . $result3->body);
+            return;
+        }
+        foreach ($data3['callbacks'] as &$cb3) {
+            if (($cb3['type'] ?? '') === 'PasswordCallback') {
+                $cb3['input'][0]['value'] = $this->password;
+            }
+            if (($cb3['type'] ?? '') === 'ChoiceCallback') {
+                $cb3['input'][0]['value'] = 0; // "continue"
+            }
+        }
+        unset($cb3);
         $data3 = json_encode($data3);
 
 
@@ -325,7 +347,7 @@ class myToyota_API
             'x-correlationid: BDD02A22-CD76-4877-90A9-196EDA5DC695',
             'content-type: application/json',
         ];
-                       
+
         $result4 = $this->_request($url, $method, $data3, $headers);
         log::add($fichierLog, 'info', '| Result getToken() myToyota - Stage 4 - body : ' . $result4->body);
         $data4 = json_decode($result4->body, true);
